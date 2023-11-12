@@ -29,9 +29,12 @@ C           TYPE 2 RECORD
 C              - - ZERO L-VECTORS
 C*  START=2000
  2000 DO 2010 I=1,NMPRM+4*NMBOD
- 2010 LPRMA(I)=0
+        LPRMA(I)=0
+ 2010 END DO
+
       DO 2020 I=1,600
- 2020 LDTA(I)=0
+         LDTA(I)=0
+ 2020 END DO
       GOTO 9990
 C
 C           TYPE 3 RECORD
@@ -51,9 +54,11 @@ C           TYPE 4 RECORD
 C           - - CLEAR ILDT + GRID LISTS, NUMPAR
 C*  START=4000
  4000 DO 4010 I=1,6
- 4010 ILDT(I)=0
+         ILDT(I)=0
+ 4010 END DO
       DO 4020 I=1,4
- 4020 LSHOBA(I)=0
+        LSHOBA(I)=0
+ 4020 END DO
       LNSHBA=0
       LXSHPA=0
       NUMPRA=2

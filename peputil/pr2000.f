@@ -49,8 +49,9 @@ C       ZETA=Z(1),  Z=Z(2),  THETA=Z(3)
       INIT=.TRUE.
     6 CALL PRODCT(ZCOF,TTRM,Z,3,3,1)
       DO 13 I=1,3
-      CZ(I)=COS(Z(I))
-13    SZ(I)=SIN(Z(I))
+        CZ(I)=COS(Z(I))
+        SZ(I)=SIN(Z(I))
+13    END DO
 C
 C        PREC(J,K)= PRECESSION MATRIX  J,K=1,2,3
       Q1=CZ(2)*CZ(3)

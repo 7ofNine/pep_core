@@ -1,5 +1,5 @@
 FORT = gfortran
-FFLAGS = -fno-automatic -frecord-marker=8 -m128bit-long-double
+FFLAGS = -fno-automatic -frecord-marker=8 -m128bit-long-double -fno-align-commons
 B = ../bigtest
 G = ../pgms
 P = ../pep

@@ -166,7 +166,9 @@ C        INITIALIZE STATISTICS
       NCUT=0
       N=0
       DO 70 K=1,5
-   70 S(K)=0D0
+        S(K)=0D0
+   70 END DO
+
    80 IF(CRDIN) THEN
          CALL OBSFRM(OBSLIB,0,4,-1,ICD)
       ELSE
@@ -254,7 +256,9 @@ C           ACCUMULATE STATISTICS
       A(4)=A(1)*A(2)
       A(5)=A(2)**2
       DO 140 K=1,5
-  140 S(K)=S(K)+A(K)
+        S(K)=S(K)+A(K)
+  140 END DO
+
   150 IF(CRDOUT) THEN
          CALL OBSFRM(OBSLIB,OBSOUT,4,1,ICO)
       ELSE
@@ -269,7 +273,9 @@ C           DO FINAL COMPUTATION
       IF(N.LE.0) GOTO 200
       F=1D0/N
       DO 180 K=1,5
-  180 A(K)=S(K)*F
+        A(K)=S(K)*F
+  180 END DO
+
       CM(1)=A(3)-A(1)**2
       CM(2)=A(4)-A(1)*A(2)
       CM(3)=A(5)-A(2)**2
