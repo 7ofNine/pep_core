@@ -1,5 +1,5 @@
 FORT = gfortran
-FFLAGS = -fno-automatic -w -frecord-marker=8 -m128bit-long-double
+FFLAGS = -fno-automatic -frecord-marker=8 -m128bit-long-double
 B = ../bigtest
 G = ../pgms
 P = ../pep
@@ -35,7 +35,7 @@ bigtest: abc.dummy convw0 cplnq cpynbq cpynrm cpyobs ctchar intrlv $B/bigtest.in
 #
 abc.dummy:
 	echo echo ABC not implemented > abcps
-	chmod +x abcps
+#	chmod +x abcps
 	echo> abc.dummy
 #
 convw0: convw0.f
@@ -71,3 +71,6 @@ obsfrm.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 obsio.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 prepmnpt.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 zerpar.o: $U/pepglob.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
+
+clean:
+	rm -f *.x *.o  *.exe $U/*.o $B/*.o $P/*.o $G/*.o $B/*.exe $P/*.exe $G/*.exe

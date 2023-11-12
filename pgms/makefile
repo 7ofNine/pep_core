@@ -1,6 +1,6 @@
 FORT = gfortran
 
-FFLAGS = -fno-automatic -w -frecord-marker=8
+FFLAGS = -fno-automatic -frecord-marker=8 
 B = ../bigtest
 G = .
 P = ../pep
@@ -12,3 +12,6 @@ new:
 # include dependencies:
 aplot.o: $U/plttyp.inc $G/pltopnfo.inc
 symbol.o: $U/plttyp.inc
+
+clean:
+	rm -f *.x *.o  *.exe $U/*.o $B/*.o $P/*.o $G/*.o $B/*.exe $P/*.exe $G/*.exe
