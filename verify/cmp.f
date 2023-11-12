@@ -18,9 +18,10 @@ C
 C
       CMP=.FALSE.
       DO 10 JB=1,ISF
-      JPTX=ISTRT(JB)
-      IF(BUFA(JPTX:IFIN(JB)).NE.BUFB(JPTX:IFIN(JB))) GOTO 100
-   10 CONTINUE
+        JPTX=ISTRT(JB)
+        IF(BUFA(JPTX:IFIN(JB)).NE.BUFB(JPTX:IFIN(JB))) GOTO 100
+   10 END DO
+
 C THEY MATCH
    20 CMP=.TRUE.
       RETURN
@@ -58,16 +59,18 @@ C
  
 C HANDLE PEP-ISMS
          LIM=MIN0(JSIZ-8,40)
-         DO 110 I=1,LIM
-         DO 110 J=1,8
-         IF(BUFA(I:I+8).EQ.PEPSTR(J) .AND. BUFB(I:I+8).EQ.PEPSTR(J))
-     .      GOTO 20
-  110    CONTINUE
+         DO 111 I=1,LIM
+            DO 110 J=1,8
+                IF(BUFA(I:I+8).EQ.PEPSTR(J) .AND.
+     .             BUFB(I:I+8).EQ.PEPSTR(J))
+     .          GOTO 20
+  110       END DO
+  111    END DO
          LIM=JSIZ-10
          DO 120 I=1,LIM
          IF(BUFA(I:I+5).EQ.'LEVEL=' .AND. BUFB(I:I+5).EQ.'LEVEL=')
      .      GOTO 20
-  120    CONTINUE
+  120    END DO
 C
          LIM=MIN0(205,JSIZ)
          LIM1=LIM-1
@@ -75,32 +78,33 @@ C
          BUFTA(1:LIM)=BUFA(1:LIM)
          BUFTB(1:LIM)=BUFB(1:LIM)
          DO 140 I=1,LIM1
-         IF(BUFTA(I:I).NE.'-' .OR. BUFTB(I:I).NE.' ') GOTO 140
-         IP1=I+1
-         DO 130 J=IP1,LIM
-         IF(BUFTA(J:J).EQ.'0' .OR. BUFTA(J:J).EQ.'.') GOTO 130
-         IF(BUFTA(J:J).LE.'0' .OR. BUFTA(J:J).GT.'9') BUFTA(I:I)=' '
-         GOTO 140
-  130    CONTINUE
+            IF(BUFTA(I:I).NE.'-' .OR. BUFTB(I:I).NE.' ') GOTO 140
+            IP1=I+1
+            DO 130 J=IP1,LIM
+                IF(BUFTA(J:J).EQ.'0' .OR. BUFTA(J:J).EQ.'.') GOTO 130
+             IF(BUFTA(J:J).LE.'0' .OR. BUFTA(J:J).GT.'9') BUFTA(I:I)=' '
+            GOTO 140
+  130    END DO
          BUFTA(I:I)= ' '
-  140    CONTINUE
-         DO 150 I=1,LIM
-         DO 150 J=1,5
-         IF(BUFTA(I:I).EQ.IGNCHR(J)) BUFTA(I:I)='0'
-         IF(BUFTB(I:I).EQ.IGNCHR(J)) BUFTB(I:I)='0'
-  150    CONTINUE
+  140    END DO
+         DO 151 I=1,LIM
+            DO 150 J=1,5
+                IF(BUFTA(I:I).EQ.IGNCHR(J)) BUFTA(I:I)='0'
+                IF(BUFTB(I:I).EQ.IGNCHR(J)) BUFTB(I:I)='0'
+  150       END DO
+  151    END DO
          DO 160 I=3,LIM5
-         IF(BUFTA(I:I).NE.'/' .OR. BUFTB(I:I).NE.'/') GOTO 160
-         IF(BUFTA(I+3:I+3).NE.'/' .OR. BUFTB(I+3:I+3).NE.'/') GOTO 160
-         IM2=I-2
-         IP5=I+5
-         DO 155 J=IM2,IP5
-         IF(BUFTA(J:J).EQ.' ' .OR.
-     .    (BUFTA(J:J).GE.'0'.AND.BUFTA(J:J).LT.'9')) BUFTA(J:J)='9'
-         IF(BUFTB(J:J).EQ.' ' .OR.
-     .    (BUFTB(J:J).GE.'0'.AND.BUFTB(J:J).LT.'9')) BUFTB(J:J)='9'
-  155    CONTINUE
-  160    CONTINUE
+           IF(BUFTA(I:I).NE.'/' .OR. BUFTB(I:I).NE.'/') GOTO 160
+           IF(BUFTA(I+3:I+3).NE.'/' .OR. BUFTB(I+3:I+3).NE.'/') GOTO 160
+           IM2=I-2
+           IP5=I+5
+           DO 155 J=IM2,IP5
+              IF(BUFTA(J:J).EQ.' ' .OR.
+     .        (BUFTA(J:J).GE.'0'.AND.BUFTA(J:J).LT.'9')) BUFTA(J:J)='9'
+              IF(BUFTB(J:J).EQ.' ' .OR.
+     .        (BUFTB(J:J).GE.'0'.AND.BUFTB(J:J).LT.'9')) BUFTB(J:J)='9'
+  155      END DO
+  160    END DO
  
          IF(BUFTA(1:LIM).EQ.BUFTB(1:LIM)) GOTO 20
          GOTO 200

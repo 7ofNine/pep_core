@@ -18,35 +18,37 @@ C - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 C
 C        RESET CHARACTER POINTER IF ANY RECORDS WERE SKIPPED
    10 DO 20 I=1,2
-   20 LNJ(I)=MOD(LN(I),ISIZ)*JSIZ+ISUB1(I)
+        LNJ(I)=MOD(LN(I),ISIZ)*JSIZ+ISUB1(I)
+   20 END DO
 C        START HERE WHEN EXPECTING A MATCH
    30 IF(LN(1).GE.JP(1)) CALL CRD(1)
       IF(LN(2).GE.JP(2)) CALL CRD(2)
       IF(IRFM.EQ.0) GOTO 80
 C           MUST DELETE OLD PAGE PTRS FRO PRINT FILES
       DO 70 I=1,2
-      IF(IPNP(I).LE.1) GOTO 70
-      IPN=IPNP(I)
-      DO 40 J=1,IPN
-      IF(LN(I).LT.KPGP(I,J)) GOTO 50
-   40 CONTINUE
-      J=IPN+1
-   50 IPJ=J-2
-      IF(IPJ.LE.0) GOTO 70
+        IF(IPNP(I).LE.1) GOTO 70
+        IPN=IPNP(I)
+        DO 40 J=1,IPN
+            IF(LN(I).LT.KPGP(I,J)) GOTO 50
+   40   END DO
+        J=IPN+1
+   50   IPJ=J-2
+        IF(IPJ.LE.0) GOTO 70
 C           NOW MOVE BACK PTRS TO BE KEPT
-      IPN=IPN-IPJ
-      DO 60 J=1,IPN
-   60 KPGP(I,J)=KPGP(I,J+IPJ)
-      IPNP(I)=IPN
-   70 CONTINUE
+        IPN=IPN-IPJ
+        DO 60 J=1,IPN
+            KPGP(I,J)=KPGP(I,J+IPJ)
+   60   END DO
+        IPNP(I)=IPN
+   70 END DO
    80 IF(LN(1).GE.JP(1).OR.LN(2).GE.JP(2)) GOTO 220
 C        NOW WE HAVE TWO CARDS TO COMPARE
       IF(.NOT.CMP(CBF(LNJ1),CBF(LNJ2))) GOTO 100
 C        RECORDS MATCH, ADVANCE POINTERS AND CHECK NEXT
       DO 90 I=1,2
-      LN(I)=LN(I)+1
-      LNJ(I)=IINC(LNJ(I),I)
-   90 CONTINUE
+        LN(I)=LN(I)+1
+        LNJ(I)=IINC(LNJ(I),I)
+   90 END DO
       GOTO 30
 C        NON-MATCH, LOOK FOR NEXT MATCH
   100 LOOK=1
@@ -93,7 +95,7 @@ C NEED TO READ NEXT CARD
             CALL CRD(I)
 C DON'T INSIST IF A FILE HAS REACHED END
             IF(IP(I).GE.JP(I)) GOTO 190
-  180       CONTINUE
+  180    END DO
          IF(LOOK.le.LOOKS) then
             LOOK=LOOK+1
 C SOME OVERPRINTING HAPPENED, SEE IF STILL A MATCH
@@ -124,8 +126,8 @@ C        NO MATCH UP TO END OF BOTH
       RETURN
 C        ONE FILE EXHAUSTED
   220 DO 230 I=1,2
-      IF(LN(I).LT.JP(I)) GOTO 240
-  230 CONTINUE
+        IF(LN(I).LT.JP(I)) GOTO 240
+  230 END DO
 C        BOTH EXHAUSTED
       IDMP=IDMP-1
       GOTO 200

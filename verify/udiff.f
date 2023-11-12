@@ -20,10 +20,10 @@ C        OF 0 RATHER THAN FORMING THE OUTPUT BUFFER.
 C
       ICODE=0
       DO 100 I=1,LEN
-      OUT(I)=' '
-      IF(BUFA(I).EQ.BUFB(I)) GOTO 100
-      OUT(I)='_'
-      ICODE=1
-  100 CONTINUE
+        OUT(I)=' '
+        IF(BUFA(I).EQ.BUFB(I)) GOTO 100
+        OUT(I)='_'
+        ICODE=1
+  100 END DO
       RETURN
       END
