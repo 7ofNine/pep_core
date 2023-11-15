@@ -196,6 +196,9 @@ c     scltes = 0 unscaled tesseral harmonics are input (change to scaled
 c                before return to calling program)
 c     scltes = 1 scaled tesseral harmonics are input (default)
 
+      integer ntype, inunit, incnd, jdtype, iftkm, mcnd, mcentr, mean,
+     .        lcnd, kcnd, jcnd
+      real*10 fract0
 
       namelist/NMLST2/Cond,Con,Con1,Eps,Name,Jd1,Jd0,Jd2,L,K,Int,Nplnt,
      .Ncentr,Itape,a,e,inc,asc,per,anom,radius,j,J2,J3,J4,J5,J6,J7,J8,
@@ -1622,10 +1625,10 @@ c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 c local variables
       integer*2 nplch
       character*8 blank/'        '/
-      real*10 dum,fct,fract,fract0,fract9,wct(3)
-      integer i,ict66,ictl,iftkm,incnd,incr,indnd,
-     . intx,inunit,jx,jcnd,jd09,jdtype,kcnd,
-     . latdim,lcnd,londim,m,mcentr,mcnd,mcndi,mean,ngdpts,ntype
+      real*10 dum,fct,fract,fract9,wct(3)
+      integer i,ict66,ictl,incr,indnd,
+     . intx,jx,jd09,
+     . latdim,londim,m,mcndi,ngdpts
 c external functions
       real*10 LEGSCL
       integer JULDAY

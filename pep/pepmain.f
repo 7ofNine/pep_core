@@ -3,7 +3,7 @@
       implicit none
 
  
-c|main      m.e.ash   oct 1969   main program (always in core storage)
+c main      m.e.ash   oct 1969   main program (always in core storage)
 c     Main program for PEP (Planetary Ephemeris Program)
 c     Designed to run on an IBM 360 model 67 computer using overlay, it
 c     now runs on an IBM 370 model 168 or any plug-compatible.

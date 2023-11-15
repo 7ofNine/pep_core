@@ -1,17 +1,18 @@
 FORT = gfortran
-FFLAGS = -fno-automatic -frecord-marker=8 -std=gnu -fallow-argument-mismatch -Wall
+FFLAGS = -fno-automatic -frecord-marker=8 -std=gnu -Wall -ffpe-trap=invalid -g -fbacktrace
+# -fcheck=all -ffpe-trap=invalid -fbacktrace -g -w
 
 pep: blkdata1.o blkdata2.o blkdata3.o blkdata4.o blkdata7.o blkdata8.o blkdata9.o *.o
 	$(FORT) $(FFLAGS) -o pep *.o
-	rm -rf newdate
-	mv -f blkd1prv blkdata1.f
+#	rm -rf newdate
+#	mv -f blkd1prv blkdata1.f
 
 .f.o:
 	$(FORT) $(FFLAGS) -c -o $@ $<
 	
 new:
 	$(FORT) $(FFLAGS) -c *.f
-blkdata1.o: blkdata1.f newdate
+blkdata1.o: blkdata1.f # newdate
 
 newdate:	
 	cp blkdata1.f newdate

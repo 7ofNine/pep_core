@@ -73,7 +73,7 @@ c local
       character*8 npmsg(11)/'  NO TAR', 'GET PLAN', 'ET FOR  ', ' ',
      .          ' HARMONI', 'C PARTIA', 'L, STOP ', 'IN SBSET',
      .          ' ZONAL  ', 'TESS.SIN', 'TESS.COS'/
-      character*56 npmsgm
+C     character*56 npmsgm
       real*4    epsp2, epsp3
       real*10 hsftr/1E15_10/
       character*4 mesage(2)/' ON ', ' OFF'/
@@ -282,7 +282,7 @@ c
  
   100 if(Ki(1).ne.0) then
          do i = 2, 7
-            if(Ki(i).ge.0) Iparp = Iparp + 1
+            if(Ki(i).ge.0) Iparp = Iparp + 1_2
          end do
       endif
 c*  start=2000
@@ -384,7 +384,7 @@ c see if any body set up for harmonics
          do j = n1, n2
             Kount = Kount + 1
             Icntrl(Kount) = Ki(i)
-            Iparp = Iparp + 1
+            Iparp = Iparp + 1_2
             N     = N + 6
             if(kong.ne.Ncentr) then
                Itzone(ktong,j) = Kount
@@ -421,7 +421,7 @@ c see if any body set up for harmonics
                if(tessfg(j)) then
                   Kount = Kount + 1
                   Icntrl(Kount) = kii
-                  Iparp = Iparp + 1
+                  Iparp = Iparp + 1_2
                   N     = N + 6
                   if(king.ge.50) then
  
@@ -454,7 +454,7 @@ c*  start=2800
 c usual parameter
   500 Kount = Kount + 1
       Icntrl(Kount) = Ki(i)
-      Iparp = Iparp + 1
+      Iparp = Iparp + 1_2
 
 c need elliptic package for indirect term in partial w.r.t. mass of a
 c target body
