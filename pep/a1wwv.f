@@ -1,4 +1,6 @@
       real*10 function A1WWV(jd, fract)
+
+      USE ISO_FORTRAN_ENV, ONLY: INT32
 c
 c Ash/Amuchastegui - June 69  double precision function A1WWV
 c  7/17/98 updated for 1999 Jan 1 quantum jump, plus a guess at the next
@@ -14,7 +16,7 @@ c
  
  
 c*** start of declarations inserted by spag
-      integer   i, ilp, int, int1, j, jd, jd0, m1, mjd, nchang
+      integer   i, ilp, nnint, int1, j, jd, jd0, m1, mjd, nchang
  
 c*** end of declarations inserted by spag
  
@@ -249,28 +251,28 @@ c with one second quantum jumps at the following dates
       else
 c
 c interpolation formula before 1966 Jan 1
-c calculate int
+c calculate nint
          t   = jd - 2435480
          t   = (t + fract)/10.0_10
-         int = t
-         t   = t - int
-         int = int + 1
+         nnint = INT(t, INT32)
+         t   = t - nnint
+         nnint = nnint + 1
 c
-c check if int is irregular point
-         int1 = int + 1
+c check if nint is irregular point
+         int1 = nint + 1
          mjd  = jd - 2430000
-         jd0  = 5470 + 10*int
+         jd0  = 5470 + 10*nnint
          m1   = 1
          if(jd.ge.2437000) m1 = 37
          do j = m1, 46
             if(jd0.eq.jdtabl(j)) then
                if(j.ge.37) goto 100
                if(mjd.ne.jd0 .or. fract.ge.fract0) goto 40
-            else if(int.lt.jump(j)) then
+            else if(nint.lt.jump(j)) then
                if(int1.lt.jump(j)) goto 100
                if(int1.ne.jump(j)) goto 50
                if(j.lt.37) goto 100
-            else if(int.eq.jump(j)) then
+            else if(nint.eq.jump(j)) then
                if(mjd.lt.jdtabl(j)) then
                else if(mjd.eq.jdtabl(j)) then
                   if(fract.gt.fract0 .or. mjd.gt.7000) goto 40
@@ -280,17 +282,17 @@ c check if int is irregular point
             else
                goto 50
             endif
-            a1 = a(int)
+            a1 = a(nint)
             a2 = a(int1) - dif(j)
             goto 200
-   40       a1 = a(int) + dif(j)
+   40       a1 = a(nint) + dif(j)
             a2 = a(int1)
             goto 200
    50    end do
-  100    a1 = a(int)
+  100    a1 = a(nint)
          a2 = a(int1)
       endif
-  200 if(int.ge.nchang) a1  = a1 + 3E4_10
+  200 if(nint.ge.nchang) a1  = a1 + 3E4_10
       if(int1.ge.nchang) a2 = a2 + 3E4_10
 c
 c interpolation

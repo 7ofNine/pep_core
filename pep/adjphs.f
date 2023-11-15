@@ -1,4 +1,6 @@
       subroutine ADJPHS(nphase,nplnt,name)
+
+      USE ISO_FORTRAN_ENV, ONLY: REAL32
  
       implicit none
 c
@@ -46,7 +48,7 @@ c internal to subroutine adjphs
                if(Lphs(i,nphase).gt.0) then
                   old = Aphase(i,nphase)
                   call ADJAST(old,fctphs)
-                  snwv = Nwv
+                  snwv = REAL(Nwv, REAL32)
                   write(Iout,10) astrik(Ntype),N,i,nphase,
      .                            Lphs(i,nphase),i,name,
      .                            Phsit(nphase),Phser(nphase),

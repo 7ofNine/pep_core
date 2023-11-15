@@ -107,7 +107,7 @@ c        pages 3-6 of memo
 c        p** -1 is replaced by m** -1 (ie i-(k-1)/(k-1) is replaced by
 c        i(k)/(k-1) addsmr used methods outlined on pgs 3-6 to execute
 c        eq 5 of memo
-               call ADDSMR(b, S, H, Sh, G, np, Npnp, Nptr, iptr, Smat,
+               call ADDSMR(b, S, H, Sh, G, np, Npnp, Nptr, iptr,
      .                     Bthts, nd, A6, wr, wi)
                call EBCDIX(i + 1, label, 3, 2)
                if(shoinf) call XPMPO(np, b, 1, 0, label, 8)
@@ -162,7 +162,7 @@ c read in appropriate s
                read(Lfile, rec = m) ((S(i1,i2),i1=1,Npnp), i2 = 1, Npnp)
 c
 c smear covariances
-               call ADDSMR(b, S, H, Sh, G, np, Npnp, Nptr, iptr, Smat,
+               call ADDSMR(b, S, H, Sh, G, np, Npnp, Nptr, iptr,
      .                     Bthts, nd, A6, wr, wi)
                call EBCDIX(m, label, 3, 2)
                if(shoinf) call XPMPO(np, b, 1, 0, label, 8)

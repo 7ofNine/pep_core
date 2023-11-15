@@ -1,5 +1,7 @@
       subroutine ADAM(ngo)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: INT32
+
       implicit none
 c
 c w.b.smith   oct 1968    subroutine adam
@@ -129,7 +131,7 @@ c
                Hmx = Inthmx*Nsign
             endif
             Tstop  = tstopt
-            nstmid = Hmx/Hc+1E-15_10
+            nstmid = INT(Hmx/Hc+1E-15_10, INT32)
             T      = T0
             if(istrtt.eq.0) then
                write(strtmsg,170) K2
@@ -245,7 +247,7 @@ c printout time required for integration
       duratn = ABS(T-T0) + Both
       stpday = 1._10/ABS(Hc)
       steps  = duratn*stpday
-      isteps = steps+0.01_10
+      isteps = INT(steps+0.01_10, INT32)
       write(Iout,700) isteps,duratn,stpday
   700 format(
      .     '-ADAMS-MOULTON NUMERICAL INTEGRATION HAS BEEN COMPLETED IN',

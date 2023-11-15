@@ -666,7 +666,7 @@ c*  start=1200
 c
 c fourier shape
                      ll = 122
-                     call ADJFOR(i, ll, Aplnt(k), Nplhar(i))
+                     call ADJFOR(i, Aplnt(k), Nplhar(i))
                   else if(ibr.eq.3) then
 c
 c grid shape

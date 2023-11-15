@@ -1,6 +1,7 @@
       subroutine ACWRAP(coeff,rhs,xnom,numpar,aptitl,anyest,alldg,
      .                  nstop,anyoff,sumsq)
- 
+      USE ISO_FORTRAN_ENV, ONLY: INT16
+
       implicit none
 c
 c d. white  april 1973  subroutine acwrap
@@ -38,7 +39,7 @@ c build pointer, compressed rhs & xnom
          k = i*(i + 1)/2
          if(coeff(k) .ne. 0._10) then
             nsave = nsave + 1
-            Pointr(nsave) = i
+            Pointr(nsave) = INT(i, INT16)
             rhs(nsave)    = rhs(i)
             xnom(nsave)   = xnom(i)
          endif

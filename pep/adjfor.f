@@ -1,4 +1,4 @@
-      subroutine ADJFOR(ind,ll,aplnt,npl)
+      subroutine ADJFOR(ind,aplnt,npl)
  
       implicit none
 c
@@ -7,7 +7,7 @@ c        called by adjust for fourier shape model parameters
 c
 c arguments
       character*8 aplnt
-      integer   ind,ll
+      integer   ind
       integer*2 npl
 c
 c array dimensions

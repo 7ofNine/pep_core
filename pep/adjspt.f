@@ -1,5 +1,6 @@
       subroutine ADJSPT(nspot,nplnt,name)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: INT32
       implicit none
 c
 c ash/forni  october 1967  subroutine adjspt
@@ -28,7 +29,7 @@ c internal to subroutine adjspt
       character*12 wrdc(6)/' RADIUS   KM',' LONGITUDEDG',' LATITUDE DG',
      .                     ' VERT.V MM/Y',' WEST.V MM/Y',' NRTH.V MM/Y'/
       character*2 astrik(3)/'* ','& ','  '/
-      integer   i,int,j
+      integer   i,nnint
  
       fctspt(1) = Aultsc*Ltvel
       fctspt(2) = Aultsc/Convd
@@ -67,9 +68,9 @@ c fix spot coordinates if latitude goes beyond a pole,
 c or radius goes negative, or longitude goes beyond +/- 360
          if(Lspcrd(2,nspot).gt.0 .and. Lspcrd(3,nspot).gt.0) then
             if(ABS(Spcord(3,nspot)).gt.90._10) then
-               int=Spcord(3,nspot)/360._10
-               if(Spcord(3,nspot).lt.0._10) int=int-1
-               Spcord(3,nspot)=Spcord(3,nspot)-360*int
+               nnint = INT(Spcord(3,nspot)/360._10, INT32)
+               if(Spcord(3,nspot).lt.0._10) nnint=nnint-1
+               Spcord(3,nspot)=Spcord(3,nspot)-360*nnint
                if(Spcord(3,nspot).gt.270._10) then
                   Spcord(3,nspot)=Spcord(3,nspot)-360._10
                else if(Spcord(3,nspot).gt.90._10) then

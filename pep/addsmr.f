@@ -1,4 +1,4 @@
-      subroutine ADDSMR(b, s, h, sh, g, np, npnp, nptr, dptr, smat,
+      subroutine ADDSMR(b, s, h, sh, g, np, npnp, nptr, dptr,
      .                  bthts, nd, a6, wr, wi)
  
       implicit none
@@ -22,7 +22,7 @@ c        this routine replaces p**-1 by m**-1 as outline on pages 3-6 of
 c        memo actual procedure is steps 1-5 on page 6 of memo
 c         parameters
       integer*4 np
-      integer*4 npnp, smat
+      integer*4 npnp
       real*10   b(1)
       real*10   bthts(nd, npnp)
       real*10 a6(npnp, npnp), wr(npnp), wi(npnp)

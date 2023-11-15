@@ -1,4 +1,7 @@
+
       real*10 function A1UT1(jd, fract)
+
+      USE ISO_FORTRAN_ENV, ONLY: INT32
  
       implicit none
  
@@ -31,7 +34,7 @@ c local
       data int1, int2/299, 434/
       data int3, int4/548, 648/
       integer*2 iau(700)
-      integer*4 i,int,int1,int2,int3,int4,j,nr
+      integer*4 i,nnint,int1,int2,int3,int4,j,nr
 
 c external functions
       real*10 A1UT1F,BIHUT1,XA1UT1
@@ -172,11 +175,11 @@ c
 c calculate interpolation times and value of tab. points
          t   = jd - 2435480
          t   = (t + fract)/10._10
-         int = t
-         t   = t - int
-         int = int - 1
+         nnint = INT(t,INT32)
+         t   = t - nnint
+         nnint = nnint - 1
          do i = 1, 4
-            j = int + i
+            j = nint + i
             xint(i) = iau(j)
             if(j.ge.int1) xint(i) = xint(i) + 30000._10
             if(j.ge.int2) xint(i) = xint(i) + 30000._10

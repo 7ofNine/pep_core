@@ -1,6 +1,8 @@
       subroutine ADJBDY(lbdy,conbdy,fctbdy,wrds,wrdl1,wrdl2,name,
      .                  nplnt,jd0,nbdy,ncentr,icnd)
  
+      USE ISO_FORTRAN_ENV, ONLY: INT32
+
       implicit none
  
 c
@@ -35,7 +37,7 @@ c        common
 c
 c internal to subroutine adjbdy
       real*10 dom
-      integer i,ict66,int,j,jd0,m,nbdy,maxang
+      integer i,ict66,nnint,j,jd0,m,nbdy,maxang
       character*4 astrik(3)/'*   ','&   ','    '/
       character*8 earth/' EARTH  '/,neme,wrdssd
       character*4 wrdsss(2)
@@ -141,9 +143,9 @@ c fix adjusted eccentricity and angles
          if(conbdy(1).lt.0._10) maxang=5
          do i=4,maxang
             if(lbdy(i).gt.0) then
-               int = conbdy(i)/360._10
-               if(conbdy(i).lt.0._10) int = int - 1
-               conbdy(i) = conbdy(i) - int*360
+               nnint = INT(conbdy(i)/360._10, INT32)
+               if(conbdy(i).lt.0._10) nnint = nnint - 1
+               conbdy(i) = conbdy(i) - nnint*360
             endif
          end do
  

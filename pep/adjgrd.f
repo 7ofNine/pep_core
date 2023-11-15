@@ -1,5 +1,7 @@
       subroutine ADJGRD(ind,ll,aplnt,npl)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY:REAL32
+
       implicit none
 c
 c        r.b. goldstein sept. 1978
@@ -43,7 +45,7 @@ c local
      .                0pf8.3)
                if(Jout.gt.0) write(Jout,10) astrik(Ntype),N,
      .            ishp,aplnt,npl,old,Adj,Nwv,Sig,Fract
-               if(Keepit) Grid(k,ind,i) = Nwv
+               if(Keepit) Grid(k,ind,i) = REAL(Nwv, REAL32)
             endif
          end do
       end do

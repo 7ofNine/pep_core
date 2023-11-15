@@ -1,5 +1,7 @@
       subroutine ADJRBS(nrbias,nplnt,name)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: REAL32
+
       implicit none
 c
 c ash/forni  october 1967  subroutine adjrbs
@@ -45,7 +47,7 @@ c internal to subroutine adjrbs
             if(Lrbs(i,nrbias).gt.0) then
                old = Rbias(i,nrbias)
                call ADJAST(old,fctrbs)
-               snwv = Nwv
+               snwv = REAL(Nwv, REAL32)
                write(Iout,10) astrik(Ntype),N,i,nrbias,
      .                         Lrbs(i,nrbias),wrds(i),name,
      .                         Rdbsit(1,nrbias),Rdbser(nrbias),
