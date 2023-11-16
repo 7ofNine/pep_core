@@ -228,7 +228,7 @@ c this would be  limvel if there were room for vel or acc.
                k1     = k1 + n3
                call YPRTCD(Bod1(1,k1,1), Ybdast(1,1,k3,n), k2)
             endif
-            call ASTERP(Ybdast(1,1,1,n), dd(1,ni), nasu)
+            call ASTERP(Ybdast(1,1,1,n), nasu)
          endif
       end do
       return

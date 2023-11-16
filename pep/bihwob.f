@@ -1,11 +1,13 @@
       subroutine BIHWOB(jd, frw, x, y)
- 
+
+      use iso_fortran_env, only: int32, real32
+
       implicit none
  
  
 c*** start of declarations inserted by spag
       real      f1, f2, s, s2, t, t2, x, y
-      integer   i, int, j, jd, nr
+      integer   i, nnint, j, jd, nr
  
 c*** end of declarations inserted by spag
  
@@ -306,12 +308,12 @@ c warning message for use of rapid service values
 c
 c set up indices for  5 days b.i.h. interpolation
       tt  = ((jd-2440220) + frw)/5._10
-      int = tt
-      t   = tt - int
+      nnint = int(tt, int32)
+      t   = real(tt - nnint, real32)
 c
 c second difference interpolation
       t2 = t*t
-      s  = 1._10 - t
+      s  = real(1._10 - t, real32)
       s2 = s*s
       do j = 1, 2
          do i = 1, 2

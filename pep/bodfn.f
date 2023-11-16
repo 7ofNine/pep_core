@@ -1,5 +1,7 @@
       real*10 function BODFN(k,j,s)
- 
+
+      use iso_fortran_env, only: int32
+
       implicit none
 
 c
@@ -61,7 +63,7 @@ c npl= planet number of the current body
          if(j.ne.2) then
  
 c calculations done once per step
-            Jd    = s
+            Jd    = int(s, int32)
             Fract = s - Jd
 
             if(Orbint) then

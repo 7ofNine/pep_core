@@ -45,7 +45,7 @@ c for distributed asteroidal perturbation force
       logical   flg45
       real*10 astsm,crosan,DOT,den,dum,rysb2,rysb3,rysml,rysml2,rysml3,
      . s,ys3(3),ysc3,yscor(3)
-      integer*4 i,iden,ij,iquit,j,jquit,k,kk,l,mm,n,nc,nexpan
+      integer*4 i,ij,iquit,j,jquit,k,kk,l,mm,n,nc,nexpan
 c
 c * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 c

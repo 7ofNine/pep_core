@@ -1,11 +1,12 @@
       real*10 function BIHUT1(jd, frw)
- 
+
+      use iso_fortran_env, only: int32
       implicit none
  
  
 c*** start of declarations inserted by spag
       real*10 ETUTF, f2, frw, s, t, UT2UT1
-      integer   i, int, int1, int2, int3, int4, j, jd, nr
+      integer   i, nnint, int1, int2, int3, int4, j, jd, nr
  
 c*** end of declarations inserted by spag
  
@@ -211,13 +212,13 @@ c
 c calculate interpolation times and value of tab. points
       t   = jd - 2440220
       t   = (t + frw)/5._10
-      int = t
-      t   = t - int
+      nnint = int(t, int32)
+      t   = t - nnint
       s   = 1._10 - t
-      int = int - 1
+      nnint = nnint - 1
       if(int.ne.intsav) then
          do i = 1, 4
-            j = int + i
+            j = nnint + i
             xint(i) = iau(j) + 60000._10
             if(j.ge.int1) xint(i) = xint(i) + 30000._10
             if(j.ge.int2) xint(i) = xint(i) + 30000._10

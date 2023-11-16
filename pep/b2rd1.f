@@ -1,5 +1,7 @@
       subroutine B2RD1(lice)
 
+      use iso_fortran_env, only: int16, int32
+
       implicit none
 
 c j.f.chandler  1977 june        subroutine b2rd1
@@ -59,7 +61,7 @@ c read first two records
      .     Jvlb2,Epsb2,Kb2,Itrt,Npg,(Bmas(i),i = 1,Nast),
      .     (Relft(i),i = 1,Nast),Kkb2,(Icn2(i),i = 1,Nast),
      .     (Cmas(i),i = 1,Nast),(Fr0(i),i = 1,Nast)
-      Intb2 = intr
+      Intb2 = int(intr, int16)
 
       if(Nast.le.0) goto 390
 c
@@ -103,13 +105,13 @@ c calculate interval quantities
       b2int = Intb2
       if(Intb2.le.0) b2int = 2._10**Intb2
       Naf = 0
-      if(Na1.gt.0) Naf = 1
-      if(Na4.gt.0) Naf = Naf + 2
-      if(Na8.gt.0) Naf = Naf + 4
+      if(Na1.gt.0) Naf = 1_2
+      if(Na4.gt.0) Naf = Naf + 2_2
+      if(Na8.gt.0) Naf = Naf + 4_2
       amarg = b2int
       if(Na4.gt.0) amarg = b2int*4._10
       if(Na8.gt.0) amarg = b2int*8._10
-      imarg  = amarg*5._10
+      imarg  = int(amarg*5._10, int32)
       imarg  = imarg + 1
       Ib2sgn = ISIGN(1,Jdb22 - Jdb21)
       m1     = Jdb21

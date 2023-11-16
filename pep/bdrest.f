@@ -1,5 +1,7 @@
       subroutine BDREST
 
+      use iso_fortran_env, only: int16
+
       implicit none
 
 
@@ -45,7 +47,7 @@ c read first two records of n-body tape
      . ((Beta(i,j),i=1,6),j=1,nbdy1),((Name(i,j),i=1,6),j=1,nbdy1),
      . nmoon1,nbody1,Intbdy,Jvlbdy,Epsbdy,Kbdy,i,i,
      . (stuff,i=1,nbdy1),(stuff,i=1,nbdy1),Kkbdy1
-      Kbdy(39) = kb39
+      Kbdy(39) = int(kb39, int16)
       nrec     = 0
 c
 c error message for number of bodies

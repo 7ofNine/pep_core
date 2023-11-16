@@ -1,5 +1,6 @@
       subroutine ASTRD1(lice, nplnt, kp)
- 
+
+      use iso_fortran_env, only: int16, int32
       implicit none
  
  
@@ -49,13 +50,13 @@ c temporary storage
      .     ((Name(j,i),j=1,6),i=1,Nast), Na1, Na4, Na8, Intr,
      .     Jvlb2, Epsb2, Kb2, Itrt, Npg, (Bmas(i), i=1, Nast),
      .     (Relft(i), i=1, Nast), Kkb2
-      Intb2 = Intr
+      Intb2 = int(Intr, int16)
  
 c set up bit pattern to select non-empty classes (1, 4, or 8)
       Naf = 0
-      if(Na1.gt.0) Naf = 1
-      if(Na4.gt.0) Naf = Naf + 2
-      if(Na8.gt.0) Naf = Naf + 4
+      if(Na1.gt.0) Naf = 1_2
+      if(Na4.gt.0) Naf = Naf + 2_2
+      if(Na8.gt.0) Naf = Naf + 4_2
       Ib2sgn = ISIGN(1, Jdb22 - Jdb21)
       Ddir   = Ib2sgn
       Fstep  = Intb2
@@ -92,7 +93,7 @@ c error stops
      .ATA SET, STOP IN ASTRD1', 22)
  
 c setup computations
-  700 ints   = Fstep*32._10 - 1._10
+  700 ints   = int(Fstep*32._10 - 1._10, int32)
       Jd0(1) = max0(Jdb21, Jdb22) - ints
       Jdb21  = min0(Jdb21, Jdb22) + ints
       Jdb22  = Jd0(1)

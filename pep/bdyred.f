@@ -1,5 +1,7 @@
       subroutine BDYRED(in0,nstop,jdpad,kall)
- 
+
+      use iso_fortran_env, only: int16, int32
+
       implicit none
 
 c     m.ash   jan 1972    subroutine bdyred
@@ -212,7 +214,7 @@ c read earth,moon,planet control and data constants (&nmlst2)
 c
 c segregate pulsars
          if(Numpsr.lt.u_mxpsr) then
-            Numpsr = Numpsr + 1
+            Numpsr = Numpsr + 1_2
             i = NSCAN(Bname, 5, ' ')
             if(i.lt.0) i = 4
             call MVC(Bname, i + 1, 4, Sptpsr(Numpsr), 1)
@@ -326,7 +328,7 @@ c planet constants
      .          ' INPUT PLANETS, ERROR IN BDYRED')
          goto 400
       endif
-      klan = klan + 1
+      klan = klan + 1_2
       jplnt = klan + 4
       Nplnt(klan)  = Nimb
       Npcent(klan) = Ncentb
@@ -373,7 +375,7 @@ c planet constants
             nstop = nstop + 1
             goto 400
          endif
-         klam = klam + 1
+         klam = klam + 1_2
          Nplhar(klam) = Nimb
          Nshape(klam) = Nshp
          do i = 1,9
@@ -444,7 +446,7 @@ c check for non-zero elements of grid and l-vector
 c
 c segregate asteroids
   280 if(Numsml.lt.u_mxsml) then
-         Numsml = Numsml + 1
+         Numsml = Numsml + 1_2
          Nbsml(Numsml)  = Nimb
          Denpts(Numsml) = Denptr
          do i = 1,7

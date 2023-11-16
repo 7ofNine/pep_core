@@ -1,10 +1,10 @@
-      subroutine ASTERP(y, dist, n)
+      subroutine ASTERP(y, n)
  
       implicit none
  
  
 c*** start of declarations inserted by spag
-      real*10 dist, y
+      real*10 y
       integer   i, n
  
 c*** end of declarations inserted by spag
@@ -12,7 +12,7 @@ c*** end of declarations inserted by spag
  
 c j.f.chandler - 1976 july
 c everett interpolation for perturbing satellites
-      dimension y(5, 9, 41), dist(2)
+      dimension y(5, 9, 41)
 c           y   =input y vector
 c           dist=input tabular interval and its square
 c                             now not needed, since no vel, acc.

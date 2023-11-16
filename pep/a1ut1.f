@@ -179,7 +179,7 @@ c calculate interpolation times and value of tab. points
          t   = t - nnint
          nnint = nnint - 1
          do i = 1, 4
-            j = nint + i
+            j = nnint + i
             xint(i) = iau(j)
             if(j.ge.int1) xint(i) = xint(i) + 30000._10
             if(j.ge.int2) xint(i) = xint(i) + 30000._10

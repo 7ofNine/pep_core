@@ -1,5 +1,7 @@
       subroutine B2REED(jd,fract,mplnt,kcall)
- 
+
+      use iso_fortran_env, only: int32
+
       implicit none
 
 c j.f.chandler  1977 jun   subroutine b2reed
@@ -54,7 +56,7 @@ c get correct records of s-body tape into storage
       if(fk.lt.0._10) then
 c
 c correct record is behind on tape
-         n = fk
+         n = int(fk, int32)
          n = 4 - n
          if(n.gt.nb2rec) goto 100
          do i = 1,n
@@ -64,7 +66,7 @@ c correct record is behind on tape
          goto 600
       endif
  
-      n = fk
+      n = int(fk, int32)
       if(n.eq.0) goto 550
       m = n - 3
       if(m.gt.0) then
@@ -207,7 +209,7 @@ c test if date is in storage already
       ivl  = max0(Ivl1(l),Ivl1(l+1),Ivl1(l+2))
       dim5 = dim*5._10
       tb21 = Jdb2(1) + Frb2(1)
-      j1   = (tb - tb21)/dim
+      j1   = int((tb - tb21)/dim, int32)
       if(kcall.ne.5) j1 = j1/5*5
       tb = tb21 + dim*j1
  
@@ -227,7 +229,7 @@ c now move data to proper storage
 c satellite observed body
          do i = 1,3
             Isbvel(i) = ivl
-            Jdsb(i)   = Ttb2(i)
+            Jdsb(i)   = int(Ttb2(i), int32)
             Fsb(i)    = Ttb2(i) - Jdsb(i)
          end do
          do j = 1,15
@@ -242,7 +244,7 @@ c satellite observed body
 c satellite observing body
          do i = 1,3
             Iscvel(i) = ivl
-            Jdsc(i)   = Ttb2(i)
+            Jdsc(i)   = int(Ttb2(i), int32)
             Fsc(i)    = Ttb2(i) - Jdsc(i)
          end do
          do j = 1,15
@@ -257,7 +259,7 @@ c satellite observing body
 c minor planet
          do i = 1,3
             Ipvel(i) = ivl
-            Jdp(i)   = Ttb2(i)
+            Jdp(i)   = int(Ttb2(i), int32)
             Fp(i)    = Ttb2(i) - Jdp(i)
          end do
          do j = 1,15

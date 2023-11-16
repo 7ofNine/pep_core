@@ -100,3 +100,4 @@ bigtest/tv2.out
 bigtest/tv2.verout
 /.metadata/
 
+/pep/*.dll
