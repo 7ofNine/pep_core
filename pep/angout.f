@@ -1,5 +1,7 @@
       subroutine ANGOUT(iangbf, angbuf, bessel, sidtm1)
- 
+
+      use iso_fortran_env, only: int32, real32
+
       implicit none
 
 c
@@ -90,20 +92,21 @@ c local variables
 c
 c determine range (m), range-rate (cm/min), and
 c range-rate-rate (cm/min/min)
-      irang  = Rsitp(1)*Ltvel*1E3_10 + 0.5_10
+      irang  = int(Rsitp(1)*Ltvel*1E3_10 + 0.5_10, int32)
       drange = DOT(Xsitep(1,1),Xsitep(4,1))/Rsitp(1)
-      idrang = drange*Ltvel*6E6_10 + SIGN(0.5_10, drange)
+      idrang = int(drange*Ltvel*6E6_10 + SIGN(0.5_10, drange), int32)
       if(Jct(47).gt.0) then
 c
 c geocentric radius for special les-8/9 output
-         iddrng = SQRT(Xm(1,1)**2 + Xm(2,1)**2 + Xm(3,1)**2)
-     .            *Ltvel*1E3_10 + 0.5_10
+         iddrng = int(SQRT(Xm(1,1)**2 + Xm(2,1)**2 + Xm(3,1)**2)
+     .            *Ltvel*1E3_10 + 0.5_10, int32)
       else
          ddrang = ( -drange**2 + DOT(Xsitep(4,1),Xsitep(4,1))
      .            - (Xsitep(1,1)*(Accp(1)-Xsite(7,1))+Xsitep(2,1)
      .            *(Accp(2)-Xsite(8,1))+Xsitep(3,1)*(Accp(3)-Xsite(9,1))
      .            ))/Rsitp(1)
-         iddrng = ddrang*Ltvel*3.6E8_10 + SIGN(0.5_10, ddrang)
+         iddrng = int(ddrang*Ltvel*3.6E8_10 + SIGN(0.5_10, ddrang),
+     .                int32)
       endif
 c
 c make range negative if satellite is in earth's shadow
@@ -165,7 +168,7 @@ c practical astronomy')
          if(Jct(42).gt.1) then
 c
 c radio frequency refraction (millstone subroutine dell)
-            eltrue = el
+            eltrue = real(el, real32)
             if(eltrue.lt.0.) eltrue = 0.
             call DELL(eltrue, eloff)
             elref = eltrue + eloff
@@ -233,7 +236,7 @@ c compute right ascension,declination,hour angle
       decl  = ASIN(xsat(3)/rsat)/Convds
       ra    = ATAN2(xsat(2), xsat(1))
       ha    = sidtml - ra
-      i     = ha/Twopi
+      i     = int(ha/Twopi, int32)
       if(ha.lt.0._10) i = i - 1
       ha = ha - i*Twopi
       if(ra.lt.0._10) ra = ra + Twopi
@@ -249,32 +252,32 @@ c compute rates of change
       dra   = dra/Convhs
 c
 c convert to integer parts
-      iaz    = az*1E5_10 + 0.5_10
-      iel    = el*1E5_10 + SIGN(0.5_10, el)
-      irah   = ra/3600._10
+      iaz    = int(az*1E5_10 + 0.5_10, int32)
+      iel    = int(el*1E5_10 + SIGN(0.5_10, el), int32)
+      irah   = int(ra/3600._10, int32)
       ra     = ra - irah*3600
-      iram   = ra/60._10
+      iram   = int(ra/60._10, int32)
       ra     = ra - iram*60
-      iras   = ra*1E3_10 + 0.5_10
+      iras   = int(ra*1E3_10 + 0.5_10, int32)
       isgndc = 1
       if(decl.lt.0._10) then
          isgndc = 2
          decl   = -decl
       endif
-      idecld = decl/3600._10
+      idecld = int(decl/3600._10, int32)
       decl   = decl - idecld*3600
-      ideclm = decl/60._10
+      ideclm = int(decl/60._10, int32)
       decl   = decl - ideclm*60
-      idecls = decl*1E2_10 + 0.5_10
-      ihah   = ha/3600._10
+      idecls = int(decl*1E2_10 + 0.5_10, int32)
+      ihah   = int(ha/3600._10, int32)
       ha     = ha - ihah*3600
-      iham   = ha/60._10
+      iham   = int(ha/60._10, int32)
       ha     = ha - iham*60
-      ihas   = ha*1E3_10 + 0.5_10
-      idra   = dra*1E4_10 + SIGN(0.5_10, dra)
-      iddecl = ddecl*1E3_10 + SIGN(0.5_10, ddecl)
-      idha   = dha*1E4_10 + SIGN(0.5_10, dha)
-      isec   = Sec + 0.5
+      ihas   = int(ha*1E3_10 + 0.5_10, int32)
+      idra   = int(dra*1E4_10 + SIGN(0.5_10, dra), int32)
+      iddecl = int(ddecl*1E3_10 + SIGN(0.5_10, ddecl), int32)
+      idha   = int(dha*1E4_10 + SIGN(0.5_10, dha), int32)
+      isec   = int(Sec + 0.5, int32)
 c
 c make sure rates of change fit their fields
       if(idra.ge.1000000 .or. idra.le.-100000) idra = 0
@@ -292,7 +295,7 @@ c convert to characters and store in buffer
      .       2I8, i10, i10, i9)
       rewind Intern
       i1     = iangbf*51 + 1
-      iangbf = iangbf + 1
+      iangbf = iangbf + 1_2
       i2     = iangbf*51
       read(Intern, 300) (angbuf(i), i = i1, i2)
   300 format(51A2)

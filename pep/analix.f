@@ -1,4 +1,6 @@
       subroutine ANALIX
+
+      USE ISO_FORTRAN_ENV, ONLY: INT16
  
       implicit none
 
@@ -84,7 +86,7 @@ c summary printout
  
 c invert iptrx array
                      do i = 1, Mparam
-                        if(Iptrx(i).gt.0) jti(Iptrx(i)) = i
+                        if(Iptrx(i).gt.0) jti(Iptrx(i)) = INT(i, int16)
                      end do
                   endif
                   Nsoltn = Nsoltn + 1
@@ -96,7 +98,7 @@ c now invert jptr array into iptrx
                   do i = 1, npm
                      ipm = jptr(i)
                      if(ipm.gt.0 .and. jti(ipm).gt.0)
-     .                   Iptrx(jti(ipm)) = ipm
+     .                   Iptrx(jti(ipm)) = int(ipm, int16)
                   end do
  
 c prepare normal equations

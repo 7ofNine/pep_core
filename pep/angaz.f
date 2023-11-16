@@ -1,13 +1,14 @@
-      subroutine ANGAZ(kathy)
- 
+      subroutine ANGAZ()
+
+      USE ISO_FORTRAN_ENV, ONLY: REAL32
       implicit none
 
 c j.f.chandler - 1979 january - subroutine angaz
 c calculate azimuth/elevation observables
 c derived from old subr. angle
 
-c arguments
-      integer*4 kathy
+c arguments none used!
+c      integer*4 kathy
 c          kathy=-1  azimuth,elevation observation (topocentric)
 c          kathy= 0  meridian circle observation (geocentric referred
 c                    to true equinox and equator of date)
@@ -201,7 +202,7 @@ c
 c add refraction correction to theoretical value of elevation
 c (radio frequency refraction table from millstone)
       if(fdev.le.(1._10-900E-10_10)) then
-         eltrue = Deriv(2,2)
+         eltrue = real(Deriv(2,2), real32)
          if(eltrue.lt.0.) eltrue = 0.
          dref = 0.
          do i = 1,3

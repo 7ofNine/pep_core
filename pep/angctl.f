@@ -1,5 +1,6 @@
       subroutine ANGCTL(kathy)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: REAL32
       implicit none
  
 c subroutine angctl - j.f.chandler - 1979 jan
@@ -75,7 +76,7 @@ c not azimuth-elevation
 c photographic obs after 1.0 jan 1972 assumed to have utc epoch
       else
          Atuts = A1WWV(Jds,Fract)
-         Ututs = Atuts-A1UT1(Jds,Fract)
+         Ututs = real(Atuts-A1UT1(Jds,Fract), real32)
          Ctat  = CTATF(Jds,Fract+Atuts/Secday,1,1)
       endif
       Ctut  = (Ctat+Atuts)/Secday
@@ -159,7 +160,7 @@ c*  start=2000
             if(Ncodf.gt.20) then
                call ANGDIF(kathy)
             else if(kathy.eq.-1) then
-               call ANGAZ(kathy)
+               call ANGAZ()
             else if(kathy.eq.0) then
                call ANGMER(kathy)
             else

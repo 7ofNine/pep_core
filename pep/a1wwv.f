@@ -259,7 +259,7 @@ c calculate nint
          nnint = nnint + 1
 c
 c check if nint is irregular point
-         int1 = nint + 1
+         int1 = nnint + 1
          mjd  = jd - 2430000
          jd0  = 5470 + 10*nnint
          m1   = 1

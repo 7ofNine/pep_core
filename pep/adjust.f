@@ -1,5 +1,7 @@
       subroutine ADJUST(keep)
  
+      USE ISO_FORTRAN_ENV, ONLY: REAL32, INT16
+
       implicit none
 
 c     ash/forni    june 1969     subroutine adjust
@@ -191,7 +193,7 @@ c write out error analysis
       call PAGSET('        L VECTOR       PARAMETER   BODY  NPLNT'//
      .            '  JD0          OLD VALUE        ADJUSTMENT    '//
      .            '     NEW VALUE           SIGMA    FRACT ',-33)
-      call PAGSET(-1,Jout)
+      call PAGSET(transfer(-1,"xxxx",1), Jout)
       call NEWPG
       ams = Measmt
       if(Measmt.le.0) ams = 1._10
@@ -296,7 +298,7 @@ c*  start=200
             if(Leqn(i,k).gt.0) then
                double = deqnx(k, i)
                call ADJAST(double, Fcteqn(i))
-               snwv = Nwv
+               snwv = REAL(Nwv, REAL32)
                write(Iout, 220) astrik(Ntype), N, i, k, Leqn(i, k),
      .                          nameqn(i), Eqnsit(k),
      .                          Eqnser(k), deqnx(k, i), Adj, snwv, Sig,
@@ -352,8 +354,8 @@ c imtf=  inverse mass counter
             if(l.eq.32 .or. l.eq.72) then
                igmvry = igmvry + 1
                Rjc2(igmvry) = astrik(ntype)
-               Rji2(1,igmvry) = N
-               Rji2(2,igmvry) = k
+               Rji2(1,igmvry) = INT(N, INT16)
+               Rji2(2,igmvry) = INT(k, INT16)
                Rji2(3,igmvry) = Lprm(k)
                Rjc8(1,igmvry) = wrdp(m)
                Rjc8(2,igmvry) = peryr
@@ -386,10 +388,10 @@ c
 c store information for inverse mass print out
             imtf = imtf + 1
             Tfc2(imtf)=  astrik(Ntype)
-            Tfi2(1,imtf) = N
-            Tfi2(2,imtf) = k
+            Tfi2(1,imtf) = INT(N, INT16)
+            Tfi2(2,imtf) = INT(k, INT16)
             Tfi2(3,imtf) = Lprm(k)
-            Tfi2(4,imtf) = l
+            Tfi2(4,imtf) = INT(l, INT16)
             Tfc8(imtf) =  bodynm
             Tfr8(5,imtf) = -Fract
             mass2 = Mass(l)
@@ -452,7 +454,7 @@ c*  start=600
                if(Ldt(k).gt.0) then
                   ddt = Dt(k)
                   call ADJAST(ddt, 1._10)
-                  snwv = Nwv
+                  snwv = REAL(Nwv, REAL32)
                   write(Iout, 310) astrik(Ntype), N, k, Ldt(k),
      .                             dtwrd(j), Jddt(kk), Dt(k), Adj,
      .                             snwv, Sig, Fract
@@ -462,7 +464,7 @@ c*  start=600
                   if(Jout.gt.0) write(Jout, 310) astrik(Ntype), N,
      .               k, Ldt(k), dtwrd(j), Jddt(kk), Dt(k), Adj, snwv,
      .               Sig, Fract
-                  if(Keepit) Dt(k) = Nwv
+                  if(Keepit) Dt(k) = REAL(Nwv, REAL32)
                endif
             end do
             call FRSTAT(1, 1, dtwrd(j))
@@ -1034,9 +1036,9 @@ c
 c decide if least squares iteration is to continue
       if(Iterat.le.Ict(1)) then
          if(Jct(1).ge.1) then
-            if(normsq.lt.Eps(15)) Ict(1) = Iterat
+            if(normsq.lt.Eps(15)) Ict(1) = INT(Iterat, INT16)
          else
-            if(Nkind(1)+Nkind(2).le.0) Ict(1) = Iterat
+            if(Nkind(1)+Nkind(2).le.0) Ict(1) = INT(Iterat, INT16)
          endif
       endif
 c

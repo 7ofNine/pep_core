@@ -1,4 +1,6 @@
       subroutine ANGMER(kathy)
+
+      USE ISO_FORTRAN_ENV, ONLY: int32, int16, real32
  
       implicit none
 
@@ -226,12 +228,12 @@ c           termination calculations
          Xsitp0(i,1) = -xo(i)/r
       end do
  
-      mm   = Utrec
+      mm   = int(Utrec, int32)
       eist = Utrec - mm
-      Ihr  = mm/3600
+      Ihr  = int(mm/3600, int16)
       mm   = mm - Ihr*3600
-      Imin = mm/60
-      Sec  = mm - Imin*60 + eist
+      Imin = int(mm/60, int16)
+      Sec  = real(mm - Imin*60 + eist, real32)
  
       rr2 = xo(1)**2 + xo(2)**2
       Angdum(10) = SQRT(rr2)
@@ -271,7 +273,7 @@ c get right ascension between 0 and 360 degrees
             if(alphat.lt.0._10) alphat = Twopi + alphat
          else
             alphat = Twopi - (alphat - (Sidtm+Sidvel*Utrec))
-            mm     = alphat/Twopi
+            mm     = int(alphat/Twopi, int32)
             if(alphat.lt.0._10) mm = mm - 1
             alphat = alphat - mm*Twopi
          endif

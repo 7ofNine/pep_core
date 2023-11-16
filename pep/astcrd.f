@@ -1,5 +1,7 @@
       subroutine ASTCRD(jd, fract)
- 
+
+      use iso_fortran_env, only: int32, int16
+
       implicit none
  
  
@@ -56,13 +58,13 @@ c get correct three records of perturbing sat. tape
       if(fk.lt.0) then
 c
 c correct records are behind on the tape
-         nn = fk + 1.E-4_10
+         nn = int(fk + 1.E-4_10, int32)
          nn = 4 - nn/40
          do i = 1, nn
             backspace Jpert
          end do
       else
-         nn = fk/40._10
+         nn = int(fk/40._10, int32)
          if(nn.eq.0) go to 500
          mm = nn - 3
          if(mm.lt.0) then
@@ -191,7 +193,7 @@ c set up indexing for 'equivalence'  of bod48 bod1
             fl = fk/dd(1, ni)
  
 c compute p vector and tabular indices
-            ntab = fl
+            ntab = int(fl, int32)
             P(1) = fl - ntab
             ntab = ntab + 1
             mtab = ntab + 1
@@ -222,7 +224,7 @@ c this would be  limvel if there were room for vel or acc.
                      Ybdast(i, j, k4, n) = Ybdast(i, j, k3, n)
                   end do
                end do
-  510          ntq(n) = ntab
+  510          ntq(n) = int(ntab, int16)
                k1     = k1 + n3
                call YPRTCD(Bod1(1,k1,1), Ybdast(1,1,k3,n), k2)
             endif

@@ -1,4 +1,4 @@
-      subroutine ALBEDO(s,sbcor,rfla,kreflt)
+      subroutine ALBEDO(s,sbcor,rfla)
  
       implicit none
 c
@@ -9,7 +9,7 @@ c
       real*10 s,szero,t,sbcor(6),rfla(3)
       real*10 time(2)
       real*4    press(100,3,2),up(100,2)
-      integer*4 iumax(2),ja,jb,kreflt,m1,m2
+      integer*4 iumax(2),ja,jb,m1,m2
 
 c array dimensions
       include 'globdefs.inc'

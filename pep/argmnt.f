@@ -1,10 +1,12 @@
       real*10 function ARGMNT(angle)
- 
+
+      use iso_fortran_env, only: int32
+
       implicit none
  
  
 c*** start of declarations inserted by spag
-      integer   int
+      integer   nnint
  
 c*** end of declarations inserted by spag
  
@@ -17,8 +19,8 @@ c
       real*10 angle, tint
 c angle =  input angle in revolutions
 c
-      int    = angle
-      tint   = int
+      nnint  = int(angle, int32)
+      tint   = nnint
       ARGMNT = (angle - tint)*Twopi
       return
       end

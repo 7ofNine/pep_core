@@ -162,7 +162,7 @@ c
  
 c effect of visible reflected light
                if(Kreflt.eq.1 .or. Kreflt.eq.3)
-     .             call ALBEDO(s,Sbcor,rfla,Kreflt)
+     .             call ALBEDO(s,Sbcor,rfla)
 c
 c effect of emitted infrared radiation
 c kreflt also signals whether to recalculate orbit elements

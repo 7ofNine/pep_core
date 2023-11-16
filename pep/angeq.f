@@ -1,5 +1,6 @@
       subroutine ANGEQ(kathy)
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: int32
       implicit none
 
 c j.f.chandler - 1979 february - subroutine angeq
@@ -234,7 +235,7 @@ c
 c calculate hour angle instead of right ascension
       if(Jct(39).gt.1) then
          alphat = Twopi - (alphat - (Sidtm+Sidvel*Utrec))
-         mm     = alphat/Twopi
+         mm     = int(alphat/Twopi, int32)
          if(alphat.lt.0._10) mm = mm - 1
          alphat = alphat - mm*Twopi
 c

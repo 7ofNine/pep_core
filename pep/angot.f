@@ -1,5 +1,6 @@
       subroutine ANGOT(marta)
 
+      USE iso_fortran_env, only: int32
       implicit none
       integer*4 marta
 
@@ -114,7 +115,7 @@ c get time zones
             do i=1,2
                slon=Coords(2,i)
                if(slon.lt.0._10) slon=slon+360._10
-               izn(i)=slon/15._10+0.5_10
+               izn(i) = int(slon/15._10+0.5_10, int32)
             end do
             if(izn(1).ge.0 .and. izn(1).le.23) then
                shlab=stz(izn(1))

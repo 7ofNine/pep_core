@@ -1,5 +1,7 @@
       subroutine ANSET
- 
+
+      use iso_fortran_env, only: int16
+
       implicit none
 c
 c m.e.ash  sept 1969   subroutine anset
@@ -47,27 +49,27 @@ c squares adjustment control constants
 c
 c for observing sites with adjustable coordinates
       do j = 1,u_mxsit
-         Lscrd1(j) = Nparam + 1
+         Lscrd1(j) = int(Nparam + 1, int16)
          call BCHECK(Lscrd(1,j),nice,-6)
-         Lscrd2(j) = Nparam
+         Lscrd2(j) = int(Nparam, int16)
       end do
 c
 c for equator-equinox corrections
       do j = 1,u_mxeqx
-         Leqn1(j) = Nparam + 1
+         Leqn1(j) = int(Nparam + 1, int16)
          call BCHECK(Leqn(1,j),nice,-3)
-         Leqn2(j) = Nparam
+         Leqn2(j) = int(Nparam, int16)
       end do
 c
 c for sky corrections (star catalog errors)
       do j = 1,u_mxsky
-         Lsky1(j) = Nparam + 1
+         Lsky1(j) = int(Nparam + 1, int16)
          call BCHECK(Lskycf(1,j),nice,-80)
-         Lsky2(j) = Nparam
+         Lsky2(j) = int(Nparam, int16)
       end do
 c
 c for solar system parameters
-      Lprm0 = Nparam
+      Lprm0 = int(Nparam, int16)
       call ACHECK(Lprm,nice,u_nmprm)
       if(nice.gt.0) then
          nstop = nstop + nice
@@ -103,22 +105,22 @@ c for et-ut2, a1-ut1, or wobble parameters
       endif
 c
 c for earth gravitational potential harmonic coefficients
-      Lehar1 = Nparam + 1
-      Lechr0 = Nparam
-      Leshr0 = Nparam
+      Lehar1 = int(Nparam + 1, int16)
+      Lechr0 = int(Nparam, int16)
+      Leshr0 = int(Nparam, int16)
       if(Nezone.gt.1) then
          n11 = -(Nezone - 1)
          call BCHECK(Lezhar,nice,n11)
       endif
-      Lechr0 = Nparam
-      Leshr0 = Nparam
+      Lechr0 = int(Nparam, int16)
+      Leshr0 = int(Nparam, int16)
       if(Netess.gt.1) then
          n11 = -((Netess*(Netess+1))/2 - 1)
          call BCHECK(Lechar,nice,n11)
-         Leshr0 = Nparam
+         Leshr0 = int(Nparam, int16)
          call BCHECK(Leshar,nice,n11)
       endif
-      Lehar2 = Nparam
+      Lehar2 = int(Nparam, int16)
 c
 c for moon initial conditions and parameters
       call BCHECK(Lmn,nice,u_nmbod)
@@ -137,32 +139,32 @@ c for moon rotation initial conditions and parameters
       endif
 c
 c for moon gravitational potential harmonic coefficients
-      Lmhar1 = Nparam + 1
-      Lmchr0 = Nparam
-      Lmshr0 = Nparam
+      Lmhar1 = int(Nparam + 1, int16)
+      Lmchr0 = int(Nparam, int16)
+      Lmshr0 = int(Nparam, int16)
       if(Nmzone.gt.1) then
          n11 = -(Nmzone - 1)
          call BCHECK(Lmzhar,nice,n11)
       endif
-      Lmchr0 = Nparam
-      Lmshr0 = Nparam
+      Lmchr0 = int(Nparam, int16)
+      Lmshr0 = int(Nparam, int16)
       if(Nmtess.gt.1) then
          n11 = -((Nmtess*(Nmtess+1))/2 - 1)
          call BCHECK(Lmchar,nice,n11)
-         Lmshr0 = Nparam
+         Lmshr0 = int(Nparam, int16)
          call BCHECK(Lmshar,nice,n11)
       endif
-      Lmhar2 = Nparam
+      Lmhar2 = int(Nparam, int16)
 c
 c for moon spot coordinates
       Nsptm1 = 1
       Nsptm2 = 0
       do j = 1,u_mxspt
          if(Nsplnt(j).ne.10) goto 300
-         Nsptm2   = Nsptm2 + 1
-         Lspt1(j) = Nparam + 1
+         Nsptm2   = Nsptm2 + 1_2
+         Lspt1(j) = int(Nparam + 1, int16)
          call BCHECK(Lspcrd(1,j),nice,-6)
-         Lspt2(j) = Nparam
+         Lspt2(j) = int(Nparam, int16)
       end do
 c
 c for moon radar observation biases
@@ -170,10 +172,10 @@ c for moon radar observation biases
       Nrbsm2 = 0
       do j = 1,u_mxrbs
          if(Nplrbs(j).ne.10) goto 400
-         Nrbsm2   = Nrbsm2 + 1
-         Lrbs1(j) = Nparam + 1
+         Nrbsm2   = Nrbsm2 + 1_2
+         Lrbs1(j) = int(Nparam + 1, int16)
          call BCHECK(Lrbs(1,j),nice,-2)
-         Lrbs2(j) = Nparam
+         Lrbs2(j) = int(Nparam, int16)
       end do
 c
 c for moon optical observation phase corrections
@@ -181,60 +183,60 @@ c for moon optical observation phase corrections
       Nphsm2 = 0
       do j = 1,u_mxphs
          if(Nplphs(j).ne.10) goto 500
-         Nphsm2   = Nphsm2 + 1
-         Lphs1(j) = Nparam + 1
+         Nphsm2   = Nphsm2 + 1_2
+         Lphs1(j) = int(Nparam + 1, int16)
          call BCHECK(Lphs(1,j),nice,-9)
-         Lphs2(j) = Nparam
+         Lphs2(j) = int(Nparam, int16)
       end do
 c
 c for sun spot coordinates
-  500 Nspts1 = Nsptm2 + 1
+  500 Nspts1 = Nsptm2 + 1_2
       Nspts2 = Nsptm2
       if(Nspts1.le.u_mxspt) then
          do j = Nspts1,u_mxspt
             if(Nsplnt(j).ne.0) goto 600
             if(Spot(j).eq.blank) goto 600
-            Nspts2   = Nspts2 + 1
-            Lspt1(j) = Nparam + 1
+            Nspts2   = Nspts2 + 1_2
+            Lspt1(j) = int(Nparam + 1, int16)
             call BCHECK(Lspcrd(1,j),nice,-6)
-            Lspt2(j) = Nparam
+            Lspt2(j) = int(Nparam, int16)
          end do
       endif
 c
 c for sun radar observation biases
-  600 Nrbss1 = Nrbsm2 + 1
+  600 Nrbss1 = Nrbsm2 + 1_2
       Nrbss2 = Nrbsm2
       if(Nrbss1.le.u_mxrbs) then
          do j = Nrbss1,u_mxrbs
             if(Nplrbs(j).ne.0) goto 700
             if(Rdbsit(1,j).eq.blank) goto 700
-            Nrbss2   = Nrbss2 + 1
-            Lrbs1(j) = Nparam + 1
+            Nrbss2   = Nrbss2 + 1_2
+            Lrbs1(j) = int(Nparam + 1, int16)
             call BCHECK(Lrbs(1,j),nice,-2)
-            Lrbs2(j) = Nparam
+            Lrbs2(j) = int(Nparam, int16)
          end do
       endif
 c
 c for sun optical observation phase corrections
-  700 Nphss1 = Nphsm2 + 1
+  700 Nphss1 = Nphsm2 + 1_2
       Nphss2 = Nphsm2
       if(Nphss1.le.u_mxphs) then
          do j = Nphss1,u_mxphs
             if(Nplphs(j).ne.0) goto 800
             if(Phsit(j).eq.blank) goto 800
-            Nphss2   = Nphss2 + 1
-            Lphs1(j) = Nparam + 1
+            Nphss2   = Nphss2 + 1_2
+            Lphs1(j) = int(Nparam + 1, int16)
             call BCHECK(Lphs(1,j),nice,-9)
-            Lphs2(j) = Nparam
+            Lphs2(j) = int(Nparam, int16)
          end do
       endif
 c
 c for planet initial conditions and parameters
   800 jm1 = 18
       do j = 1,u_mxpl
-         Lpl1(j) = Nparam + 1
+         Lpl1(j) = int(Nparam + 1, int16)
          call BCHECK(Lpl(1,j),nice,u_nmbod)
-         Lpl2(j) = Nparam
+         Lpl2(j) = int(Nparam, int16)
          if(nice.gt.0) then
             nstop = nstop + nice
             write(Iout,820) nice,words,u_nmbod,j
@@ -243,13 +245,13 @@ c for planet initial conditions and parameters
 c
 c for planet gravitational potential harmonic coefficients
          Klnhrx(j) = 0
-         Lphar1(j) = Nparam + 1
-         Lpchr0(j) = Nparam
-         Lpshr0(j) = Nparam
+         Lphar1(j) = int(Nparam + 1, int16)
+         Lpchr0(j) = int(Nparam, int16)
+         Lpshr0(j) = int(Nparam, int16)
          do i = 1,4
             if(Nplhar(i).ne.0) then
                if(Nplhar(i).eq.Nplnt(j)) then
-                  Klnhrx(j) = i
+                  Klnhrx(j) = int(i, int16)
                   if((Nplnt(j).ge.0) .or. (Nshape(i).le.0)) then
  
 c spherical harmonics - gravitational pot. or shape
@@ -260,15 +262,15 @@ c spherical harmonics - gravitational pot. or shape
      .                         1
                         end do
                      endif
-                     Lpchr0(j) = Nparam
-                     Lpshr0(j) = Nparam
+                     Lpchr0(j) = int(Nparam, int16)
+                     Lpshr0(j) = int(Nparam, int16)
                      if(Nptess(i).gt.1) then
                         n11 = (Nptess(i)*(Nptess(i)+1))/2 - 1
                         do i1 = 1,n11
                            if(Lpchar(i,i1).gt.0) Nparam = Nparam +
      .                         1
                         end do
-                        Lpshr0(j) = Nparam
+                        Lpshr0(j) = int(Nparam, int16)
                         do i1 = 1,n11
                            if(Lpshar(i,i1).gt.0) Nparam = Nparam +
      .                         1
@@ -294,56 +296,56 @@ c
 c
 c
          end do
-         Lphar2(j) = Nparam
-         Lpl2(j)   = Nparam
+         Lphar2(j) = int(Nparam, int16)
+         Lpl2(j)   = int(Nparam, int16)
 c
 c for planet spot coordinates
          Nsptp2(j) = Nsptp2(jm1)
-         Nsptp1(j) = Nsptp2(j) + 1
+         Nsptp1(j) = Nsptp2(j) + 1_2
          if(Nsptp1(j).le.u_mxspt) then
             if(Nplnt(j).gt.0) then
                n1 = Nsptp1(j)
                do i = n1,u_mxspt
                   if(Nsplnt(i).ne.Nplnt(j)) goto 850
-                  Nsptp2(j) = Nsptp2(j) + 1
-                  Lspt1(i)  = Nparam + 1
+                  Nsptp2(j) = Nsptp2(j) + 1_2
+                  Lspt1(i)  = int(Nparam + 1, int16)
                   call BCHECK(Lspcrd(1,i),nice,-6)
-                  Lspt2(i) = Nparam
-                  Lpl2(j)  = Nparam
+                  Lspt2(i) = int(Nparam, int16)
+                  Lpl2(j)  = int(Nparam, int16)
                end do
             endif
          endif
 c
 c for planet radar observation biases
   850    Nrbsp2(j) = Nrbsp2(jm1)
-         Nrbsp1(j) = Nrbsp2(j) + 1
+         Nrbsp1(j) = Nrbsp2(j) + 1_2
          if(Nrbsp1(j).le.u_mxrbs) then
             if(Nplnt(j).gt.0) then
                n1 = Nrbsp1(j)
                do i = n1,u_mxrbs
                   if(Nplrbs(i).ne.Nplnt(j)) goto 900
-                  Nrbsp2(j) = Nrbsp2(j) + 1
-                  Lrbs1(i)  = Nparam + 1
+                  Nrbsp2(j) = Nrbsp2(j) + 1_2
+                  Lrbs1(i)  = int(Nparam + 1, int16)
                   call BCHECK(Lrbs(1,i),nice,-2)
-                  Lrbs2(i) = Nparam
-                  Lpl2(j)  = Nparam
+                  Lrbs2(i) = int(Nparam, int16)
+                  Lpl2(j)  = int(Nparam, int16)
                end do
             endif
          endif
 c
 c for planet optical observation phase corrections
   900    Nphsp2(j) = Nphsp2(jm1)
-         Nphsp1(j) = Nphsp2(j) + 1
+         Nphsp1(j) = Nphsp2(j) + 1_2
          if(Nphsp1(j).le.u_mxphs) then
             if(Nplnt(j).gt.0) then
                n1 = Nphsp1(j)
                do i = n1,u_mxphs
                   if(Nplphs(i).ne.Nplnt(j)) goto 950
-                  Nphsp2(j) = Nphsp2(j) + 1
-                  Lphs1(i)  = Nparam + 1
+                  Nphsp2(j) = Nphsp2(j) + 1_2
+                  Lphs1(i)  = int(Nparam + 1, int16)
                   call BCHECK(Lphs(1,i),nice,-9)
-                  Lphs2(i) = Nparam
-                  Lpl2(j)  = Nparam
+                  Lphs2(i) = int(Nparam, int16)
+                  Lpl2(j)  = int(Nparam, int16)
                end do
             endif
          endif
@@ -352,49 +354,49 @@ c for planet optical observation phase corrections
 c
 c for star coordinates
       Nstar2 = Nsptp2(u_mxpl)
-      Nstar1 = Nsptp2(u_mxpl) + 1
+      Nstar1 = Nsptp2(u_mxpl) + 1_2
       if(Nstar1.le.u_mxspt) then
          do i = Nstar1,u_mxspt
-            Lspt1(i) = Nparam + 1
+            Lspt1(i) = int(Nparam + 1, int16)
             if(Nsplnt(i).lt.0) then
-               Nstar2 = i
+               Nstar2 = int(i, int16)
                call BCHECK(Lspcrd(1,i),nice,-6)
             endif
-            Lspt2(i) = Nparam
+            Lspt2(i) = int(Nparam, int16)
          end do
       endif
 c
 c for star quantities in radar bias common
       Nrbst2 = Nrbsp2(u_mxpl)
-      Nrbst1 = Nrbsp2(u_mxpl) + 1
+      Nrbst1 = Nrbsp2(u_mxpl) + 1_2
       if(Nrbst1.le.u_mxrbs) then
          do i = Nrbst1,u_mxrbs
-            Lrbs1(i) = Nparam + 1
+            Lrbs1(i) = int(Nparam + 1, int16)
             if(Nplrbs(i).lt.0) then
-               Nrbst2 = i
+               Nrbst2 = int(i, int16)
                call BCHECK(Lrbs(1,i),nice,-2)
             endif
-            Lrbs2(i) = Nparam
+            Lrbs2(i) = int(Nparam, int16)
          end do
       endif
 c
 c for star quantities in optical phase corr.common
       Nphst2 = Nphsp2(u_mxpl)
-      Nphst1 = Nphsp2(u_mxpl) + 1
+      Nphst1 = Nphsp2(u_mxpl) + 1_2
       if(Nphst1.le.u_mxphs) then
          do i = Nphst1,u_mxphs
-            Lphs1(i) = Nparam + 1
+            Lphs1(i) = int(Nparam + 1, int16)
             if(Nplphs(i).lt.0) then
-               Nphst2 = i
+               Nphst2 = int(i, int16)
                call BCHECK(Lphs(1,i),nice,-9)
             endif
-            Lphs2(i) = Nparam
+            Lphs2(i) = int(Nparam, int16)
          end do
       endif
 c
 c for pulsar parameters
       do i = 1,u_mxpsr
-         Lpsr0(i) = Nparam
+         Lpsr0(i) = int(Nparam, int16)
          call ACHECK(Lpsrcn(1,i),nice,u_nmpsr)
          if(nice.gt.0) then
             nstop = nstop + nice

@@ -1,5 +1,6 @@
       subroutine ANALIZ
- 
+
+      USE ISO_FORTRAN_ENV, ONLY: INT16
       implicit none
  
 c     r.reasenberg/d.white   jan 1974   subroutine analiz
@@ -35,7 +36,7 @@ c shall analiz link computations be performed
       if(Ict(15).lt.0) then
          write(Iout,100) Ict(15)
   100    format(//' ANALIZ LINK CANCELLED BY ICT(15)=', i3)
-         Ict(1) = Iterat - 1
+         Ict(1) = int(Iterat - 1, int16)
          return
       endif
 c
