@@ -1,5 +1,6 @@
       subroutine BODRED(in0,nstop,jdpad)
 
+      use iso_fortran_env, only: int32, int16
 
       implicit none
 

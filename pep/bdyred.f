@@ -224,7 +224,7 @@ c segregate pulsars
                Lpsrcn(i, Numpsr) = Limb(i)
             end do
             Plspr(Numpsr)  = Bcon1(2)
-            Ntypsr(Numpsr) = Nshp
+            Ntypsr(Numpsr) = int(Nshp, int16)
          else
             nstop = nstop + 1
             write(Iout, 110) u_mxpsr
@@ -350,7 +350,7 @@ c planet constants
       Jdpl0(kkln)  = Jdb0
       Jd2(jplnt)   = Jdb2
       Inttyp(kkln) = Kimb(88)
-      Int(jplnt)   = Imb
+      njpint(jplnt)   = Imb
       Intp1(jplnt) = Intb1
       Intp2(jplnt) = Intb2
       Ihrp(jplnt)  = Ihrb
@@ -452,7 +452,7 @@ c segregate asteroids
          do i = 1,7
             Scond(i,Numsml) = Bconst(i)
          end do
-         Jdsml0(Numsml) = Bcon1(1) + 0.50001_10
+         Jdsml0(Numsml) = int(Bcon1(1) + 0.50001_10, int32)
       else
          nstop = nstop + 1
          write(Iout,300) u_mxsml

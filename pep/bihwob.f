@@ -317,7 +317,7 @@ c second difference interpolation
       s2 = s*s
       do j = 1, 2
          do i = 1, 2
-            nr    = int + i
+            nr    = nnint + i
             f1    = cc(nr, j)
             f2    = 0.1666667E0*(cc(nr+1,j) + cc(nr-1,j))
             y1(i) = 1.3333333E0*f1 - f2

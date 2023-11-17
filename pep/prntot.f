@@ -363,7 +363,7 @@ c ordinary planet
          call PAGCHK(60,29,0)
          write(Iout,1460) pname,j,npln,Iplnt(j),symsp(k5),
      .                     Jd1(k),symsp(k5),Jdpl0(j),symsp(k5),
-     .                     Jd2(k),Int(k),ncentr,
+     .                     Jd2(k),njpint(k),ncentr,
      .                     (symsp(k5),i,Lpl(i,j),i = 1,u_nmbod)
  1460    format('0', a8, 4x, 'NPLNT(', i2, ')=', i3, 4x, 'IPLNT=',
      .          i3, 9x, 'JD', a2, '1=', i8, 7x, 'JD', a2, '0=', i8,

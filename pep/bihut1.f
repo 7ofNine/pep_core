@@ -216,7 +216,7 @@ c calculate interpolation times and value of tab. points
       t   = t - nnint
       s   = 1._10 - t
       nnint = nnint - 1
-      if(int.ne.intsav) then
+      if(nnint.ne.intsav) then
          do i = 1, 4
             j = nnint + i
             xint(i) = iau(j) + 60000._10
@@ -235,7 +235,7 @@ c calculate interpolation y-vector
             y1(i) = 1.33333333333333333333_10*xint(nr) - f2
             y2(i) = -0.33333333333333333333_10*xint(nr) + f2
          end do
-         intsav = int
+         intsav = nnint
       endif
 c
 c second difference interpolation

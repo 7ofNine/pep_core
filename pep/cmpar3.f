@@ -1,4 +1,6 @@
-      subroutine CMPAR3(mocpar, jtape)
+      subroutine CMPAR3(jtape)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -6,7 +8,8 @@
 c amuchastegui/ash -  june 1970 - subroutine cmpar3
 
 c arguments
-      integer*4 mocpar,jtape
+c     integer*4 mocpar,jtape
+      integer*4 jtape
 c
 c array dimensions
       include 'globdefs.inc'
@@ -195,7 +198,7 @@ c     (2) this is a giant planet, and any solar-system parameter or
 c     planet orbital element is to be estimated
 c case (1) is a traditional target body. case (2) must now also be one
                npl=Nplnt(i)
-               Ssbkl(npl)=i
+               Ssbkl(npl) = int(i, int16)
                do j=1,6
                   if(Lpl(j,i).gt.0) goto 340
                end do
@@ -367,7 +370,7 @@ c observation series
          if(ctime.lt.0) then
             itimo=ctime
          else
-            itimo=ctime*10+itime
+            itimo = int(ctime*10+itime, int16)
          endif
          n16=u_nmpsr
          if(Idumob.ne.1 .or. Ict(3).gt.0) write(Iabs2)
@@ -458,8 +461,8 @@ c default value for optical types
       jtypob = ITYPOB(Ncodf)
       if(jtypob.eq.5) jtypob = 1
       if(jtypob.eq.1) nddiff = 0
-      Ncod(1) = 2*jtypob - 1
-      Ncod(2) = Ncod(1) + 1
+      Ncod(1) = int(2*jtypob - 1, int16)
+      Ncod(2) = Ncod(1) + 1_2
       fdev    = Fdeva(Ntape)*1E-10_10
       ntime   = 0
       if(fdev.ne.0._10) ntime = 1

@@ -1,5 +1,5 @@
       subroutine BODHED
- 
+
       implicit none
  
  
@@ -51,17 +51,17 @@ c write first two records of n-body output tape
 
 c 2nd record describes moon, regardless of whether it's integrated,
 c and doesn't describe lunar libration, regardless
-         nbdyh = Nbodyp+1
+         nbdyh = Nbodyp+1_2
 c set tabular intervals for all bodies
          intbh(1) = Intbdy
          if(Intbdy.lt.0) then
             do i = 2, Nbodyp
-               intbh(i) = intbh(1) + 1
+               intbh(i) = intbh(1) + 1_2
             end do
          else
-            if(Intbdy.eq.0) intbh(1) = 1
+            if(Intbdy.eq.0) intbh(1) = 1_2
             do i = 2, Nbodyp
-               intbh(i) = intbh(1)*2
+               intbh(i) = intbh(1)*2_2
             end do
          endif
          intbh(nbdyh)  = -1

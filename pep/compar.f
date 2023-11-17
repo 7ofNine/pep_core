@@ -1,4 +1,6 @@
       subroutine COMPAR(mocpar)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 c
@@ -298,8 +300,7 @@ c
 c local
       integer   i,ict31,ictsav,j,jtape,
      .          jtape1,jtypob,jut1,jwob
-      integer*2 ione/1/
-c
+
 c setup computations
       if(Iterat.gt.1 .or. mocpar.eq.1) Ict(41) = 0
       ictsav = Ict(1)
@@ -437,8 +438,8 @@ c
             else
                if(Ncodf.le.0) go to 200
  
-               call CMPAR2(mocpar)
-               call CMPAR3(mocpar, jtape)
+               call CMPAR2()
+               call CMPAR3(jtape)
 c
 c dispatch to observation routines
                jtypob = ITYPOB(Ncodf)
@@ -567,7 +568,7 @@ c restore tapes
  
 c*  start=3000
       call ERRTOT(izr2)
-      Ict(1) = ictsav
+      Ict(1) = int(ictsav, int16)
  
 c test for unused iobs input
       if(Iobs.gt.0 .and. Niobs.ge.0) write(Iout, 300) Iobs

@@ -16,13 +16,13 @@ c
      . Nshp,Scntrl(9),Zhar(u_mxzon-1),Char((u_mxtes*(u_mxtes+1))/2-1),
      . Shar((u_mxtes*(u_mxtes+1))/2-1),Lzh(u_mxzon-1),
      . Lch((u_mxtes*(u_mxtes+1))/2-1),Lsh((u_mxtes*(u_mxtes+1))/2-1),
-     . Denptr,K(u_nmprm),Int,Nplnt,Ncentr,Nzone,Ntess,Ihr,Imin,
+     . Denptr,K(u_nmprm),nnint,Nplnt,Ncentr,Nzone,Ntess,Ihr,Imin,
      . Kk(100),Icnd
       real*10 Cond,Con,Con1,Tcon,Sec,Zhar,Char,Shar
       real*4    Eps,Scntrl
       integer   Int1,Int2,Jd1,Jd0,Jd2,Itape,I4fill,Nshp
       character*8 Name
-      integer*2 L,Lzh,Lch,Lsh,I2fill,Denptr,K,Int,Nplnt,Ncentr,
+      integer*2 L,Lzh,Lch,Lsh,Denptr,K,nnint,Nplnt,Ncentr,
      .          Nzone,Ntess,Ihr,Imin,Kk,Icnd
       real*4    shape(1000),tlat(2),tlon(2),tlatin,tlonin
       integer*2 lshape(1000)
@@ -62,7 +62,7 @@ c standard setup for every body
          Itape = Nplnt + 10
          if(Nplnt.gt.10) goto 100
          Name     = pname(Nplnt)
-         Int      = intpl(Nplnt)
+         nnint      = intpl(Nplnt)
          K(87)    = k87(Nplnt)
          Con(1)   = prad(Nplnt)
          Con1(10) = ratpoe(Nplnt)

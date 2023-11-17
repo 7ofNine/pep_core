@@ -1,5 +1,5 @@
       subroutine BODOUT
- 
+      use iso_fortran_env, only: int32, real32
       implicit none
 c
 c ash/smith/connolly    may 1968    subroutine bodout
@@ -77,9 +77,9 @@ c insert libration initial conditions as well
          call ECLPRC(Jdbdy0,0._10,1)
          call MONROT(2,X0m(1,2),X0m(2,2),X0m(3,2),
      .    X0m(4,2),X0m(5,2),X0m(6,2))
-         Librt1(1,1)=Tauc
-         Librt1(2,1)=Rhoc
-         Librt1(3,1)=Meqinc*Tauc-Isig
+         Librt1(1,1)=real(Tauc, real32)
+         Librt1(2,1)=real(Rhoc, real32)
+         Librt1(3,1)=real(Meqinc*Tauc-Isig, real32)
          if(Jct(21).le.0) then
             call PEPNUT((Jdbdy0-2451545.5_10)/36525._10,Nutat1(1,1),
      .       Nutat1(2,1))
@@ -156,9 +156,9 @@ c insert integration results into tabular point
          call ECLPRC(Jd,Fract,1)
          call MONROT(2,Y(l+1,3),Y(l+2,3),Y(l+3,3),
      .       Y(l+4,3),Y(l+5,3),Y(l+6,3))
-         Librt1(1,Ntabr)=Tauc
-         Librt1(2,Ntabr)=Rhoc
-         Librt1(3,Ntabr)=Meqinc*Tauc-Isig
+         Librt1(1,Ntabr)=real(Tauc, real32)
+         Librt1(2,Ntabr)=real(Rhoc, real32)
+         Librt1(3,Ntabr)=real(Meqinc*Tauc-Isig, real32)
          if(Jct(21).le.0) then
             call PEPNUT((T-2451545.5_10)/36525._10,Nutat1(1,Ntabr),
      .       Nutat1(2,Ntabr))
@@ -189,8 +189,8 @@ c octet of moon, nutation, library from /bdydta/ to complete the set
 c if we are writing an output tape
       if(Kbdy(39).ge.0 .and. Jmoon.le.0) then
          mntb = (Mtab-2)*4
-         jf   = T
-         je   = T-Hmx
+         jf   = int(T, int32)
+         je   = int(T-Hmx, int32)
          jdir = 1
          np   = IABS(je - Jdbd(1))*2
          if((jf-je)*Ibdsgn.le.0) then
@@ -264,7 +264,7 @@ c backspace buffer, write n-body data set
          if(Kbdy(39).lt.0) goto 400
  
 c move integration result tabular point
-         jf  = T
+         jf  = int(T, int32)
          fsb = T - jf
          do i = 1, 6
             Merc2(i,1) = Merc1(i,1)
@@ -377,13 +377,13 @@ c test for end
          Ntab = 0
          Mtab = 0
          if(Jmoon.gt.0) Ntabr=0
-         jf   = T
+         jf   = int(T, int32)
          if(Iboth.ge.0) then
             if(Nsign*(Jdbdy1-jf).le.0) Iboth = 1
          endif
          if(Kbdy(39).lt.0) return
          juldat = T - Bint
-         je     = juldat
+         je     = int(juldat, int32)
          fsb    = juldat - je
 c
 c write n-body data set

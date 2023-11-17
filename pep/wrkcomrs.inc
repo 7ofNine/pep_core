@@ -10,7 +10,7 @@ C           PARAMETER VALUES FROM SNE TAPE
      8 SKYCF1(80,u_mxsky),SPCRD1(6,u_mxspt),SCORD1(6,u_mxsit),
      9 PSRCN1(u_nmpsr,u_mxpsr),T0ST1(u_mxsit),T0SP1(u_mxspt),JDDT9(200),
      A AST(200),KSCRD1(u_mxsit),MCPHS(u_mxphs),MCT(80),TITLE,
-     B JDEM9,JDMN9,JDER9,JDMR9,JDPL9(u_mxpl),ASP9(4),APLN1(u_mxpl),
+     B JDEM9,JDMN9,JDER9,JDMR9,JDPL9(-3:u_mxpl),ASP9(4),APLN1(u_mxpl),
      C SCONTM(4,9),DEQNX1(3,u_mxeqx),RBIAS1(2,u_mxrbs)
       CHARACTER*8 ASP9,APLN1
       REAL*10 PRMTR1,ECOND1,MCOND1,ERCND1,MRCND1,PCOND1,

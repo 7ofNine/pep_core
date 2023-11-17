@@ -27,7 +27,7 @@ c write body quantities onto disk
          ntki = Ndumki(j)
          write(Iplcon) (Dumcon(i,j),i = 1,12),
      .                 (Dumeps(i,j),i = 1,6),(Kkk(i,j),i = 1,100),
-     .                 Jd1(j),Jd2(j),Int(j),Intp1(j),Intp2(j),
+     .                 Jd1(j),Jd2(j),njpint(j),Intp1(j),Intp2(j),
      .                 Ihrp(j),Iminp(j),Secp(j),
      .                 (Kkp(i,j),i = 1,100),Nplnt(j-4),
      .                 (Dtcon(i,j),i = 1,30),Ndumki(j),

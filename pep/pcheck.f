@@ -100,7 +100,7 @@ c check integration epoch not midnight
          t2 = t2 + Dumeps(2,i)
          if(jd0(i).eq.-1) t0 = t1
          if(jd0(i).lt.-1) t1 = t0
-         call TCHECK(name,t1,t0,t2,Int(i),nstop)
+         call TCHECK(name,t1,t0,t2,njpint(i),nstop)
          goto 300
  
 c error message for jd1,jd2 inconsistency

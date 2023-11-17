@@ -1,4 +1,6 @@
       subroutine COMRIT(marta)
+
+      use iso_fortran_env, only: int16, real32
  
       implicit none
 
@@ -89,7 +91,7 @@ c note: nutprc not restored in obsred
                Save(i+8) = nutprc(i)
             end do
             if(nnutsav.ge.19) Save(27) = Pc(1)
-            if(Numsav.lt.nnutsav+8) Numsav = nnutsav+8
+            if(Numsav.lt.nnutsav+8) Numsav = int(nnutsav+8, int16)
             if((Ncodf.ge.4 .and. Ncodf.le.6) .or. Ncodf.gt.9) then
                Save(18) = Salph
                Save(19) = Calph
@@ -128,9 +130,9 @@ c write extra listing on nout
             if((jdu-jdu1) .gt. 1) jdu1 = jdu
             hr = (Ihr*3600 + Imin*60 + Sec)/3600. + (jdu - jdu1)*24
             do j = Num1, Num2
-               xnout(1, j) = Result(j)
-               xnout(2, j) = Deriv(1, j)
-               xnout(3, j) = Deriv(2, j)
+               xnout(1, j) = real(Result(j), real32)
+               xnout(2, j) = real(Deriv(1, j), real32)
+               xnout(3, j) = real(Deriv(2, j), real32)
             end do
             write(Nout, 20) jdu, Ihr, Imin, Sec, hr,
      .                      ((xnout(i,j),i=1,3), j = Num1, Num2)

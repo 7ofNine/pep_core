@@ -1,4 +1,6 @@
       subroutine CMPAR1(jtape,mocpar)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -80,7 +82,7 @@ c test for end of file in obsred
  
 c clear all undefined m-vectors (Mprmx, Memx, Mmnx, Merx, Mmrx, Mplx,
 c Mdtx, Mumdtx, Msitcr, and Msptcr already set)
-      call ZFILL(Mplx,2*2558)
+      call ZFILL(transfer(Mplx, (/ "x" /)),2*2558)
  
       read(Iabs1s,end=300) Nseqa(3),Ncoda(3),Nplnta(3),Sita1(3),
      . Sita1(4),Sera(3),Sita2(3),Sita2(4),Spota(3),(Erwgta(i,3),i=1,2),
@@ -385,7 +387,7 @@ c           determine tape numbers:
 c           iiobcn,iiobs,iiabs1 are iobcon,iobs,iabs1 or 0
 c           according to whether they are read or not
 c           set ntape,mtape from jobf
-         Mtape = mod(jobf/2,3)
+         Mtape = int(mod(jobf/2,3), int16)
          if(jobf.ge.4) then
  
 c iabs1 included
@@ -443,15 +445,15 @@ c
 c*  start=5000
 c initialize quantities for this series
  1600 npshpt = Npshp1
-      call ZFILL(Nsite1,2*50)
-      Npshp1 = npshpt
+      call ZFILL(transfer(Nsite1,(/ "x" /)),2*50)
+      Npshp1 = int(npshpt, int16)
  
 c clear all undefined l-vectors (Lprmx, Lemx, Lmnx, Lerx, Lmrx, Ldtx,
 c and Numdtx already set)
-      call ZFILL(Lplx,2*2558)
+      call ZFILL(transfer(Lplx,(/ "x" /)), 2*2558)
  
 c clear freq and site quantities
-      call ZFILL(Xsite,zsitcr)
+      call ZFILL(transfer(Xsite, (/"x" /)), zsitcr)
  
       Nplnt0 = Nplnta(Ntape)
       Freq   = Freqa(Ntape)
@@ -479,8 +481,8 @@ c logical spot. (see also coding in cmpar2, cmpar3, nrmict, prdict.)
       ctime=Itima(Ntape)
       itime=Itima(Ntape)
       if(ctime.ge.0) then
-         ctime=ctime/10
-         itime=itime-ctime*10
+         ctime=ctime/10_2
+         itime=int(itime-ctime*10, int16)
       else
          jtypob=ITYPOB(Ncodf)
          if(jtypob.ne.2 .and. jtypob.ne.3) then
@@ -535,7 +537,7 @@ c         1 - header written
             call LVTBDY(Lmrx,Lmr,Mmrx,u_nmbod)
             Numdtx = Numdt
             if(Numdtx.gt.0) then
-               if(Jddt0.le.0) Numdtx = Numdt + 400
+               if(Jddt0.le.0) Numdtx = Numdt + 400_2
                ndt9 = -Numdtx
                call LVTBDY(Ldtx,Ldt,Mdtx,ndt9)
             endif
@@ -551,7 +553,7 @@ c write first two records of output observation library tape
             if(Mtape.ge.0 .or. Ict(3).gt.0) then
                Life   = 1
                numdt1 = Numdt
-               if(numdt1.gt.0 .and. Jddt0.le.0) numdt1 = Numdt + 400
+               if(numdt1.gt.0 .and. Jddt0.le.0) numdt1 = Numdt + 400_2
                if(numdt1.le.0) numdt1 = 1
                write(Iabs2) namobs,Heding,Date,Lnklvl
                write(Iabs2) Ntapa(Ntape),Npage,Iterat,u_nmprm,u_nmbod,
@@ -587,7 +589,8 @@ c determine if observation series is to be skipped
  1900 if(niobs9.le.0) then
          read(Iobs,1950) ntest,ntest2
  1950    format(2I1)
-         if(Ncoda(2).ge.7 .and. Ncoda(2).le.9) ntest = ntest + ntest2
+         if(Ncoda(2).ge.7 .and. Ncoda(2).le.9) ntest =
+     .        int(ntest + ntest2, int16)
          if(ntest.le.0) niobs9 = 1
       endif
  2000 if(niabs9.le.0) then

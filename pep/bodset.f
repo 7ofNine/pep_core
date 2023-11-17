@@ -1,5 +1,7 @@
       subroutine BODSET(lice)
 
+      use iso_fortran_env, only: int32, int16
+
       implicit none
 
 c
@@ -70,7 +72,7 @@ c determine initial conditions and body quantities
 c     Mrm   = Mass(10)
       Merth = Mass(3) - Mmoon
       Masse = 1._10 - Mass(10)
-      i     = prmter(97) + 0.5001_10
+      i     = int(prmter(97) + 0.5001_10, int32)
       Tvary0= i
       N     = 0
       Gamat = Gama
@@ -209,15 +211,15 @@ c moon not used and not included in newtonian or relativistic forces
          Jmoonx=Jmoon
          if(Jmoonx.le.0) then
             Nbodyp=Nbody
-            Nbodyx=Nbody+1
+            Nbodyx=Nbody+1_2
             Jmoonx=Nbodyx
             Nplbdy(Jmoonx)=10
             Ncbdy(Jmoonx)=3
             Mass1(Jmoonx)=Mmoon
             klref(Jmoonx)=-2
          else
-            Nbodyp=Jmoon-1
-            Nbodyx=Jmoon
+            Nbodyp=int(Jmoon-1, int16)
+            Nbodyx=int(Jmoon, int16)
          endif
       endif
 

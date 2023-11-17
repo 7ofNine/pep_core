@@ -1,5 +1,5 @@
 FORT = gfortran
-FFLAGS = -fno-automatic -frecord-marker=8 -Wall -ffpe-trap=invalid -g -fbacktrace
+FFLAGS = -fno-automatic -frecord-marker=8 -Wall -ffpe-trap=invalid -g -fbacktrace -fallow-argument-mismatch
 # -fcheck=all -ffpe-trap=invalid -fbacktrace -g -w
 
 pep: blkdata1.o blkdata2.o blkdata3.o blkdata4.o blkdata7.o blkdata8.o blkdata9.o *.o

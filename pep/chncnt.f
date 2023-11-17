@@ -1,5 +1,7 @@
       subroutine CHNCNT(jd0, fract, nplnt, ncentr, mcentr, cond, icnd,
      .                  mcnd)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -47,7 +49,7 @@ c determine central body coordinates
       if(kp(10).lt.1) then
          if(kp(3).eq.1) kp(10) = 1
          lcentr = ncentr
-         if(mcentr.gt.0) lcentr = mcentr
+         if(mcentr.gt.0) lcentr = int(mcentr, int16)
       else
          lcentr = 10
       endif
@@ -97,10 +99,10 @@ c printout comments in midst of input stream
       end do
 c
 c change initial conditions from cartesian coordinates
-  500 ncentr = mcentr
+  500 ncentr = int(mcentr, int16)
       mcentr = -2
       incnd  = icnd
-      icnd   = mcnd
+      icnd   = int(mcnd, int16)
       iepoch = Jct(13)+1
       if(iepoch.eq.2) then
          jd0x = 2451545

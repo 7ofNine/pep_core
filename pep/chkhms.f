@@ -18,14 +18,14 @@ c respectively
       integer*2 ihr, imin
       if( sec .ge. 60.0 ) then
          sec  = sec - 60.0
-         imin = imin + 1
+         imin = imin + 1_2
       endif
       if( imin .ge. 60 ) then
-         imin = imin - 60
-         ihr  = ihr + 1
+         imin = imin - 60_2
+         ihr  = ihr + 1_2
       endif
       if( ihr .ge. 24 ) then
-         ihr = ihr - 24
+         ihr = ihr - 24_2
          jds = jds + 1
       endif
       return

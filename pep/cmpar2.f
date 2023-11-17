@@ -1,11 +1,13 @@
-      subroutine CMPAR2(mocpar)
+      subroutine CMPAR2()
+
+      use iso_fortran_env, only: int16
  
       implicit none
 
 c amuchastegui/ash - april 1970 - subroutine cmpar2
 
 c arguments
-      integer*4 mocpar
+c      integer*4 mocpar
 
 c array dimensions
       include 'globdefs.inc'
@@ -84,7 +86,7 @@ c initialize bias quantities
       call ZFILL(Xpp, zeqnph)
 c
 c determine klan and klanb for observed body
-      Mnplnt = Nplnt0 - 10
+      Mnplnt = Nplnt0 - 10_2
  
 c npshp1=0  (done after planet tape is rewound)
       if(Nplnt0.ge.0) then
@@ -97,14 +99,14 @@ c npshp1=0  (done after planet tape is rewound)
          else if(Nplnt0.gt.0) then
             do i = 1, Numpln
                if(Nplnt(i).eq.Nplnt0) then
-                  Klap = i
+                  Klap = int(i, int16)
                   Ncp0 = Npcent(i)
                   if(Nplnt0.le.30 .and. Ncp0.le.0 .and. 
      .             Inttyp(i).ne.0) then
-                     Klan = i
+                     Klan = int(i, int16)
                      goto 100
                   endif
-                  Klanb = i
+                  Klanb = int(i, int16)
                   Klan  = 0
                   if(Ncp0.gt.0) then
                      if(Ncp0.eq.10) then
@@ -114,7 +116,7 @@ c npshp1=0  (done after planet tape is rewound)
                      else
                         do j = 1, Numpln
                            if(Ncp0.eq.Nplnt(j)) then
-                              Klan = j
+                              Klan = int(j, int16)
                               goto 100
                            endif
                         end do
@@ -150,7 +152,7 @@ c                          see below at label=1400
   100 if(Ncodf.gt.20 .and. Nplnt2.ne.0 .and. Nplnt2.ne.3) then
          do i = 1, Numpln
             if(Nplnt(i).eq.Nplnt2) then
-               Klans1 = i
+               Klans1 = int(i, int16)
                Nps1   = Nplnt2
                Ncs1   = Npcent(i)
                goto 200
@@ -166,7 +168,7 @@ c determine klanr for planet rotation
   200 if(Klan.gt.0 .and. Klan.le.u_mxpl) then
          do i = 1, Numpln
             if(Nplnt(Klan).eq.-Nplnt(i)) then
-               Klanr = i
+               Klanr = int(i, int16)
                goto 300
             endif
          end do
@@ -193,7 +195,7 @@ c transfer 'sending site' (indicates type of occultation)
             endif
             do k = 1, Numsit
                if(Sita1(ntapf).eq.Site(1,k)) then
-                  nsite(i) = k
+                  nsite(i) = int(k, int16)
                   Ksite(i) = Kscrd(k)
                   Sitf(i)  = sitd(k)
                   T0sit(i) = T0site(k)
@@ -240,7 +242,7 @@ c determine if observing site is not on earth
          else
             do i = 1, Numpln
                if(Nplnt(i).eq.Nps1) then
-                  Klans1 = i
+                  Klans1 = int(i, int16)
                   Ncs1   = Npcent(i)
                   goto 500
                endif
@@ -259,7 +261,7 @@ c determine spot number, partial derivative controls
      .    goto 1000
       do k = 1, Numpsr
          if(Spotf.eq.Sptpsr(k)) then
-            Nplsr = k
+            Nplsr = int(k, int16)
             do j=1,u_nmpsr
                Psrprm(j) = Psrcn(j, k)
             end do
@@ -292,7 +294,7 @@ c compare from 1st non-blank character in each
             if(j2.ge.0) then
                n = min0(n1, 8-j2)
                if(LEG(n,j1+1,Spotf,j2+1,Aplnt(i)).eq.0) then
-                  Klans1 = i
+                  Klans1 = int(i, int16)
                   Nps1   = Nplnt(i)
                   Ncs1   = Npcent(i)
                   goto 1200
@@ -304,7 +306,7 @@ c compare from 1st non-blank character in each
   700 do k = 1, Numspt
          if(tspot.ne.Spot(k)) goto 800
          if(l.eq.2) then
-            Nspot2 = k
+            Nspot2 = int(k, int16)
          else
             if(Nsplnt(k).ne.Nplnt0) then
                write(Iout,710) tspot,Nsplnt(k),Nplnt0
@@ -312,7 +314,7 @@ c compare from 1st non-blank character in each
                call SUICID(
      .'OBSERVED SPOT IS NOT ON CORRECT PLANET, STOP IN CMPAR2  ',14)
             endif
-            Nspot = k
+            Nspot = int(k, int16)
          endif
          call LVTBDY(Lspcdx(1,l), Lspcrd(1,k), Mspcdx(1,l), -6)
          do j = 1,6
@@ -388,7 +390,7 @@ c determine radar bias number, partial derivative controls
       do i = 1, Numrbs
         if(Nplrbs(i).eq.Nplnt0 .and. Rdbsit(1,i).eq.sitf4(1,1) .and.
      .        Rdbsit(2,i).eq.sitf4(1,2) .and. Rdbser(i).eq.Series) then
-           Nrbias = i
+           Nrbias = int(i, int16)
            do j = 1, 2
               Rbsx(j) = Rbias(j, i)
            end do
@@ -403,7 +405,7 @@ c determine optical equinox-equator number, partial
 c derivative controls
  1300 do i = 1, Numeqn
          if(Eqnsit(i).eq.sitf4(1,1) .and. Eqnser(i).eq.Series) then
-            Neqnox = i
+            Neqnox = int(i, int16)
             do j = 1, 3
                eqnx(j) = deqnx(i, j)
             end do
@@ -419,7 +421,7 @@ c controls
       do i = 1, Numphs
          if(Nplphs(i).eq.Nplnt0 .and. Phsit(i).eq.sitf4(1,1) .and.
      .            Phser(i).eq.Series) then
-            Nphase = i
+            Nphase = int(i, int16)
             if(Iabs1.le.0 .or. Ncphu.le.Ncphs(i)) Ncph = Ncphs(i)
             do j = 1, 9
                Aphs(j) = Aphase(j, i)
@@ -436,7 +438,7 @@ c determine sky error map for optical observations
       call ZFILL(Sky, 16*maxnsk)
       do i = 1, Numstr
          if(Ctlg.eq.Ctlgnm(i)) then
-            Nstar = i
+            Nstar = int(i, int16)
             if(Nskycf(i).gt.Nskyc) Nskyc = Nskycf(i)
             do j = 1, maxnsk
                Sky(j) = Skycf(j, Nstar)

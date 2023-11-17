@@ -193,7 +193,7 @@ c write out error analysis
       call PAGSET('        L VECTOR       PARAMETER   BODY  NPLNT'//
      .            '  JD0          OLD VALUE        ADJUSTMENT    '//
      .            '     NEW VALUE           SIGMA    FRACT ',-33)
-      call PAGSET(transfer(-1,"xxxx",1), Jout)
+      call PAGSET(transfer(-1,(/ "x" /), 1), Jout)
       call NEWPG
       ams = Measmt
       if(Measmt.le.0) ams = 1._10
