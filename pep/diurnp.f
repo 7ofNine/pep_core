@@ -1,4 +1,6 @@
       subroutine DIURNP(jd, fract, thetg, dtheta)
+
+      use iso_fortran_env, only: int32, real32
  
       implicit none
  
@@ -59,7 +61,7 @@ c
       do j = 1, 5
          farg(j) = (a(1,j) + a(2,j)*d1 + a(3,j)*dsq + a(4,j)*d3)*Convd
          end do
-      m = farg(5)/Twopi
+      m = int(farg(5)/Twopi, int32)
       farg(5) = farg(5) + (1 - m)*Twopi
       farg(5) = MOD(farg(5), Twopi)
       farg(6) = thetg - Pc(1)
@@ -68,8 +70,8 @@ c
       term2 = ((c-aa)/c)*(1._10 - k/ks)
 c x,y are coordinates of angular momentum pole in bih lefthand syste
 c
-      Ywob   = Ywob - Ywob*term2 - ym2
-      Xwob   = Xwob - Xwob*term2 + xm2
+      Ywob   = real(Ywob - Ywob*term2 - ym2, real32)
+      Xwob   = real(Xwob - Xwob*term2 + xm2, real32)
       dtheta = term2*Convds*(Xwob*COS(thetg) + Ywob*SIN(thetg))
       bothcs = .false.
       call DNPOLE(7, 5, t3, 1, nf, bothcs, farg, sum2)

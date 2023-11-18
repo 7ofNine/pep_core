@@ -156,7 +156,7 @@ c           other numbers as above
 c
 c
 c           initialize earth,moon,planet init.cond.and parameters
-         call ZFILL(Econd, zempcn)
+         call ZFILL(transfer(Econd, (/ "x" /)), zempcn)
          erad  = 6378.166_10
          eflat = 1._10/298.3_10
          mrad  = 1738._10
@@ -175,30 +175,30 @@ c           analysis) are stored in peripheral data set iplcon
 c
 c
 c           initialize earth gravitational potential harmonic coeff.
-         call ZFILL(Ezhar, zemhar)
+         call ZFILL(transfer(Ezhar, (/ "x" /)), zemhar)
          call HARNTL(npln3, Ezhar, Echar, Eshar, Nezone, Netess)
 c
 c initialize moon gravitational potential harmonic coeff.
-         call ZFILL(Mzhar, zemhar)
+         call ZFILL(transfer(Mzhar, (/ "x" /)), zemhar)
          call HARNTL(npln10, Mzhar, Mchar, Mshar, Nmzone, Nmtess)
 c
 c initialize coefs,l-vectors, and controls for planet grav.pot.
 c or shape
-         call ZFILL(Nshape, zplnhr)
-         call ZFILL(Pzhar, zscof4)
+         call ZFILL(transfer(Nshape, (/ "x" /)), zplnhr)
+         call ZFILL(transfer(Pzhar, (/ "x" /)), zscof4)
          do j = 1, 4
             Szero(j) = .true.
          end do
 c
 c initialize quantities to go into iplcon peripheral data set
-         call ZFILL(Dumcon, zfranc)
+         call ZFILL(transfer(Dumcon, (/ "x" /)), zfranc)
          do j = 1,20
             if(j.le.4) Kkk(88,j) = 3
          end do
 c
 c clear limited asteroid and pulsar quantities
-         call ZFILL(Scond, zsmlbd)
-         call ZFILL(Psrcn, zpsrst)
+         call ZFILL(transfer(Scond, (/ "x" /)), zsmlbd)
+         call ZFILL(transfer(Psrcn, (/ "x" /)), zpsrst)
 c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 c
 c read earth,moon,planet control and data constants (&nmlst2)

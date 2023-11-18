@@ -143,7 +143,7 @@ c   scdta, con1 for a second probe, is read in scrd1.
       rewind Iplcon
 c
 c zero all precession, nutation quantities
-      call ZFILL(Dhprec,zleon)
+      call ZFILL(transfer(Dhprec, (/ "x" /)), zleon)
 c constants for precession matrix
 c exact quantities for new iau precession constant at epoch 1950.0
 c are coded in preces (r.w.king 10 jun 80)
@@ -225,8 +225,8 @@ c           plrd1,sbrd1,bdrd1)
       Jdbdy9 = Jdbdy0
       Jdbdy0 = 0
  
-      call ZFILL(Nsite1,2*50)
-      call ZFILL(Stat,zstats)
+      call ZFILL(transfer(Nsite1, (/ "x" /)), 2*50)
+      call ZFILL(transfer(Stat, (/ "x" /)), zstats)
       do i = 1, 4
          Ntaps(i) = -999999
       end do
@@ -236,7 +236,7 @@ c           plrd1,sbrd1,bdrd1)
 c
 c
 c zero all "merged" l-vectors to start
-      call ZFILL(Deriv,zltrap)
+      call ZFILL(transfer(Deriv, (/ "x" /)), zltrap)
 c
 c write title page for comparison of theory and observation
       call OPRMSG('COMPARISON OF THEORY AND OBSERVATION', 9)

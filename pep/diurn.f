@@ -1,4 +1,6 @@
       subroutine DIURN(imonth,fract,em,emdot)
+
+      use iso_fortran_env, only: real32
  
       implicit none
  
@@ -31,8 +33,8 @@ c electron density in  elec/cm**3  are put in at monthly values
       data emnite/12*1.E5/
       diff = emday(imonth) - emnite(imonth)
       do i = 1, 2
-         actlng(i) = twopi*fract(i) - Longr(i)
-         fourpi    = 2._10*twopi
+         actlng(i) = real(twopi*fract(i) - Longr(i), real32)
+         fourpi    = real(2._10*twopi, real32)
          if(abs(actlng(i)).gt.fourpi) then
             write(6,20) (k,actlng(k),fract(k),Longr(k),k=1,2)
    20       format(2x,'ANGULAR DIST.FROM UT MIDNIGHT INCORRECT IN DIURN'

@@ -58,7 +58,7 @@ c
 
 c     nonportable IBMism
 
-      call fileinf(firetc, 'MAXREC', mrec)
+c      call fileinf(firetc, 'MAXREC', mrec)
       open(Mfile, access='DIRECT', recl=lrec, status='SCRATCH')
       call PREPDB(buff, ndim, mrec, Mfile)
 c
@@ -72,7 +72,7 @@ c max record length = 400 items (20 * 20)
 
 c     nonportable IBMism
 
-      call fileinf(firetc, 'MAXREC', mrec)
+c      call fileinf(firetc, 'MAXREC', mrec)
       open(Lfile, access='DIRECT', recl=lrec, status='SCRATCH')
       call PREPDB(buff, ndim, mrec, Lfile)
 c
@@ -86,7 +86,7 @@ c max record length=(maxp+2) "double" words
 
 c     nonportable IBMism
 
-      call fileinf(firetc, 'MAXREC', mrec)
+c      call fileinf(firetc, 'MAXREC', mrec)
       open(Kfile, access='DIRECT', recl=lrec, status='SCRATCH')
 
       call PREPDB(buff, ndim, mrec, Kfile)

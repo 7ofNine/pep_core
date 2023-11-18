@@ -8,6 +8,8 @@ c  array  - name of array or array element
 c  length - size in bytes of region to zero
 c
 c
+c  extremely dirty way of initializing arrays to 0
+c
       implicit none
  
       integer*4 length, i, izero/0/

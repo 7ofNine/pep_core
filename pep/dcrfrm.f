@@ -1,4 +1,6 @@
       subroutine DCRFRM(imats, b, lenb, iptr, jptrc, jptrd)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 
@@ -44,8 +46,8 @@ c read pointer group for pre-reduced sne
      .            (Idrest(i),i = 1,Ndparm)
 c
 c get ptrs from 'mparam' to 'nparam'
-      call ZFILL(Sigma,16*Nparam)
-      call ZFILL(iptr,2*Mparam)
+      call ZFILL(transfer(Sigma, (/ "x" /)), 16*Nparam)
+      call ZFILL(transfer(iptr, (/ "x" /)), 2*Mparam)
       do i = 1,Mparam
          ia     = i
          Sav(i) = ai
@@ -53,7 +55,7 @@ c get ptrs from 'mparam' to 'nparam'
       call FRMMVE(Sigma,Nparam)
       do i = 1,Nparam
          ai = Sigma(i)
-         if(ia .gt. 0) iptr(ia) = i
+         if(ia .gt. 0) iptr(ia) = int(i, int16)
          end do
 c
 c     at this point:
@@ -68,15 +70,15 @@ c           jptrc(1-nparam) --> ncr
 c           jptrd(1-nparam) --> ndr
       ncr = 0
       ndr = 0
-      call ZFILL(jptrc,2*Nparam)
-      call ZFILL(jptrd,2*Nparam)
+      call ZFILL(transfer(jptrc, (/ "x" /)), 2*Nparam)
+      call ZFILL(transfer(jptrd, (/ "x" /)), 2*Nparam)
       do i = 1,Ncparm
          jp = iptr(Icrest(i))
          Icrest(i) = 0
          if(jp .gt. 0) then
             ncr = ncr + 1
-            Icrest(i) = ncr
-            jptrc(jp) = ncr
+            Icrest(i) = int(ncr, int16)
+            jptrc(jp) = int(ncr, int16)
          endif
          end do
       do i = 1,Ndparm
@@ -84,8 +86,8 @@ c           jptrd(1-nparam) --> ndr
          Idrest(i) = 0
          if(jp .gt. 0) then
             ndr = ndr + 1
-            Idrest(i) = ndr
-            jptrd(jp) = ndr
+            Idrest(i) = int(ndr, int16)
+            jptrd(jp) = int(ndr, int16)
          endif
          end do
       if(ncr*ndr .gt. lenb)
@@ -95,7 +97,7 @@ c skip v-bar and c-bar
       call BSKIP(imats,Ncparm)
 c
 c restore partial solution (z-bar)
-      call ZFILL(Solut,16*ndr)
+      call ZFILL(transfer(Solut, (/ "x" /)), 16*ndr)
       call QREAD(imats,i,Sav,Ndparm)
       do i = 1,Ndparm
          ip = Idrest(i)
@@ -103,7 +105,7 @@ c restore partial solution (z-bar)
          end do
 c
 c restore transformation matrix (f-bar adjoint)
-      call ZFILL(b,16*ncr*ndr)
+      call ZFILL(transfer(b, (/ "x" /)), 16*ncr*ndr)
       do while( .true. )
  
 c read and transpose a row

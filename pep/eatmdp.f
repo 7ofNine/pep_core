@@ -1,10 +1,10 @@
-      real function EATMDP(wetz, dryz, zen, dwetz, ddryz, zendot)
+      real function EATMDP(wetz, dryz, zen, zendot)
  
       implicit none
  
  
 c*** start of declarations inserted by spag
-      real      ddryz, degthe, dryz, dwetz, v, wetz, zen, zendot
+      real      degthe, dryz, v, wetz, zen, zendot
  
 c*** end of declarations inserted by spag
  

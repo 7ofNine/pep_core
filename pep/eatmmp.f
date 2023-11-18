@@ -37,6 +37,8 @@ c     wetz = zenith delay of the wet component of the atm. (sec)
 c     dryz = zenith delay of the dry component of the atm. (sec)
 c     zen  = zenith angle of line of sight  (radians)
 
+      use iso_fortran_env, only: real32
+
       implicit none
 
 c     external variables
@@ -47,7 +49,7 @@ c     zen is the zenith angle in radians
 c     local variables
       integer  i, is
       logical  smlsav
-      real*4   tempCel, hgtOrth, xc
+      real*4   tempCel, hgtOrth
       real*10 a1, a2, a3
       real*10 a10,a11,a12,a13
       real*10 a20,a21,a22,a23
@@ -81,7 +83,7 @@ c     define the local temperature
       is = 0
       if (i .eq. 2) is = 3
       smlsav = (Numsav .lt. is + 43)
-      tempCel = Save(is + 41)
+      tempCel = real(Save(is + 41), real32)
       if( smlsav .or. tempCel .lt. 150. .or. tempCel .gt. 350. ) 
      . tempCel = 273.15
 c     convert from Kelvin to celsius
@@ -89,7 +91,7 @@ c     tempCel = temperature in degrees Celsius
       tempCel = tempCel - 273.15
 
 c     define observing site parameters 
-      hgtOrth = Shgt(i)*1000.0
+      hgtOrth = real(Shgt(i)*1000.0, real32)
       elevRad = 1.57079632679-zen
       cLat    = Cnrm(i)
 c     Shgt(i) = height of tracking station above reference ellipsoid (km)
@@ -116,7 +118,7 @@ c     via the continued fraction method
 c     mapping = m(epsilon) in Equation 4 of Paper X
 c              and is a unitless scaling of the total zenith delay
 
-      EATMMP = mapping*(wetz+dryz)
+      EATMMP = real(mapping*(wetz+dryz), real32)
 
       return
       end

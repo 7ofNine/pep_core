@@ -99,15 +99,17 @@ c setup /aprtbf/
          Epsa(i) = 0.0E0
       end do
       Epsa(30) = 5.0E-5
+
+c ERRSET does nothing here
 c
 c change tables for error monitor
-      call ERRSET(207, 300, 15, 0, 0, 209)
-      call ERRSET(211, 1, 1, 0, 0, 214)
-      call ERRSET(215, 1, 1, 0, 0, 215)
+c      call ERRSET(207, 300, 15, 0, 0, 209)
+c      call ERRSET(211, 1, 1, 0, 0, 214)
+c      call ERRSET(215, 1, 1, 0, 0, 215)
  
 c call errset (215,300,300,0,0,215)
-      call ERRSET(217, 1, 1, 0, 0, 220)
-      call ERRSET(221, 1, 1, 0, 0, 225)
+c      call ERRSET(217, 1, 1, 0, 0, 220)
+c      call ERRSET(221, 1, 1, 0, 0, 225)
 c     call errset (221,300,300,0,0,225)
 c
 c     ihc207 - ihc209 set to unlimited errors, up to 15 messages.

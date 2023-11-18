@@ -1,4 +1,6 @@
       subroutine DTCHCK(jddtm0, mumdt, mumdt1, dt, mdt)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -33,7 +35,7 @@ c initialize imdt corrections
                mdt(i + 200) = mdt(i + 100)
                mdt(i + 100) = 0
             end do
-            mumdt1 = mumdt1 + 200
+            mumdt1 = mumdt1 + 200_2
          endif
       endif
       return
@@ -42,10 +44,10 @@ c initialize imdt corrections
 c correct imdt's if dt arrays have been expanded
 c
       if( ioff3 .ne. 0 ) then
-         if( imdt(3) .gt. 0 ) imdt(3) = imdt(3) + ioff3
-         if( imdt(4) .gt. 0 ) imdt(4) = imdt(4) + ioff3
-         if( imdt(5) .gt. 0 ) imdt(5) = imdt(5) + ioff5
-         if( imdt(6) .gt. 0 ) imdt(6) = imdt(6) + ioff5
+         if( imdt(3) .gt. 0 ) imdt(3) = int(imdt(3) + ioff3, int16)
+         if( imdt(4) .gt. 0 ) imdt(4) = int(imdt(4) + ioff3, int16)
+         if( imdt(5) .gt. 0 ) imdt(5) = int(imdt(5) + ioff5, int16)
+         if( imdt(6) .gt. 0 ) imdt(6) = int(imdt(6) + ioff5, int16)
       endif
  
       return

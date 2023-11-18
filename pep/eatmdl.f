@@ -1,4 +1,6 @@
       real function EATMDL(wetz, dryz, zen)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
@@ -119,7 +121,7 @@ c for elevation less than 0.0 assume zero correction
                EATMDL = rwp1(1)*wetz + rdp1(1)*dryz
             else
                f  = amod(elev, 0.1)/0.1
-               n  = elev/0.1
+               n  = int(elev/0.1, int32)
                rw = rwp1(n) + f*(rwp1(n+1) - rwp1(n)) + 0.5*f*(f - 1.0)
      .              *(rwp1(n+1) - 2.0*rwp1(n) + rwp1(n-1))
                rd = rdp1(n) + f*(rdp1(n+1) - rdp1(n)) + 0.5*f*(f - 1.0)
@@ -130,13 +132,13 @@ c for elevation less than 0.0 assume zero correction
 c elevations greater than 60.0 deg. use same scaling law for
 c wet and dry components of correction
             f = amod(elev, 0.5)/0.5
-            n = (elev/0.5) - 118
+            n = int((elev/0.5) - 118, int32)
             r = rp5(n) + f*(rp5(n+1) - rp5(n)) + 0.5*f*(f - 1.0)
      .          *(rp5(n+1) - 2.0*rp5(n) + rp5(n-1))
             EATMDL = r*(wetz + dryz)
          else
             f  = amod(elev, 0.5)/0.5
-            n  = (elev/0.5) - 18
+            n  = int((elev/0.5) - 18, int32)
             rw = rwp5(n) + f*(rwp5(n+1) - rwp5(n)) + 0.5*f*(f - 1.0)
      .           *(rwp5(n+1) - 2.0*rwp5(n) + rwp5(n-1))
             rd = rdp5(n) + f*(rdp5(n+1) - rdp5(n)) + 0.5*f*(f - 1.0)

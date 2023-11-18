@@ -1,4 +1,6 @@
       subroutine EATCTL(icall,active,kick,kobj,eatcor)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 c
@@ -63,7 +65,7 @@ c calculate path delay using mapping function
 c
 c calculate delay rate using mapping function
          do i = 1,numsit
-            atmdl(i) = EATMDP(wetz(i),dryz(i),Za(i,kobj),0.,0.,
+            atmdl(i) = EATMDP(wetz(i),dryz(i),Za(i,kobj),
      .                 Zar(i,kobj))
          end do
  
@@ -129,7 +131,7 @@ c modify delay or rate corrections by input scale factor(s)
          if(Nsite1.eq.Nsite2) atmprm(2) = Aphs(1)
       endif
       do i = 1,numsit
-         atmprm(i) = atmprm(i)*prmter(62)
+         atmprm(i) = real(atmprm(i)*prmter(62), real32)
  
 c default value of prmter(62) is 1
          eatcor(i) = atmprm(i)*atmdl(i)

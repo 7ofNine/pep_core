@@ -1,4 +1,6 @@
       subroutine D2DMS(deg,imin,sec,ddeg,idigit)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
@@ -50,7 +52,7 @@ c * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 c convert to character*3 degrees
  
       valabs= ABS(degin) + roundd
-      ideg=valabs
+      ideg=int(valabs, int32)
       write(deg,110) ideg
   110 format(I3)
       if(degin.lt.0._10) deg(1:1)='-'
@@ -58,7 +60,7 @@ c convert to character*3 degrees
 c get minutes
  
       valabs = (valabs - ideg) * 60._10
-      imin = valabs
+      imin = int(valabs, int32)
  
 c get seconds and deduct rounding criterion
  

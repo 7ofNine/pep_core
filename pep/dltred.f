@@ -373,14 +373,14 @@ c (assuming input is not too strange)
                if( temp .lt. 0. ) then
                   if( sec(i) .lt. 0. ) then
                      sec(i)  = sec(i) + 60.
-                     imin(i) = imin(i) - 1
+                     imin(i) = imin(i) - 1_2
                   endif
                   if( imin(i) .lt. 0 ) then
-                     imin(i) = imin(i) + 60
-                     ihr(i)  = ihr(i) - 1
+                     imin(i) = imin(i) + 60_2
+                     ihr(i)  = ihr(i) - 1_2
                   endif
                   if( ihr(i) .lt. 0 ) then
-                     ihr(i) = ihr(i) + 24
+                     ihr(i) = ihr(i) + 24_2
                      jd(i)  = jd(i) - 1
                      go to 340
                   endif
@@ -388,14 +388,14 @@ c (assuming input is not too strange)
                if( temp .ge. 86400. ) then
                   if( sec(i) .ge. 60. ) then
                      sec(i)  = sec(i) - 60.
-                     imin(i) = imin(i) + 1
+                     imin(i) = imin(i) + 1_2
                   endif
                   if( imin(i) .ge. 60 ) then
-                     imin(i) = imin(i) - 60
-                     ihr(i)  = ihr(i) + 1
+                     imin(i) = imin(i) - 60_2
+                     ihr(i)  = ihr(i) + 1_2
                   endif
                   if( ihr(i) .ge. 24 ) then
-                     ihr(i) = ihr(i) - 24
+                     ihr(i) = ihr(i) - 24_2
                      jd(i)  = jd(i) + 1
                   endif
                endif

@@ -1,4 +1,6 @@
       subroutine DLIBRA(jd,fract,librat,seli,nvel,beta,gamma)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 
@@ -6,6 +8,9 @@ c
 c eckhardt/slade/king/ash  aug 1972   subroutine dlibra
 c calculation of moon physical libration using eckhardt's second
 c order model
+c
+c we changed most real*4 to real*10. why where they real*4 in the first
+c plac?? (GUT)
 c
 c arguments
       integer*4 jd,nvel
@@ -19,21 +24,22 @@ c local
       real*10 td,julian,jd1900/2415020._10/
       real*4    dlibrt(6,2),ibet,igam
       real*10 sig(9),pea(9),tau(18)
-      real*4    taua(15),taub(15),tauc(15),siga(9),sigb(9),sigc(9),
+      real*10    taua(15),taub(15),tauc(15),siga(9),sigb(9),sigc(9),
      .          peaa(9),peab(9),peac(9)
       real*10 ss(9),cp(9),st(18),ff,ssr(9),cpr(9),str(18)
-      real*4    d,d2,f2,l,lp,l2,lp2,sn
+      real*10    d,d2,f2,lp,l2,lp2
       real*10 ldoub,argdub,sl,cl,den,denrt
       real*10 slong,soll,g,w,wp,per,gp
       real*10 t1,t2,t3,sl1,per1,soll1,gp1,sn1
       real*10 t,s,p
-      real*4    tquand,tquanb,tquanr,lr,lpr,ffr,dr,l2r,lp2r,
+      real*10 tquanb, tquand, sn, l
+      real*10    tquanr,lr,lpr,ffr,dr,l2r,lp2r,
      .          d2r,f2r
-      real*4    arg,cd2,cf2,cf2d2,cl2,cld2,clf2,clf2d2,clp,gpr,
+      real*10    arg,cd2,cf2,cf2d2,cl2,cld2,clf2,clf2d2,clp,gpr,
      .          gr,perr,sd2,sf2,sf2d2,sl2,slaf2,sld2,slf2,
      .          slf2d2,slongr,slp,snr,sollr,wpr,wr
       integer   i,j
-      integer*4 newval/0/, nwval1/0/
+      integer*4 :: newval = 0, nwval1 = 0
 c
 c define constants
       data siga/-.26_10,-3.02_10,-10.61_10,-26.03_10,2.50_10,
@@ -61,7 +67,7 @@ c define constants
 c portable single-precision arithmetic statement function
       real*4 SNG10
       real*10 x
-      SNG10(x)=x
+      SNG10(x) = real(x, real32)
  
       julian = jd+fract-.5_10
       if(newval.ne.1) then
@@ -193,7 +199,8 @@ c tau vector coefficients
       st(15) = sin(l2-lp-d2)
       st(16) = sin(l2-d2)
       st(17) = sin(l2)
-      arg    = .53733431_10-1.0104982E-5_10*td+1.91E-14_10*td**2
+      arg    = real(.53733431_10-1.0104982E-5_10*td+1.91E-14_10*td**2,
+     .              real32)
       st(18) = sin(SNG10(Twopi*arg))
 c
 c calculate libration angles
@@ -207,20 +214,21 @@ c calculate libration angles
       do i = 1,18
          t = t+tau(i)*st(i)
       end do
-      librat(1,1) = Convds*t
-      librat(1,2) = Convds*p
-      librat(1,3) = (seli*t-s)*Convds
+      librat(1,1) = real(Convds*t, real32)
+      librat(1,2) = real(Convds*p, real32)
+      librat(1,3) = real((seli*t-s)*Convds, real32)
 c
 c calculate libration rates
       if(nvel.gt.0) then
-         slongr= (13.1763965268_10 - 17.0E-13_10*t1 + 11.7E-20_10*t2)
-     .    *Convd
-         perr  = (.1114040803_10 - 15.478E-12_10*t1 - 7.8E-19_10*t2)
-     .    *Convd
-         snr   = (-.0529539222_10 + 3.114E-12_10*t1 + 15.0E-20_10*t2)
-     .    *Convd
-         gpr   = (.985600267_10 - 2.24E-13_10*t1 - 21.0E-20_10*t2)*Convd
-         sollr = (.9856473354_10 - 4.534E-13_10*t1)*Convd
+         slongr= REAL((13.1763965268_10 - 17.0E-13_10*t1
+     .           + 11.7E-20_10*t2)*Convd, real32)
+         perr  = real((.1114040803_10 - 15.478E-12_10*t1
+     .           - 7.8E-19_10*t2) * Convd, real32)
+         snr   = real((-.0529539222_10 + 3.114E-12_10*t1
+     .            + 15.0E-20_10*t2) * Convd, real32)
+         gpr   = real((.985600267_10 - 2.24E-13_10*t1
+     .           - 21.0E-20_10*t2)*Convd, real32)
+         sollr = real((.9856473354_10 - 4.534E-13_10*t1)*Convd, real32)
          gr    = slongr-perr
          wr    = perr-snr
          wpr   = sollr-gpr-snr
@@ -279,9 +287,9 @@ c calculate libration rates
          do i = 1,18
             t = t+tau(i)*str(i)
          end do
-         librat(2,1) = Convds*t
-         librat(2,2) = Convds*p
-         librat(2,3) = (seli*t-s)*Convds
+         librat(2,1) = real(Convds*t, real32)
+         librat(2,2) = real(Convds*p, real32)
+         librat(2,3) = real((seli*t-s)*Convds, real32)
       endif
       return
  
@@ -289,8 +297,8 @@ c calculate partial derivatives
       entry DLIBP1(nvel,dlibrt,ibet,igam)
       if(nwval1.ne.1) then
          nwval1 = 1
-         tquanr = 1.E5*(-24.46/den**2+5.42/den/denrt -
-     .            2.71/den/SQRT(denrt))
+         tquanr = real(1.E5*(-24.46/den**2+5.42/den/denrt -
+     .            2.71/den/SQRT(denrt)), real32)
       endif
       s    = 0.
       p    = 0.
@@ -306,9 +314,9 @@ c partials w.r.t. beta
       do i = 1,15
          t = t+(taub(i)-taua(i))/.00003_10*st(i+2)
       end do
-      dlibrt(1,1) = Convds*t
-      dlibrt(2,1) = Convds*p
-      dlibrt(3,1) = Convds*s
+      dlibrt(1,1) = real(Convds*t, real32)
+      dlibrt(2,1) = real(Convds*p, real32)
+      dlibrt(3,1) = real(Convds*s, real32)
       if(nvel.gt.0) then
          s = 0.
          p = 0.
@@ -320,9 +328,9 @@ c partials w.r.t. beta
          do i = 1,15
             t = t+(taub(i)-taua(i))/.00003_10*str(i+2)
          end do
-         dlibrt(4,1) = Convds*t
-         dlibrt(5,1) = Convds*p
-         dlibrt(6,1) = Convds*s
+         dlibrt(4,1) = real(Convds*t, real32)
+         dlibrt(5,1) = real(Convds*p, real32)
+         dlibrt(6,1) = real(Convds*s, real32)
       endif
 c
 c partials w.r.t. gamma
@@ -336,9 +344,9 @@ c partials w.r.t. gamma
       do i = 1,15
          t = t+(tauc(i)-taua(i))/.00002_10*st(i+2)
       end do
-      dlibrt(1,2) = Convds*t
-      dlibrt(2,2) = Convds*p
-      dlibrt(3,2) = Convds*s
+      dlibrt(1,2) = real(Convds*t, real32)
+      dlibrt(2,2) = real(Convds*p, real32)
+      dlibrt(3,2) = real(Convds*s, real32)
       if(nvel.gt.0) then
          s = 0.
          p = 0.
@@ -350,9 +358,9 @@ c partials w.r.t. gamma
          do i = 1,15
             t = t+(tauc(i)-taua(i))/.00002_10*str(i+2)
          end do
-         dlibrt(4,2) = Convds*t
-         dlibrt(5,2) = Convds*p
-         dlibrt(6,2) = Convds*s
+         dlibrt(4,2) = real(Convds*t, real32)
+         dlibrt(5,2) = real(Convds*p, real32)
+         dlibrt(6,2) = real(Convds*s, real32)
       endif
 c note that partials returned are tau, rho, isig, etc., not tau, rho
 c i*(sig-tau)
