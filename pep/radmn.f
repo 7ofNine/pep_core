@@ -98,7 +98,7 @@ c sun w.r.t. ssbc
          if(Nswcns.gt.0) call SOTRP(Jd, ctrecf, Xslcns, 0)
 c
 c correct site coordinates for solid body tides
-         if(Jct(10).gt.0) call ETIDE(etide1, nvel, 1, kspt)
+         if(Jct(10).gt.0) call ETIDE(etide1, nvel, 1)
 c
 c correct site coordinates for fluid displacements
          if(Jct(49).gt.0) call FLURED(Jd,ctrecf,1)
@@ -272,7 +272,7 @@ c need earth velocity for tide model
                if(Nswcns.gt.0) call SOTRP(Jdy, fresn, Xslcns(1,3), 0)
 c
 c correct second site coordinates for solid body tides
-               if(Jct(10).gt.0) call ETIDE(etide1, nvel, 2, kspt)
+               if(Jct(10).gt.0) call ETIDE(etide1, nvel, 2)
                etide1 = 1
 c
 c correct second site coordinates for fluid displacements

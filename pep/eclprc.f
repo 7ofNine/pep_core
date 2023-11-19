@@ -1,4 +1,6 @@
       subroutine ECLPRC(jd, fract, mnrt1)
+
+      use iso_fortran_env, only: int32
  
       implicit none
 
@@ -26,33 +28,33 @@ c          their time derivatives, and aa matrix
 c local
       real*10 qq, ppp
       real*10 cappi, spi
-      integer i, int, int1, j
+      integer i, nnint, int1, j
 
 c
 c determination of time
-      int = jd - 2415020
+      nnint = jd - 2415020
       qq  = fract - 0.5_10
-      Tt  = int + qq
+      Tt  = nnint + qq
       if(mnrt1.le.0) then
 c
 c determination of mean anomaly
-         int  = 1306*int
-         int1 = int/36000
-         ppp  = int - int1*36000
+         nnint  = 1306*nnint
+         int1 = nnint/36000
+         ppp  = nnint - int1*36000
          ppp  = ((ppp-6.3895392E3_10) + qq*1.306E3_10 +
      .    Tt*(0.49924465_10+Tt*(6.889E-10_10+Tt*2.99E-17_10)))/3.6E4_10
-         int  = ppp
-         Anomx= (ppp - int)*Twopi
+         nnint  = int(ppp, int32)
+         Anomx= (ppp - nnint)*Twopi
       else
 c
 c determine mean longitude and time derivatives
-         int  = 1317*int
-         int1 = int/36000
-         ppp  = int - int1*36000
+         nnint  = 1317*nnint
+         int1 = nnint/36000
+         ppp  = nnint - int1*36000
          ppp  = ((ppp+2.70434164E4_10) + qq*1.317E3_10 +
      .    Tt*(0.63965268_10+Tt*(-8.5E-11_10+Tt*3.9E-18_10)))/3.6E4_10
-         int  = ppp
-         Long = (ppp - int)*Twopi
+         nnint  = int(ppp, int32)
+         Long = (ppp - nnint)*Twopi
          Longd  = (13.1763965268_10 - Tt*(1.7E-12_10+
      .    Tt*1.17E-19_10))*Convd
          Longdd = (1.7E-12_10 + Tt*2.34E-19_10)*Convd
@@ -69,8 +71,8 @@ c determination of ascending node
       ppp = 7.19953541666666666667E-1_10 +
      . Tt*(-1.47094228333333333333E-4_10 +
      . Tt*(4.325E-15_10+Tt*1.38888888888888888889E-22_10))
-      int = ppp
-      Asc = (ppp - int)*Twopi
+      nnint = int(ppp, int32)
+      Asc = (ppp - nnint)*Twopi
       Ascd  = (-1.4709422833333333333E-4_10 +
      .        Tt*(8.65E-15_10+Tt*4.16666666666666667E-22_10))*Twopi
       Ascdd = (8.65E-15_10 + Tt*8.3333333333333333333E-22_10)*Twopi
@@ -80,8 +82,8 @@ c determination of perigee
      . Tt*(4.56550006944444444444E-4_10 -
      . Tt*(2.58222222222222222222E-14_10+
      . Tt*8.61111111111111111111E-22_10))
-      int = ppp
-      Per = (ppp - int)*Twopi
+      nnint = int(ppp, int32)
+      Per = (ppp - nnint)*Twopi
 c
 c determination of aa matrix
       Tpr = Tt - 18262.423_10

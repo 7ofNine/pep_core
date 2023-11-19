@@ -1,8 +1,7 @@
-      real*10 function ERTFN(i,j,t)
+      real*10 function ERTFN()
  
       implicit none
-      integer i,j
-      real*10 t
+
 
       ERTFN=0._10
  

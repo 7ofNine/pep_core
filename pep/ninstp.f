@@ -100,7 +100,7 @@ c
                else if(ngo.eq.4) then
                   F(i, 3) = BODFN(i, 3, T)
                else if(ngo.eq.5) then
-                  F(i, 3) = ERTFN(i, 3, T)
+                  F(i, 3) = ERTFN()
                else if(ngo.eq.7) then
                   F(i, 3) = PRTFN(i, 3, T)
                else if(ngo.eq.8) then
@@ -167,7 +167,7 @@ c save starting coefficients
          else if(ngo.eq.4) then
             F(i, 3) = BODFN(i, 3, T)
          else if(ngo.eq.5) then
-            F(i, 3) = ERTFN(i, 3, T)
+            F(i, 3) = ERTFN()
          else if(ngo.eq.7) then
             F(i, 3) = PRTFN(i, 3, T)
          else if(ngo.eq.8) then

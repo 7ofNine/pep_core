@@ -1,4 +1,6 @@
       real function EIONDL(theta, dmx, amx, freq, nflag)
+
+      use iso_fortran_env, only: real32
  
       implicit none
  
@@ -33,7 +35,7 @@ c     assumed to be 0.
 c portable single-precision arithmetic statement function
       real*4 SNG10
       real*10 x
-      SNG10(x)=x
+      SNG10(x)=real(x, real32)
 c
       degthe = theta*57.2957795
       var    = 1.

@@ -1,5 +1,7 @@
       subroutine EVTRP(jd,fract,nvel,lcntl,icall,yv,x,body,ndim,
      .                 jdtb,frtb,p)
+
+      use iso_fortran_env, only: int32, int16
  
       implicit none
 
@@ -9,7 +11,7 @@ c        this is a control routine for interpolating a body from its
 c        integration (or n-body or s-body) tape, using everett method
 c        parameters:
 
-      integer*4 jd,nvel,lcntl,icall,ndim
+      integer*4 i, jd,nvel,lcntl,icall,ndim
       real*10 fract
 c data from integration tape
       real*10 body(6,ndim,1),frtb(3)
@@ -97,7 +99,7 @@ c        commons
 
 c local
       real*10 bbintx,dt
-      integer*4 i,i4,idir,ifirst,io,j,jmx,jo,jy,lim1,lim2,n1,n2,n3,nb11,
+      integer*4 idir,ifirst,io,j,jmx,jo,jy,lim1,lim2,n1,n2,n3,nb11,
      . nbn,nbo,ndmy,ngo,nmo,nov5,nprec,npto2,ntbss,nvela,nvelr
       integer*2 npl
 c
@@ -156,7 +158,7 @@ c velocity interpolation vectors
       nvelr = max0(0,nvel)
       if(Nvels(icall).gt.1 .or. nvelr.gt.Nvels(icall)) then
          ntbss = 9999
-         Nvels(icall) = nvelr
+         Nvels(icall) = int(nvelr, int16)
       endif
       jmx = 3*(Nvels(icall)+1)
       ifirst = 0
@@ -206,7 +208,7 @@ c*  start=1000
 c           determine putative index of left-hand tabular point
 c           if ok, then proceed to y-vectors
   100 dt  = ((jd-jdtb(ngo)) + fract - frtb(ngo))/bbintx
-      nbn = dt + 19._10
+      nbn = int(dt + 19._10, int32)
       nbn = nbn - 19
       if(nbn.ge.lim1 .and. nbn.le.lim2) then
 c
@@ -241,7 +243,7 @@ c at least one point can be re-used
                nb11  = 1
                Ntab1 = 1
             endif
-            Ntab2 = ntbss - nmo - 1
+            Ntab2 = int(ntbss - nmo - 1, int16)
             n1    = 3
             n2    = Ntab2 + 1
             n3    = -1
@@ -258,7 +260,7 @@ c cannot reuse anything
                ntbss = 9999
                goto 400
             endif
-            Ntab1 = 4 - nmo
+            Ntab1 = int(4 - nmo, int16)
             n1    = 1
             n2    = Ntab1 - 1
             n3    = 1
@@ -300,7 +302,7 @@ c saved values cannot be re-used. set flag & read tape
          call RTREED(jd,fract,ndmy,3)
       else if(icall.ge.8 .and. icall.le.10) then
       else if(icall.ge.11 .and. icall.le.19) then
-         npl=icall-10
+         npl=int(icall-10, int16)
          call SSREED(jd,npl,Iplss(npl))
       else
          call SUICID('BAD ICALL, STOP IN EVTRP', 6)
@@ -308,7 +310,7 @@ c saved values cannot be re-used. set flag & read tape
  
       ifirst = 1
       if(jd.gt.0) goto 100
-      Ntb1s(icall) = ntbss
+      Ntb1s(icall) = int(ntbss, int16)
       return
 c
 c*  start=2000
@@ -332,8 +334,9 @@ c adjust ntbss after shifting
 c
 c*  start=2500
 c select tabular region according to nb11 (usually 2)
-  400 Nbtrp(icall) = nbn + 2 - nb11
-      if(idir.lt.0) Nbtrp(icall) = 2 + 3*nprec - Nbtrp(icall)
+  400 Nbtrp(icall) = int(nbn + 2 - nb11, int16)
+      if(idir.lt.0) Nbtrp(icall) = int(2 + 3*nprec - Nbtrp(icall),
+     .   int16)
 c
 c determine y vectors
   500 if(Ntab1.le.Ntab2) then
@@ -349,7 +352,7 @@ c determine y vectors
       endif
 c
 c reset ntb1s if any change (shifting and/or recomputing)
-      Ntb1s(icall) = ntbss
+      Ntb1s(icall) = int(ntbss, int16)
 c
 c
 c*  start=3000
@@ -374,7 +377,7 @@ c
             endif
          endif
       end do
-      Nb1(icall) = nb11
+      Nb1(icall) = int(nb11, int16)
 c
 c*  start=5000
 c debug printout

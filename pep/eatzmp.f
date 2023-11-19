@@ -23,6 +23,8 @@ c     Applied Optics, 6, 51-59, 1967
 c     James Battat July 20, 2005
 c     jbattat@cfa.harvard.edu
 
+      use iso_fortran_env, only: real32
+
       implicit none
 
 c external variables
@@ -119,7 +121,7 @@ c     latitude and height of the site
       flath = 1.0_10-0.00266*c2lat-0.00028*hgt
 
 c     Finally, calculate the zenith hydrostatic delay
-      dryzi = 2.416579E-5_10*(fhlam/flath)*presPa
+      dryzi = real(2.416579E-5_10*(fhlam/flath)*presPa, real32)
 c     dryzi = the zenith hydrostatic delay (eqn 26 of Paper A)
 c                 and has units of meters.
 
@@ -136,8 +138,8 @@ c     atmospheric component
 c     fnhlam is unitless and is defined in Paper A, eqn 32
 
 c     Finally compute the zenith non-hydrostatic delay 
-      wetzi = 1.0E-6_10 * (5.316*fnhlam-3.759*fhlam) *
-     .          (es/flath)
+      wetzi = real(1.0E-6_10 * (5.316*fnhlam-3.759*fhlam) *
+     .          (es/flath), real32)
 c     wetzi is the zenith, non-hydrostatic delay 
 c     .       it has units of meters as defined in
 c     .       Paper A, equation 38
@@ -146,8 +148,8 @@ c     .       Paper A, equation 38
 c     ***** CONVERT THE DELAYS FROM METERS INTO SECONDS *****
 c     dryzi and wetzi are in meters here but eatzdl.f wants them
 c     to be in seconds.
-      wetzi = wetzi/(Ltvel*1e3_10)
-      dryzi = dryzi/(Ltvel*1e3_10)
+      wetzi = real(wetzi/(Ltvel*1e3_10), real32)
+      dryzi = real(dryzi/(Ltvel*1e3_10), real32)
 
       return
       end

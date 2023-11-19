@@ -1,4 +1,6 @@
       subroutine EMPRD1(lice)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -49,7 +51,7 @@ c notation as NPLNT*100 plus an offset of 1 to 6.
 c set up array NPLPT with central and all target body numbers together
       Nplpc = 3
       do kt=1,Numtar
-         Nplpt(kt)= Ntrg(kt)
+         Nplpt(kt)= int(Ntrg(kt), int16)
       end do
 
 c loop over central body and any target bodies
@@ -77,7 +79,7 @@ c needed partials in order to compute the approximations
 c see if central or target body is input planet
          do i = 1, Numpln
             if(Nplnt(i).eq.Nplpt(kt)) then
-               klac  = i
+               klac  = int(i, int16)
                goto 50
             endif
          end do
@@ -131,25 +133,25 @@ c partials w.r.t. integrated body IC
                nlist=nlist+1
                if(nlist.gt.i_mxplp) goto 95
                klist(nlist)=iicntl(j)
-               Kpt(j,kt)=nlist+7
+               Kpt(j,kt)=int(nlist+7, int16)
             else if((iicntl(j).ge.1.and.iicntl(j).le.10) .or.
      .       (iicntl(j).ge.31 .and. iicntl(j).le.33) .or.
      .       (iicntl(j).ge.41.and.iicntl(j).le.44)) then
                nlist=nlist+1
                if(nlist.gt.i_mxplp) goto 95
                klist(nlist)=iicntl(j)
-               Kpt(j,kt)=nlist+7
+               Kpt(j,kt)=int(nlist+7, int16)
             else
                king=(iicntl(j)-1)/100
                kong=iicntl(j)-100*king
                if(king.gt.0 .and. kong.le.6) then
                   if(king.eq.Nplpt(kt)) then
-                     Kpt(j,kt)=kong+1
+                     Kpt(j,kt)=int(kong+1, int16)
                   else if(king.le.9) then
                      nlist=nlist+1
                      if(nlist.gt.i_mxplp) goto 95
                      klist(nlist)=iicntl(j)
-                     Kpt(j,kt)=nlist+7
+                     Kpt(j,kt)=int(nlist+7, int16)
                   endif
                endif
             endif
@@ -195,8 +197,8 @@ c elliptic approximation for other planets would go here
          endif
       end do
 c take note of 1st partial if found on center or 1st target integration
-      Parnum(3)=Kpt(1,0)-1
-      if(Numtar.gt.0) Parnum(2)=Kpt(1,1)-1
+      Parnum(3)=int(Kpt(1,0)-1, int16)
+      if(Numtar.gt.0) Parnum(2)=Kpt(1,1)-1_2
       return
 
 c rewind planet tape(s)

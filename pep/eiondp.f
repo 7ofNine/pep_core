@@ -1,4 +1,6 @@
       real function EIONDP(theta,dmx,amx,freq,derthe,derdmx)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 
@@ -34,7 +36,7 @@ c external functions
 c portable single-precision arithmetic statement function
       real*4 SNG10
       real*10 x
-      SNG10(x)=x
+      SNG10(x)=real(x, real32)
 c
       degthe = theta*57.2957795
       dop1   = EIONDL(theta, derdmx, amx, freq, +1)

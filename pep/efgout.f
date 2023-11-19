@@ -1,4 +1,6 @@
       subroutine EFGOUT(sidtm1)
+
+      use iso_fortran_env, only: int32
  
       implicit none
 c
@@ -397,16 +399,16 @@ c nodal crossing printout
      .                         -min8) + 3600._10*(jjj1(4,j)-ihr8)
      .                         + 8.64E4_10*(jdyr-jdyr8)) + min8*60._10 +
      .                         ihr8*3600._10
-                        i    = sec8/8.64E4_10
+                        i    = int(sec8/8.64E4_10, int32)
                         if(sec8.lt.0._10) i = i - 1
                         jdyr8  = jdyr8 + i
                         jdy8   = jdy8 + i
                         sec8   = sec8 - i*8.64E4_10
-                        ihr8   = sec8/3600._10
+                        ihr8   = int(sec8/3600._10, int32)
                         sec8   = sec8 - ihr8*3600._10
-                        min8   = sec8/60._10
+                        min8   = int(sec8/60._10, int32)
                         sec8   = sec8 - min8*60._10
-                        isec8  = sec8 + 0.500000000000001_10
+                        isec8  = int(sec8 + 0.500000000000001_10, int32)
                         icross = 1
                         if(sublt8.gt.0._10) icross = 2
                         subln8 = (wlong - subln8)*dd8 + subln8
@@ -457,9 +459,9 @@ c les-8/9 output
                   if(hax.gt.4.32E4_10) then
                      ihsgn = iminus
                      hax   = ABS(hax-8.64E4_10)
-                     jjj1(15, j) = hax/3600._10
+                     jjj1(15, j) = int(hax/3600._10, int32)
                      hax = hax - jjj1(15, j)*3600._10
-                     jjj1(16, j) = hax/60._10
+                     jjj1(16, j) = int(hax/60._10, int32)
                      has = hax - jjj1(16, j)*60._10
                   endif
                   if(Jct(46).gt.0) then

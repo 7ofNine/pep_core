@@ -1,4 +1,6 @@
       subroutine EIOCTL(icall,active,kick,kobj,f,eiocor)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 c
@@ -68,7 +70,7 @@ c for active model read in peak electron density
      .EL=100 ', 18)
       else
          frt4(1) = 0.
-         if(ABS(Utrec).ge.0.29) frt4(1) = Utrec/86400.
+         if(ABS(Utrec).ge.0.29) frt4(1) = real(Utrec/86400., real32)
 c note:  time difference between stations ignored in static
 c model, tmdly=0.
          tmdly   = 0.
@@ -135,7 +137,7 @@ c scales round-trip time delay
 c
 c modify delay or rate corrections by input scale factor(s)
       do i = 1, numsit
-         ionprm(i) = prmter(63)
+         ionprm(i) = real(prmter(63), real32)
  
 c default value of prmter(63) is 1
          if(Ncph.gt.2) ionprm(i) = Aphs(i + 2)*ionprm(i)

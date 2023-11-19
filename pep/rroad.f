@@ -103,7 +103,7 @@ c
             else if(ngo.eq.4) then
                Dydt(l,k) = BODFN(l,3,T)
             else if(ngo.eq.5) then
-               Dydt(l,k) = ERTFN(l,3,T)
+               Dydt(l,k) = ERTFN()
             else if(ngo.eq.7) then
                Dydt(l,k) = PRTFN(l,3,T)
             else if(ngo.eq.8) then
@@ -238,7 +238,7 @@ c compute second deriv. using y-predict
             else if(ngo.eq.4) then
                dydtnu(l) = BODFN(lk,j,T+Hc)
             else if(ngo.eq.5) then
-               dydtnu(l) = ERTFN(lk,j,T+Hc)
+               dydtnu(l) = ERTFN()
             else if(ngo.eq.7) then
                dydtnu(l) = PRTFN(lk,j,T+Hc)
             else if(ngo.eq.8) then

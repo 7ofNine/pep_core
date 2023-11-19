@@ -1,4 +1,6 @@
       subroutine ERTPAR(kick)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 c
@@ -386,12 +388,12 @@ c count over dt partials on input tape
          endif
          return
       endif
-      Ildt1 = I1
-      Ildt2 = I2
-      Ildt3 = I3
-      Ildt4 = I4
-      Ildt5 = I5
-      Ildt6 = I6
+      Ildt1 = int(I1, int16)
+      Ildt2 = int(I2, int16)
+      Ildt3 = int(I3, int16)
+      Ildt4 = int(I4, int16)
+      Ildt5 = int(I5, int16)
+      Ildt6 = int(I6, int16)
       iitt  = Iabs1
       if(Mumdtx.le.0) iitt = 0
       if(iitt.gt.0) then

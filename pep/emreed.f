@@ -1,4 +1,6 @@
       subroutine EMREED(jd,fract)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
@@ -55,7 +57,7 @@ c
 c determine if data must be read in
       if(xdist.gt.0._10) goto 200
       if(xdist.gt.-1._10) goto 700
-      n=-xdist
+      n=int(-xdist, int32)
       if(n.le.2) then
 c correct records are immediately ahead. shift storage and replenish
          l2=3-n
@@ -97,7 +99,7 @@ c second read of error record might not be needed if system changes
       goto 300
 
 c correct records are behind on tape. backspace and fill again
-  200 n=xdist
+  200 n=int(xdist, int32)
       if(n.eq.xdist) n=n-1
       n=n+4
       do i = 1, n
@@ -130,18 +132,18 @@ c reconstruct dates of start of bad records
       if(iembad(1).gt.0 .and. Jdem(1).le.0) then
          if(iembad(2).le.0 .or. Jdem(2).gt.0) then
             Fem(1) =Jdem(2)+Fem(2)-Emint5
-            Jdem(1)=Fem(1)
+            Jdem(1)=int(Fem(1), int32)
             Fem(1) =Fem(1)-Jdem(1)
             Fem(3) =Jdem(2)+Fem(2)+Emint5
-            Jdem(3)=Fem(3)
+            Jdem(3)=int(Fem(3), int32)
             Fem(3) =Fem(3)-Jdem(3)
             goto 600
          else if(iembad(3).le.0 .or. Jdem(3).gt.0) then
             Fem(2) =Jdem(3)+Fem(3)-Emint5
-            Jdem(2)=Fem(2)
+            Jdem(2)=int(Fem(2), int32)
             Fem(2) =Fem(2)-Jdem(2)
             Fem(1) =Jdem(2)+Fem(2)-Emint5
-            Jdem(1)=Fem(1)
+            Jdem(1)=int(Fem(1), int32)
             Fem(1) =Fem(1)-Jdem(1)
             goto 600
          else if(jd.le.0) then
@@ -151,15 +153,15 @@ c reconstruct dates of start of bad records
             goto 600
          else
             Fem(1) = jdemst+femst + Emint5*(nemrec-3)
-            Jdem(1)=Fem(1)
+            Jdem(1)=int(Fem(1), int32)
             Fem(1) =Fem(1)-Jdem(1)
          endif
       endif
       Fem(2) =Jdem(1)+Fem(1)+Emint5
-      Jdem(2)=Fem(2)
+      Jdem(2)=int(Fem(2), int32)
       Fem(2) =Fem(2)-Jdem(2)
       Fem(3) =Jdem(2)+Fem(2)+Emint5
-      Jdem(3)=Fem(3)
+      Jdem(3)=int(Fem(3), int32)
       Fem(3) =Fem(3)-Jdem(3)
   600 if(jd.gt.0) goto 100
       jdemst = Jdem(1)

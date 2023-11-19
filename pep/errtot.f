@@ -1,4 +1,6 @@
       subroutine ERRTOT(ncodg)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 
@@ -118,12 +120,12 @@ c error analysis
          nnnn(i,2) = Nit(ling + i)
          fnobs = nnnn(i,2)
          if(fnobs.gt.0._10) then
-            a(i,1) = erstf(1,kong)/fnobs
-            a(i,2) = erstf(2,kong)/fnobs
+            a(i,1) = real(erstf(1,kong)/fnobs, real32)
+            a(i,2) = real(erstf(2,kong)/fnobs, real32)
             ww(1)  = erstf(3,kong)/fnobs
-            a(i,3) = SQRT(ww(1))
-            a(i,4) = ww(1)
-            a(i,5) = erstf(3,kong)
+            a(i,3) = real(SQRT(ww(1)), real32)
+            a(i,4) = real(ww(1), real32)
+            a(i,5) = real(erstf(3,kong), real32)
          else
             do j = 1,5
                a(i,j) = 0.0E0

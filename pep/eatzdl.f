@@ -1,5 +1,7 @@
       subroutine EATZDL(active,wetz,dryz)
- 
+
+      use iso_fortran_env, only: real32
+
       implicit none
 c
 c     r.king      march 1978      subroutine eatzdl
@@ -48,13 +50,13 @@ c for variation in local gravity and wave length
             if(Nk1.lt.0) then
                c2lat     = Cnrm(i)*Cnrm(i) - Snrm(i)*Snrm(i)
                ht        = Shgt(i)
-               gfact     = 1. + .0026*c2lat + .00028*ht
-               radcof(i) = .002277*gfact/Ltvel/1.E3
+               gfact     = real(1. + .0026*c2lat + .00028*ht, real32)
+               radcof(i) = real(.002277*gfact/Ltvel/1.E3, real32)
  
 c correct optical group delay also for wavelength
-               lamm2     = (1.E-9_10*Freq/Ltvel)**2
-               optcof(i) = 0.39406*(173.3 + lamm2)/((173.3-lamm2)**2)
-     .                     *gfact/Ltvel/1.E3
+               lamm2     = real((1.E-9_10*Freq/Ltvel)**2, real32)
+               optcof(i) = real(0.39406*(173.3 +
+     .              lamm2)/((173.3-lamm2)**2)*gfact/Ltvel/1.E3, real32)
             endif
 c
 c           read in meterological data from save vector
@@ -65,11 +67,11 @@ c     obslib tape,dummy values must be made up
             is = 0
             if(i.eq.2) is = 3
             smlsav = (Numsav.lt.is+43)
-            t(i)= Save(is+41)
+            t(i)= real(Save(is+41), real32)
             if(smlsav .or. t(i).lt.150. .or. t(i).gt.350.) t(i)= 273.15
-            p(i)= Save(is+42)
+            p(i)= real(Save(is+42), real32)
             if(smlsav .or. p(i).lt.500. .or. p(i).gt.1100.) p(i)= 1000.
-            h(i)= Save(is+43)
+            h(i)= real(Save(is+43), real32)
             if(smlsav .or. h(i).lt.0. .or. h(i).gt.1.) h(i)= 0.
             if(Freq.lt.5.E12_10) then
 c

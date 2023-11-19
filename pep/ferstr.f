@@ -73,7 +73,7 @@ c are not needed.
          if(nvlesn.gt.0) call ETRP(1,Jd,ctrecf,1,0,1,2)
 c
 c correct reference site coordinates for solid body tides
-         if(Jct(10).gt.0) call ETIDE(etide1,nvlesn,1,kspt)
+         if(Jct(10).gt.0) call ETIDE(etide1,nvlesn,1)
       endif
 c
 c save site position in xslcns
@@ -132,7 +132,7 @@ c error return
 c
 c correct second site coordinates for solid body tides
                if(Jct(10).gt.0) then
-                  call ETIDE(etide1,nvlesn,2,kspt)
+                  call ETIDE(etide1,nvlesn,2)
                   etide1 = 1
                endif
  

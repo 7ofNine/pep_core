@@ -97,7 +97,7 @@ c search to see if this is standard site and standard series
                   endif
                end do
             endif
-            Numeqn = Numeqn + 1
+            Numeqn = Numeqn + 1_1
             if(Numeqn.gt.u_mxeqx)
      .           call SUICID('TOO MANY INPUT SITES, STOP IN EQNRED', 9)
             Eqnsit(Numeqn) = est

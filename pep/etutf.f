@@ -1,10 +1,12 @@
       real*10 function ETUTF(jd, fract)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
  
 c*** start of declarations inserted by spag
-      integer   int, intmax, jd
+      integer   nnint, intmax, jd
  
 c*** end of declarations inserted by spag
  
@@ -57,15 +59,15 @@ c
 c calculate et-ut within table (linear interpolation)
          t   = jd - 2378314
          t   = (t + fract)/365.25_10
-         int = t
-         t   = t - int
-         int = int + 1
-         if(int.ge.intmax) then
+         nnint = int(t, int32)
+         t   = t - nnint
+         nnint = nnint + 1
+         if(nnint.ge.intmax) then
 c linear extrapolation beyond table
-            t   = t + (int - intmax + 1)
-            int = intmax - 1
+            t   = t + (nnint - intmax + 1)
+            nnint = intmax - 1
          endif
-         ETUTF = etutc(int) + (etutc(int+1) - etutc(int))*t
+         ETUTF = etutc(nnint) + (etutc(nnint+1) - etutc(nnint))*t
       else
          ETUTF = 6.0_10
       endif

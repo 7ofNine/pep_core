@@ -1,4 +1,4 @@
-      subroutine ETIDE(etide1,nvel,ns,kobj)
+      subroutine ETIDE(etide1,nvel,ns)
  
       implicit none
 
@@ -9,9 +9,9 @@ c           various vectors, calls vetide to calculate the solid body
 c           tide raised by the sun and moon on the and alters the
 c           appropriate site coordinates .
 c
-c
+c ktide is unused (GUT)
 c parameters
-      integer*4 etide1,kobj,ns,nvel
+      integer*4 etide1,ns,nvel
 c
 c           etide1 = 0  first call of etide for a given site:
 c                       calculate tides and correct site coordinates
@@ -53,7 +53,7 @@ c
 c
 c variables internal to this routine
       real*10 dellat,dellon,delrad,dlat2,dlatm,dlats,dlon2,dlonm,dlons,
-     . drad2,dradm,drads,gmsun,r
+     . drad2,dradm,drads,gmsun
       integer   i,icem,ices,iers,index,ipt,iptln,j,jct10
       logical*1 init/.false./
       real*10 g(2),hlov(2),llov(2),tlag(2),xemtid(6),

@@ -94,7 +94,7 @@ c calculation of the np derivatives
             else if(ngo.eq.4) then
                Dydt(l,k) = BODFN(l,3,T)
             else if(ngo.eq.5) then
-               Dydt(l,k) = ERTFN(l,3,T)
+               Dydt(l,k) = ERTFN()
             else if(ngo.eq.7) then
                Dydt(l,k) = PRTFN(l,3,T)
             else if(ngo.eq.8) then
@@ -167,7 +167,7 @@ c calculation of dy/dt at y(n+1)
                else if(ngo.eq.4) then
                   dydtnu(l) = BODFN(l,j,T+Hc)
                else if(ngo.eq.5) then
-                  dydtnu(l) = ERTFN(l,j,T+Hc)
+                  dydtnu(l) = ERTFN()
                else if(ngo.eq.7) then
                   dydtnu(l) = PRTFN(l,j,T+Hc)
                else if(ngo.eq.8) then

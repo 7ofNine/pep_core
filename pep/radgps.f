@@ -81,7 +81,7 @@ c sun w.r.t. ssbc
          if(Nswcns.gt.0) call SOTRP(Jd,ctrecf,Xslcns,0)
 c
 c correct site coordinates for solid body tides
-         if(Jct(10).gt.0) call ETIDE(etide1,nvel,1,kspt)
+         if(Jct(10).gt.0) call ETIDE(etide1,nvel,1)
       endif
 c
 c

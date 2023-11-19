@@ -145,9 +145,9 @@ c time at the second site
 c
 c correct site coordinates for solid body tides
          if(Jct(10).gt.0) then
-            call ETIDE(etide1,nvel,1,kspt)
+            call ETIDE(etide1,nvel,1)
             if(nintrf.ge.0 .and. numsit.eq.2)
-     .          call ETIDE(etide1,nvel,2,kspt)
+     .          call ETIDE(etide1,nvel,2)
          endif
       endif
 c
@@ -326,7 +326,7 @@ c           at second site given  source send time
          endif
 c
 c correct second site coordinates for solid body tides
-         if(Jct(10).gt.0) call ETIDE(etide1,nvel,2,kspt)
+         if(Jct(10).gt.0) call ETIDE(etide1,nvel,2)
          etide1 = 1
       endif
  

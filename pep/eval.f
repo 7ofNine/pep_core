@@ -92,7 +92,7 @@ c
          else if(ngo.eq.4) then
             fdum = BODFN(i,1,T + Hc)
          else if(ngo.eq.5) then
-            fdum = ERTFN(i,1,T + Hc)
+            fdum = ERTFN()
          else if(ngo.eq.7) then
             fdum = PRTFN(i,1,T + Hc)
          else if(ngo.eq.8) then
@@ -188,7 +188,7 @@ c
          else if(ngo.eq.4) then
             F(i,2) = BODFN(i,2,T + Hc)
          else if(ngo.eq.5) then
-            F(i,2) = ERTFN(i,2,T + Hc)
+            F(i,2) = ERTFN()
          else if(ngo.eq.7) then
             F(i,2) = PRTFN(i,2,T + Hc)
          else if(ngo.eq.8) then
