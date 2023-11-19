@@ -1,5 +1,7 @@
       subroutine FRMHED(imats,qmat,subscr,key,ippr,iprnt)
 
+      use iso_fortran_env, only: int16
+
       implicit none
 c
 c m.e.ash   feb 1970    subroutine frmhed
@@ -236,7 +238,7 @@ c grid
      .                     (Pzham(j,i),i=1,mgd2),
      .                     (Mpzhar(j,i),i=1,mgdpts)
                Mngd(j)   = mgdpts
-               Mpzone(j) = mgdpts
+               Mpzone(j) = int(mgdpts, int16)
                Mptess(j) = 0
             else
 

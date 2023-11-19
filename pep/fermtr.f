@@ -220,7 +220,7 @@ c observable is differential delay and/or delay rate
       Secb(1,1) = STORNE(secbx)
       if(Ncodeb(1,1).gt.0) then
          Fdsb(1,1) = Ihrb(1,1)*3600._10 + Iminb(1,1)*60._10 + Secb(1,1)
-         iyr19=Iyearb(1,1)+ctime*100
+         iyr19=Iyearb(1,1)+ctime*100_2
          Jdsb(1,1) = JULDAY(Imnthb(1,1),Idayb(1,1),iyr19)
          Jdb(1,1)  = Jdsb(1,1)
          Niobs = 1

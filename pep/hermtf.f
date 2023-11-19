@@ -1,10 +1,10 @@
-      real*10 function HERMTF(yh, ntype, mtype, psb)
+      real*10 function HERMTF(yh, psb)
  
       implicit none
  
  
 c*** start of declarations inserted by spag
-      integer   mtype, ntype
+c     integer   mtype, ntype
  
 c*** end of declarations inserted by spag
  

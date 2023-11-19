@@ -236,7 +236,7 @@ c
 c * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 c
 c        set-up once per a given step for partials
-   20       if(Kp(81).gt.0) call FLES(az,el,rlam,i8or9,radfor)
+   20       if(Kp(81).gt.0) call FLES(radfor)
          endif
       else if(ncall.eq.0) then
 c

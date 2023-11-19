@@ -237,7 +237,7 @@ c partial derivitives of probe position and velocity
                do m = 1, 3
                   j = j + 1
                   call YHERMT(dsprb(1,1,m,kspra), yy, jvl, 1, hc2, Nc)
-                  Dersb(j) = HERMTF(yy, jvl, 1, Psb)
+                  Dersb(j) = HERMTF(yy, Psb)
                end do
             end do
          endif
@@ -307,11 +307,11 @@ c partial derivatives of observing body position and velocity
                do m = 1, 3
                   j = j + 1
                   call YHERMT(dsprc(1,1,m,kspra), yy, jvl, 1, gc2, Nc)
-                  Dersc(j, 1) = HERMTF(yy, jvl, 1, Psc)
+                  Dersc(j, 1) = HERMTF(yy, Psc)
                   if(doboth) then
                      if(nc2.ne.Nc) call
      .                  YHERMT(dsprc(1,1,m,kspra), yy, jvl, 1, gc2, nc2)
-                     Dersc(j, 2) = HERMTF(yy, jvl, 1, Psc(1,2))
+                     Dersc(j, 2) = HERMTF(yy, Psc(1,2))
                   endif
                end do
             end do

@@ -1,4 +1,6 @@
       subroutine FERCTL(idopob)
+
+      use iso_fortran_env, only: int32, real32
  
       implicit none
  
@@ -194,12 +196,12 @@ c transmitter frequency terms
       if(Nk1.lt.0) then
          Utrec0 = Utrec
          if(Klanb.gt.0) then
-            jdxsb = Sbcom(3)
+            jdxsb = int(Sbcom(3), int32)
             fxsb  = jdxsb
             fxsb  = Sbcom(3) - fxsb
          end if
          if(Klans1.gt.0) then
-            jdxsc = Sccom(3)
+            jdxsc = int(Sccom(3), int32)
             fxsc  = jdxsc
             fxsc  = Sccom(3) - fxsc
          end if
@@ -226,13 +228,13 @@ c  atuts, ututs read in
 
       else if(itime.eq.0) then
 c  observation time is UT2
-         Ututs = -UT2UT1(Jds,fruct)
+         Ututs = real(-UT2UT1(Jds,fruct), real32)
          Atuts = A1UT1(Jds,fruct) + Ututs
 
       else
 c  observation time is UTC
          Atuts = A1WWV(Jds,fruct)
-         Ututs = Atuts - A1UT1(Jds,fruct)
+         Ututs = real(Atuts - A1UT1(Jds,fruct), real32)
       end if
 c ututs = ut1 - given observation time
 c atuts = a.1 - given observation time
@@ -273,7 +275,7 @@ c read moon tape or nbody tape to get nutation angles
       if(Jd.le.0) return
 c
 c nutation-precession determined for receiving
-      Kindnp = ndprec*(Ncode - 1)
+      Kindnp = ndprec*(Ncode - 1_2)
       call PRCNUT(Jd,Fract)
 c
 c determination of geocentric coordinates of first site

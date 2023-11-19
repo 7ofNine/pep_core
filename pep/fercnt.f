@@ -1,4 +1,6 @@
       subroutine FERCNT(nrvfrq)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 
@@ -72,7 +74,7 @@ c store received freqs from obj. 2 in save(38-39)
             end do
             nst = 30 + numsit
             if(nddiff.eq.1) nst = 37 + numsit
-            if(Numsav.lt.nst) Numsav = nst
+            if(Numsav.lt.nst) Numsav = int(nst, int16)
          endif
 c
 c save n-counts from both sites to write on iabs2

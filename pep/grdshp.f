@@ -1,4 +1,6 @@
       subroutine GRDSHP(lat,long,tmdly,topsec)
+
+      use iso_fortran_env, only: int32, int16
  
       implicit none
 c
@@ -27,8 +29,8 @@ c common
       include 'param.inc'
       include 'shpcom.inc'
       include 'ltrapx.inc'
-      integer*2 kind
-      equivalence (kind,Numpar)
+      integer*2 kkind
+      equivalence (kkind,Numpar)
       integer*2 lshape(1000)
       equivalence (lshape,Lszhar)
       include 'mtrapx.inc'
@@ -51,8 +53,8 @@ c        locals
       integer*2 lobstr(4),lps(4)
 c
 c arithmetic statement function igrid computes 1-dim pointer
-      integer*4 IGRID
-      IGRID(ilat,ilon) = (ilat-1)*londim + ilon
+      integer*2 IGRID
+      IGRID(ilat,ilon) = int((ilat-1)*londim + ilon, int16)
 c
 c
 c
@@ -88,7 +90,7 @@ c
 c obtain long. indicies for nearest grid points and
 c quantities for interpolation
          ta  = (long4 - tlon(1))/tlonin + 1._10
-         ita = ta
+         ita = int(ta, int32)
          itb = ita + 1
  
 c check for rollover in longitude
@@ -102,7 +104,7 @@ c        the maximum latitude strip corresponds to ipb=1 (i.e. the
 c        top row is maximum latitude as on a map).
 c        also there is no rollover permitted.
          pb  = (tlat(2) - lat4)/tlatin + 1._10
-         ipb = pb
+         ipb = int(pb, int32)
          ipa = ipb + 1
          pb0 = (pb - ipb)*tlatin
          p0a = tlatin - pb0
@@ -148,14 +150,14 @@ c set lshobs from lobstr and lshape. (see if those
 c points used for this obs. are being adjusted)
 c
       Lnshob = 0
-      Lixshp = kind + 1
+      Lixshp = int(kkind + 1, int16)
       if(Ncode.ne.3 .and. Shpnit) then
          do i = 1,4
             Lshobs(i) = 0
             if(lshape(lobstr(i)).ne.0) then
-               Lnshob = Lnshob + 1
+               Lnshob = int(Lnshob + 1, int16)
                Lshobs(Lnshob) = lobstr(i)
-               lps(Lnshob)    = i
+               lps(Lnshob)    = int(i, int16)
             endif
          end do
          if(Lnshob.ne.0) then
@@ -169,8 +171,8 @@ c partials.
                iflag = 1
                call PCOPY(n,lim,iflag,1,Lshobs,Mshobs)
                if(iflag.gt.0) go to 100
-               Deriv(kind,1) = Grdf2*p(lps(n))
-               Deriv(kind,2) = 0._10
+               Deriv(kkind,1) = Grdf2*p(lps(n))
+               Deriv(kkind,2) = 0._10
                if(n.ge.lim) go to 100
             end do
          endif
@@ -185,9 +187,9 @@ c
       if(Lnshob.ne.4) then
          lst = Lnshob+1
          do i = lst,4
-            kind = kind+1
-            Deriv(kind,1) = 0._10
-            Deriv(kind,2) = 0._10
+            kkind = int(kkind+1, int16)
+            Deriv(kkind,1) = 0._10
+            Deriv(kkind,2) = 0._10
          end do
       endif
  

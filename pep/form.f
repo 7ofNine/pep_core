@@ -1,4 +1,6 @@
       subroutine FORM(b)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -186,12 +188,12 @@ c write b, bthts, and wtrans for this epoch to filter data set
          else
             if(j.le.Npnp) then
                if(LEG(16,1,nm(i),1,Pnames(1,j)).eq.0) then
-                  Nptr(j) = i
+                  Nptr(j) = int(i, int16)
                   j = j + 1
                   go to 200
                endif
             endif
-            iptr(k) = i
+            iptr(k) = int(i, int16)
             k = k + 1
          endif
   200    end do

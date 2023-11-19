@@ -134,7 +134,7 @@ c*  start=3000
 c do interpolation
       do jy = 1, 3
          j    = jy + jo
-         x(j) = HERMTF(yh(1,jy),jh,0,p)
+         x(j) = HERMTF(yh(1,jy),p)
       end do
 c
 c debug printout

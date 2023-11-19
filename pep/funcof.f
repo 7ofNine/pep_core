@@ -1,10 +1,12 @@
       real*10 function FUNCOF(t, a, intb, b, c, d)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
  
 c*** start of declarations inserted by spag
-      integer   int, intb
+      integer   nnint, intb
  
 c*** end of declarations inserted by spag
  
@@ -17,19 +19,19 @@ c
       real*10 t, a, b, c, d, tint, tt, ab, bb, poly
 c
 c reduce number of revolutions
-      int  = t
-      tint = int
+      nnint  = int(t, int32)
+      tint = nnint
       tt   = t - tint
-      int  = int*intb
-      ab   = int - ((int/10000)*10000)
+      nnint  = nnint*intb
+      ab   = nnint - ((nnint/10000)*10000)
       bb   = intb
 c
 c evaluate polynomial
       poly = a + (ab + bb*tt)*1.0E-4_10 + t*(b + t*(c+t*d))
 c
 c get between -1 and 1 revolutions
-      int    = poly
-      tint   = int
+      nnint    = int(poly, int32)
+      tint   = nnint
       FUNCOF = poly - tint
       return
       end

@@ -1,4 +1,6 @@
       SUBROUTINE EXTPRC
+
+      use iso_fortran_env, only: real32
 C
 C  THE CALL TO EXTPRC SETS A FLAG: -1 MEANS USE DOUBLE PRECISION
 C                                  0  MEANS USE HARDWARE EXTENDED
@@ -219,6 +221,6 @@ C * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 C
 C ROUND DOUBLE PRECISION CALLING VAR. INTO SINGLE PRECISION VAR.
 C
-      STORNE=ARG8
+      STORNE = real(ARG8, 4)
       RETURN
       END

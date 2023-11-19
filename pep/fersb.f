@@ -1,4 +1,6 @@
       subroutine FERSB(nvel,norm,npath,kspt)
+
+      use iso_fortran_env, only: int32
  
       implicit none
  
@@ -157,7 +159,7 @@ c sun or planet as central body)
 c
 c obtain probe position at send time
 c for pioneer-venus entry probes, call pvcrd if within atmosphere
-      jdpvm = tpvm0
+      jdpvm = int(tpvm0, int32)
       if(jdpvm.eq.2443852) then
          tpvm = Jdx + fr
          if(tpvm.ge.tpvm0) then

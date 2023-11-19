@@ -1,5 +1,7 @@
       subroutine FLURED(jdu,fru,isit)
 
+      use iso_fortran_env, only: int32, real64
+
       implicit none
 
 c
@@ -36,7 +38,7 @@ c xflu= correction vector in light seconds (XYZ)
       character*80 title,desc
       real*4 buf(240,3,3,2),
      . accel(MAXFREQ,3,2),phase(MAXFREQ,3,2),coef(MAXFREQ,6,3,2)
-      real*8 ffreq(MAXFREQ,3,2),time,dt,ph,t0/2451545.5d0/,off(MAXSIT)
+      real*8 ffreq(MAXFREQ,3,2),dt,ph,t0/2451545.5d0/,off(MAXSIT)
       real*10 f2,frt,s,t,tflu(3),xflu(3)
       integer*4 i12(2),ioce,iatm,ihyd,iprt,it,itsav(2),
      . jflu,jsit,npsave,nr,ns,recno(2)
@@ -107,7 +109,7 @@ c read data into storage if necessary
 
 c
 c calculate interpolation times and value of tabular points
-      it = t
+      it = int(t, int32)
       t  = t - it
       s  = 1.0_10 - t
       if(it.ne.itsav(jsit)) then
@@ -141,7 +143,7 @@ c correction vector in local coordinates (up, west, north) in meters
      .    s*(y1(i,1,jsit)+s*s*y2(i,1,jsit))
       end do
 c add harmonic components
-      dt=((jdt-t0)+frt)*864d2
+      dt=real(((jdt-t0)+frt)*864d2, real64)
       do itype=1,3
          if(iflag(itype).gt.0) then
             nf=nfreq(itype,jsit)
