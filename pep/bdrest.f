@@ -37,7 +37,7 @@ c temporary storage
       character*120 messag
 c
 c see if n-body data set is to be written as well as read
-      if(Kbdy(39).ge.0) call INOUTV(Ibody)
+c      if(Kbdy(39).ge.0) call INOUTV(Ibody)
 c
 c read first two records of n-body tape
       read(Ibody)

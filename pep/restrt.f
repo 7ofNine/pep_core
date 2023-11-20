@@ -42,7 +42,7 @@ c local
       integer*2 id2
 c
 c see if itape to be written as well as read
-      if(kp(99).ge.0) call INOUTV(itape)
+c      if(kp(99).ge.0) call INOUTV(itape)
 c
 c read first two records
       read(itape)

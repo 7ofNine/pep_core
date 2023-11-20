@@ -1,4 +1,6 @@
-      subroutine JNITL(goose,cond,setp,kind,dy)
+      subroutine JNITL(goose,cond,setp,kkind,dy)
+
+      use iso_fortran_env, only: int32, real32
       implicit none
 
 c Subroutine JNITL   J.F.Chandler   1977 November 30
@@ -6,7 +8,7 @@ c Set up for elliptic or hyperbolic orbit calculations
 c
 c arguments to JNITL, JLIPT
       real*10 goose,cond(9),setp(50),y(6),dy(6,6),t,ry,ry2,ry3
-      integer*4 kind,nv
+      integer*4 kkind,nv
 c        goose - the square root of (g*(mass of body+mass of center))
 c        cond - array of initial conditions + optional extras
 c        cond(7)=time derivative of cond(1)
@@ -27,7 +29,7 @@ c        Note: all variables up thru quan5 (setp(18)) are used in all
 c        elliptic calculations, but those from there on are needed only
 c        if partials with respect to the initial conditions are needed.
 c
-c        kind - indicates type of setup,
+c        kkind - indicates type of setup,
 c                0 => only want coordinates
 c                1 => also want partials w.r.t. initial conditions
 c                2 => also need sinc,cinc,sper,cper in extended setp
@@ -45,7 +47,7 @@ c
 c local variables
       real*10 anom,anoms,casc,cf,cinc,cpci,cper,qq1,qq2,qq2n,qq4,qq5,
      . qq6,qq7,qq8,qqh,qql,qqs,quan1,sasc,sinc,spci,sper,th
-      integer   i,int,iyb,j,nitr,nv1,type
+      integer   i,nnint,iyb,j,nitr,nv1,type
       real*10 motion, ybar(6), absa
       real*4    anom4
 
@@ -83,7 +85,7 @@ c local variables
       setp(6) = cper*sinc
 
 c Decide if partials setup needed
-      if(kind.eq.0) return
+      if(kkind.eq.0) return
 
 c Fill rest of setp array for partials
       setp(25) = setp(9)/quan1
@@ -99,12 +101,12 @@ c Fill rest of setp array for partials
       end do
       dy(3,4) = 0._10
       dy(6,4) = 0._10
-      if(kind.le.1) return
+      if(kkind.le.1) return
       setp(32) = sinc
       setp(33) = cinc
       setp(34) = sper
       setp(35) = cper
-      if(kind.le.2) return
+      if(kkind.le.2) return
       setp(36)=setp(8)
       setp(37)=cond(7)
       setp(38)=th
@@ -138,10 +140,10 @@ c Get mean anomaly
          anom= setp(11)*t + setp(10)
          if(setp(8).gt.0._10) then
 c elliptic orbits
-            int= anom
-            if(anom.lt.0._10) int = int - 1
-            anoms= Twopi*(anom - int)
-            anom4= anoms
+            nnint= int(anom, int32)
+            if(anom.lt.0._10) nnint = nnint - 1
+            anoms= Twopi*(anom - nnint)
+            anom4= real(anoms, real32)
             if(anoms.lt.Pi) then
 c range is 0 to pi
                qqh= Pi
@@ -266,7 +268,7 @@ c Get radial distance including change of periapse and semimajor axis
       endif
 
 c Compute vector in orbit plane coordinates
-  100 ybar(1) = setp(8)*(setp(14) - setp(9))
+      ybar(1) = setp(8)*(setp(14) - setp(9))
       ybar(2) = setp(16)*setp(13)
       ybar(3) = setp(17)*setp(13)/ry
       ybar(4) = setp(18)*setp(14)/ry

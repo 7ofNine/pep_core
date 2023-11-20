@@ -1067,7 +1067,7 @@ c use prmter(45) for mass of 3rd belt, 76-78 for rad,inc,nod
          call LEGNDR(0._10,1._10,32,0,Zz(2),Leg45,0._10,0._10)
          Zz(1) = 0._10
          cos45 = SQRT(0.5_10)
-         call LEGNDR(cos45,cos45,32,0,Leg45(2),Leg145(2),0._10,0._10)
+         call LEGNDR(cos45,cos45,32,0,Leg45,Leg145,0._10,0._10)
       endif
 c
 c set up limited asteroids as perturbing bodies

@@ -33,6 +33,9 @@ c     .                    dpsi_prec, deps_prec,
 c     .                    dpsi_tot , deps_tot )
 
       subroutine IAU2000A(jd,dpsi_tot,deps_tot)
+
+      use iso_fortran_env, only:real32
+
       implicit none
 
 *     Subroutine to compute the complete MHB_2000 nutation series
@@ -52,7 +55,6 @@ c     .                    dpsi_tot , deps_tot )
 * PHYSICAL CONSTANTS
 
 * mas2rad - convert milliarcsec to radians
-
       real*8 mas2rad
       parameter (mas2rad = 4.84813681109535993591D-9)
 
@@ -82,9 +84,7 @@ c     .                    dpsi_tot , deps_tot )
 
 
       real*10 jd
-      real*8 dpsi_ls, deps_ls, dpsi_plan, deps_plan,
-     .    dpsi_fcn,  deps_fcn, dpsi_prec, deps_prec,
-     .    dpsi_bias, deps_bias
+      real*8 dpsi_ls, deps_ls, dpsi_plan, deps_plan
       real*4 dpsi_tot, deps_tot
 
 *---------------------------------------------------------------
@@ -116,8 +116,8 @@ c     .                    dpsi_tot , deps_tot )
 
 *     Now add up all of the terms to get the total nutation angles
 
-      dpsi_tot = (dpsi_ls + dpsi_plan)*mas2rad
-      deps_tot = (deps_ls + deps_plan)*mas2rad
+      dpsi_tot = real((dpsi_ls + dpsi_plan)*mas2rad, real32)
+      deps_tot = real((deps_ls + deps_plan)*mas2rad, real32)
 
       return
       end
@@ -125,6 +125,9 @@ c     .                    dpsi_tot , deps_tot )
 CTITLE LS_NUT
 
       subroutine ls_nut(jd, dpsi_ls, deps_ls)
+
+      use iso_fortran_env, only: real32, real64
+
       implicit none
 
 *     Routine to compute the MHB_2000 luni-solar contributions
@@ -219,7 +222,7 @@ CTITLE LS_NUT
 
       real*8 epoch, ls_arg(5)
 
-      epoch = jd
+      epoch = real(jd, real64)
 
 ***** Get the fundamental arguments at this epoch
 
@@ -1319,6 +1322,9 @@ CTITLE EVAL_LS_NUT
 CTITLE PLAN_NUT
 
       subroutine plan_nut(jd, dpsi, deps)
+
+      use iso_fortran_env, only: real64
+
       implicit none
 
 *     Routine to compute the planetary contribution to the nutations.
@@ -1374,7 +1380,7 @@ CTITLE PLAN_NUT
 
       real*8 epoch, plan_arg(14), plan_rat(14)
 
-      epoch = jd
+      epoch = real(jd,real64)
 
 ***** Get the fundamental arguments at this epoch
 
@@ -1436,7 +1442,7 @@ CTITLE EVAL_PLAN_NUT
 *              sorting size)
 *   carg, sarg   - cosine and sin of arguments.
 
-      real*8 arg, dargdt, period, amp, carg, sarg
+      real*8 arg, dargdt, period, carg, sarg
 
 
 * ks_plan: Series based on:skre97_rigid.plan
@@ -3307,7 +3313,7 @@ CTITLE FCN_NUT
 
       data  sine      /   0.3977769687d0 /
 
-      epoch = jd
+      epoch = real(jd, 8)
 
 ****  Find out which table values we should use.
       if(epoch.le.fcn_jd(1)) then

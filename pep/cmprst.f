@@ -58,7 +58,7 @@ c
 c
 c skip first 2 records of output tape
       if(ntabs2.gt.0) goto 300
-      call INOUTV(Iabs2)
+c     call INOUTV(Iabs2)
       read(Iabs2,err=100)
       goto 200
   100 read(Iabs2)

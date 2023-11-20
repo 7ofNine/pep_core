@@ -1,5 +1,7 @@
       subroutine KP2KI(kp, numki, ki)
- 
+
+      use iso_fortran_env, only: int16
+
       implicit none
  
  
@@ -28,7 +30,7 @@ c copy old kp(1-30) into ki
       do i = 1, 30
          ki(i) = kp(i)
          kp(i) = 0
-         if( ki(i) .ne. 0 ) numki = i
+         if( ki(i) .ne. 0 ) numki = int(i, int16)
       end do
  
 c make sure that 'numki' reflects at least ic's + 1

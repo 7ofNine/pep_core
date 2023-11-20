@@ -1,4 +1,6 @@
       subroutine HPARTL(kicki,length,lhar,mhar,nqlnti,ntype,nstrti,mti)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -101,7 +103,7 @@ c
 c have we reached proper point in kh control vector
 c for partial on probe or rotation tape
       if(l1.gt.0) goto 400
-      ltest = ltg0 + ntype
+      ltest = int(ltg0 + ntype, int16)
       iflag = -1
       call PBDPRM(nkh,kh,nstart,khar,ltest,iflag)
       if(iflag.le.0) then

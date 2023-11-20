@@ -1,5 +1,7 @@
       subroutine HRTRP(jd,fract,nvel,lcntl,icall,yh,x,body,hc,
      .                 jdtb, frtb, p)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -118,7 +120,7 @@ c find left hand tabular point
       endif
  
 c save tabular region boundaries
-      Nbtrp(icall) = nbt
+      Nbtrp(icall) = int(nbt, int16)
 c
 c*  start=2500
 c set up y vector...warning...mtype=0...no good for partials
@@ -127,7 +129,7 @@ c set up y vector...warning...mtype=0...no good for partials
          do j = 1, 3
             call YHERMT(body(1,1,j),yh(1,j),jh,0,hc,nbt)
          end do
-         Nvels(icall) = nvela
+         Nvels(icall) = int(nvela, int16)
       endif
 c
 c*  start=3000

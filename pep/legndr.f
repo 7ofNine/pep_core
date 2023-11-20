@@ -11,7 +11,7 @@ c
       integer*4 n, h, l, m, nsize, nsize1
 
 c dimension in calling program (sbfn)
-      real*10 leg(2), leg1(2), leg2(2), gleg(2), gleg1(2), gleg2(2)
+      real*10 leg(*), leg1(*), leg2(*), gleg(2), gleg1(2), gleg2(2)
       real*10 z, zz
       integer*4 nzone, ntess
 c

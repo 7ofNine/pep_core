@@ -1,4 +1,6 @@
       integer function JULDAY(imonth,iday,iyear)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -15,12 +17,12 @@ c iyear =year since 1900 (negative before 1900)
 c
       if(imonth.le.0 .or. imonth.gt.12)
      .    call SUICID(' MONTH INCORRECT, STOP IN JULDAY', 8)
-      iyr = iyear+1900
-      if(imonth.le.2) iyr = iyr - 1
-      iyr4  = iyr/4
-      iyr100=iyr/100
-      iyr400=iyr/400
-  100 JULDAY = (2415020 - 1899/4 + 1899/100 - 1899/400 + 365*iyear)
+      iyr = int(iyear+1900, int16)
+      if(imonth.le.2) iyr = iyr - 1_2
+      iyr4  = iyr/4_2
+      iyr100=iyr/100_2
+      iyr400=iyr/400_2
+      JULDAY = (2415020 - 1899/4 + 1899/100 - 1899/400 + 365*iyear)
      .         + (montot(imonth) + iday + iyr4 - iyr100 + iyr400)
       return
       end

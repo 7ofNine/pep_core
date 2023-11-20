@@ -65,7 +65,7 @@ c
       zz  = SQRT(1.0_10 - z*z)
       nz4 = Nz
       nt4 = Nt
-      call LEGNDR(z,zz,nz4,nt4,Leg(2),Leg1(2),Gleg(2),Gleg1(2))
+      call LEGNDR(z,zz,nz4,nt4,Leg,Leg1,Gleg,Gleg1)
  
 c low order polynomials not evaluated in legndr, must do this here
       Leg(1)   = z

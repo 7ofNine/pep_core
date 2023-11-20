@@ -12,7 +12,7 @@ c legendre polynomial formulas as used in subroutine legndr
 
 c arguments
       integer*4 npz, npt
-      real*10 leg(1), gleg(1)
+      real*10 leg(*), gleg(*)
 
 c common
       include 'funcon.inc'

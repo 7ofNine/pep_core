@@ -105,11 +105,11 @@ c determine which origin to use for expansion
                      end do
                      coth = DOT(Astnrm(1,ibelt),er(1,ibd,ibelt))
                      sith = SQRT(1._10 - coth**2)
-                     call LEGNDR(coth,sith,32,0,leg(2),leg1(2),
+                     call LEGNDR(coth,sith,32,0,leg,leg1,
      .                           0._10,0._10)
                      if(Astapr(ibelt))
-     .                   call LEGND2(coth,sith,32,0,leg(2),leg1(2)
-     .                   ,leg2(2),0._10,0._10,0._10)
+     .                   call LEGND2(coth,sith,32,0,leg,leg1
+     .                   ,leg2 ,0._10,0._10,0._10)
                      do i = 1,3
                         vth(i,ibd,ibelt) = coth*er(i,ibd,ibelt)
      .                     - Astnrm(i,ibelt)
