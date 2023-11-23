@@ -128,7 +128,7 @@ c*  start=9910
       endif
 c
 c obtain moon position at reflection time
-      call MNTRP(1, Jdx, Fract, 0, lmnctl, 1)
+      call MNTRP( Jdx, Fract, 0, lmnctl, 1)
       if(Jdx.le.0) then
          Jd = 0
          return
@@ -173,7 +173,7 @@ c*  start=1400
 c moon coordinates not previously calculated if nplnt0 is
 c earth satellite
          if(Klanb.ne.0 .and. Ncp0.eq.3)
-     .       call MNTRP(1, Jdx, Fract, 0, lmnctl, 1)
+     .       call MNTRP(Jdx, Fract, 0, lmnctl, 1)
          if(Jdx.le.0) then
             Jd = 0
             return
@@ -190,7 +190,7 @@ c and moon velocity for lorentz contraction
             mnrf(i)  = xemrf(i) + Xm(i,1)*Mnltsc
          end do
          if(nvlem.gt.0) then
-            call MNTRP(1, Jdx, Fract, 1, lmnctl, 1)
+            call MNTRP(Jdx, Fract, 1, lmnctl, 1)
             call EMTRP(1, Jdx, Fract, 1, lemctl, 2)
             do i=4,6
                xemrf(i) = (Xem(i,2) - Xm(i,1)*Mnfct)*Aultvl

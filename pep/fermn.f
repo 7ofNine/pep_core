@@ -105,10 +105,10 @@ c postions are not needed.
          if(nvlesn.gt.0) call EMTRP(1,Jd,ctrecf,1,lemctl,1)
 c
 c moon w.r.t. earth   (stored in xm(1-6,1), in a.u.)
-         call MNTRP(1,Jd,ctrecf,0,lmnctl,1)
+         call MNTRP(Jd,ctrecf,0,lmnctl,1)
          if(Jd.le.0) return
          lmnctl = -1
-         if(nvlesn.gt.0) call MNTRP(1,Jd,ctrecf,1,lmnctl,1)
+         if(nvlesn.gt.0) call MNTRP(Jd,ctrecf,1,lmnctl,1)
 c
 c sun w.r.t. ssbc
          if(nswesn.gt.0) then
@@ -126,8 +126,8 @@ c for counted-cycle vlbi observable, calculate earth w.r.t.
 c sun and sun w.r.t. s.s.b.c. for the receive
 c time at the second site
          if(nintrf.ge.0 .and. numsit.ne.1) then
-            call MNTRP(1,Jd,Ctrec2/Secday,0,lmnctl,2)
-            if(nvlesn.gt.0) call MNTRP(1,Jd,Ctrec2/Secday,1,
+            call MNTRP(Jd,Ctrec2/Secday,0,lmnctl,2)
+            if(nvlesn.gt.0) call MNTRP(Jd,Ctrec2/Secday,1,
      .          lmnctl, 2)
             call EMTRP(1,Jd,Ctrec2/Secday,0,lemctl,2)
             if(nvlesn.gt.0) call EMTRP(1,Jd,Ctrec2/Secday,1,
@@ -206,7 +206,7 @@ c which hits the moon (ranger)
       endif
 c
 c obtain moon position at transmit time
-      call MNTRP(1,Jdx,fractr,0,lmnctl,1)
+      call MNTRP(Jdx,fractr,0,lmnctl,1)
       if(Jdx.le.0) then
          Jd = 0
          return
@@ -254,8 +254,8 @@ c form vector pointing from source to site
 c moon coordinates not previously calculated if nplnt0 is
 c earth satellite
          if(klb.ne.0 .and. Npcent(klb).eq.3) then
-            call MNTRP(1,Jdx,fractr,0,lmnctl,1)
-            if(nvlesn.gt.0) call MNTRP(1,Jdx,fractr,1,lmnctl,
+            call MNTRP(Jdx,fractr,0,lmnctl,1)
+            if(nvlesn.gt.0) call MNTRP(Jdx,fractr,1,lmnctl,
      .          1)
          endif
          call EMTRP(1,Jdx,fractr,0,lemctl,2)
@@ -315,8 +315,8 @@ c           at second site given  source send time
          call TIMINC(Jd,ctrecf,jdesn,fresn,-dfdly1/Secday)
          call EMTRP(1,jdesn,fresn,0,lemctl,2)
          if(nvlesn.gt.0) call EMTRP(1,jdesn,fresn,1,lemctl,2)
-         call MNTRP(1,jdesn,fresn,0,lmnctl,2)
-         if(nvlesn.gt.0) call MNTRP(1,jdesn,fresn,1,lmnctl,2)
+         call MNTRP(jdesn,fresn,0,lmnctl,2)
+         if(nvlesn.gt.0) call MNTRP(jdesn,fresn,1,lmnctl,2)
  
          if(nswesn.gt.0) then
             call SOLCNT(jdesn,fresn,Xslcns(1,2),nvlesn)

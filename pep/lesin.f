@@ -1,4 +1,6 @@
       subroutine LEsin(nstop, lname, in0, les0)
+
+      use iso_fortran_env, only: int32, real32
  
       implicit none
  
@@ -100,7 +102,7 @@ c convert from utc to ephemeris time
          jd    = JULDAY(imonth, iday, iyear)
          etutc = 46.184_10 + (iyear - 75)
          fract = (ihr*3600._10 + imin*60._10 + sec + etutc)/8.64E4_10
-         i     = fract
+         i     = int(fract, int32)
          if( fract .lt. 0._10 ) i = i - 1
          jd    = jd + i
          fract = fract - i
@@ -131,10 +133,10 @@ c check for consistency of starting and stopping thrust
 c
 c convert from millipounds to micropounds and from degrees to
 c radians
-  300 thrst = thrst*1.E3_10
-      er1pt = er1pt*Convd
-      er2rl = er2rl*Convd
-      er3yw = er3yw*Convd
+  300 thrst = real(thrst*1.E3_10, real32)
+      er1pt = real(er1pt*Convd, real32)
+      er2rl = real(er2rl*Convd, real32)
+      er3yw = real(er3yw*Convd, real32)
       of1pt = of1pt*Convd
       of2rl = of2rl*Convd
 c

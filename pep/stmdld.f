@@ -134,7 +134,7 @@ c           determine reflection time from first satellite
 c
 c decide if lunar satellite instead of earth satellite
       if(Npcent(Klans1).eq.10) then
-         call MNTRP(1,Jdx,fr1,0,lmnctl,1)
+         call MNTRP(Jdx,fr1,0,lmnctl,1)
          if(Jdx.le.0) goto 999
          do i=1,3
             Xscsun(i,1)=Xscsun(i,1) + Xm(i,1)*Mnltsc
@@ -185,7 +185,7 @@ c see if planet or moon is observed
 c
 c decide if lunar satellite instead of earth satellite
          if(Npcent(Klanb).eq.10) then
-            call MNTRP(1,Jdy,fr2,0,lmnctl,2)
+            call MNTRP(Jdy,fr2,0,lmnctl,2)
             if (Jdy.le.0) goto 999
             do i=1,3
                Xsbsun(i)= Xsbsun(i) + Xm(i,2)*Mnltsc
@@ -236,7 +236,7 @@ c start iteration back to first spacecraft
 c
 c decide if lunar satellite instead of earth satellite
          if(Npcent(Klans1).eq.10) then
-            call MNTRP(1,jd3,fr3,0,lmnctl,1)
+            call MNTRP(jd3,fr3,0,lmnctl,1)
 c
 c write over moon from previous pass through this satellite
             if(jd3.le.0) goto 999

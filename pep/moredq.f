@@ -1,5 +1,7 @@
       subroutine MOREDQ(ss,cm,didk,didq,did2q,diddk,diddq,didd2q,
      . didkmx,didqmx,did2qmx)
+
+      use iso_fortran_env, only: real32
  
       implicit none
  
@@ -85,8 +87,9 @@ c cosine matrix coefficients
      . 7*0.0, -.025, 0.025, 10*0.0, -.004, -.005, -.004,
      . 2.174, 0.035, 0.026, 0.040, 0.211, 0.017, 5*0.0, 0.005, 5*0.0,
      .   0.006, 4*0.0/
-      ARG(a0, a1, a2, x) = MOD(a0 + x*(a1+a2*x), 1._10)*Twopi
-      ARGDOT(a1, a2, x)  = (a1 + 2._10*a2*x)*Twopi
+      ARG(a0, a1, a2, x) = real(MOD(a0 + x*(a1+a2*x), 1._10)*Twopi,
+     .  real32)
+      ARGDOT(a1, a2, x)  = real((a1 + 2._10*a2*x)*Twopi, real32)
  
       nt = 22
  

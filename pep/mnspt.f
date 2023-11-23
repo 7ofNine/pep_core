@@ -1,4 +1,6 @@
       subroutine MNSPT(jda,fract,mnspt1,nvel,n,nlibp2)
+
+      use iso_fortran_env, only: real32, int32
  
       implicit none
 
@@ -79,7 +81,7 @@ c local
      . dphi,dphidt,dpsi,dpsidt,dsig,dtausg,dth,dthdt,
      . frt,per,per1,phi,psi,qq,qv,slony,sigma,sphi,spsi,sth,
      . tausig,theta,tt,x(6),xms(3),ysptmp(3)
-      integer*4 i,ii,int,int1,j,jdt,jnt,nlibpr
+      integer*4 i,ii,nnint,int1,j,jdt,jnt,nlibpr
       real*10 DOT
  
       nlibpr = nlibp2
@@ -89,8 +91,8 @@ c determination of time
 c remove any ctvary correction
       ctvcor = Ctvary*(jda - Prm97 - 0.5_10 + fract)**2
       call TIMINC(jda,fract,jdt,frt,-ctvcor)
-      int = jdt - 2415020
-      tt  = int
+      nnint = jdt - 2415020
+      tt  = nnint
       qq  = frt - 0.5_10
       tt  = tt + qq
  
@@ -112,8 +114,8 @@ c interpolation of libration from nbody or moon tape
          if(meqinc.eq.0._10) meqinc = 0.0268587_10
          call MNLIB(jdt,frt,librat,nvel)
          if(Dodiss) then
-            tau = tau + Disssum
-            librat(1,3) = librat(1,3) + meqinc*Disssum
+            tau = real(tau + Disssum, real32)
+            librat(1,3) = real(librat(1,3) + meqinc*Disssum, real32)
          endif
       else if(nlibpr.gt.0) then
 c
@@ -157,17 +159,17 @@ c add analytic correction for dissipation
             Rot(3,3) = cth
             goto 300
          else
-            librat(1,1) = x(1)
-            librat(1,2) = x(2)
-            librat(1,3) = meqinc*x(1) - x(3)
+            librat(1,1) = real(x(1), real32)
+            librat(1,2) = real(x(2), real32)
+            librat(1,3) = real(meqinc*x(1) - x(3), real32)
             if(Dodiss) then
-               librat(1,1) = librat(1,1) + Disssum
-               librat(1,3) = librat(1,3) + meqinc*Disssum
+               librat(1,1) = real(librat(1,1) + Disssum, real32)
+               librat(1,3) = real(librat(1,3) + meqinc*Disssum, real32)
             endif
             if(nvel.gt.0) then
-               librat(2,1) = x(4)
-               librat(2,2) = x(5)
-               librat(2,3) = meqinc*x(4) - x(6)
+               librat(2,1) = real(x(4), real32)
+               librat(2,2) = real(x(5), real32)
+               librat(2,3) = real(meqinc*x(4) - x(6), real32)
             endif
          endif
       else
@@ -175,8 +177,8 @@ c
 c series for libration
          call DLIBRA(jdt,frt,librat,meqinc,nvel,beta,gamma)
          if(Dodiss) then
-            librat(1,1) = librat(1,1) + Disssum
-            librat(1,3) = librat(1,3) + meqinc*Disssum
+            librat(1,1) = real(librat(1,1) + Disssum, real32)
+            librat(1,3) = real(librat(1,3) + meqinc*Disssum, real32)
          endif
       endif
 c
@@ -191,7 +193,7 @@ c        determination of ascending node
      .       tt*(-1.4709422833333333E-4_10 + tt*(4.325E-15_10+
      .       tt*1.3888888888888889E-22_10))
       int1 = 2
-  100 jnt  = per1
+  100 jnt  = int(per1, int32)
       if(per1.lt.0) then
          jnt = jnt - 1
       else if(per1.eq.0) then
@@ -216,9 +218,9 @@ c calculate psi, theta, sines, and cosines
          sth  = SIN(theta)
 c
 c determine mean anomaly
-         int  = 1306*int
-         int1 = int/36000
-         per1 = int - int1*36000
+         nnint  = 1306*nnint
+         int1 = nnint/36000
+         per1 = nnint - int1*36000
          per1 = ((per1-6.3895392E3_10) + qq*1306._10 +
      .    tt*(0.49924465_10+tt*(6.889E-10_10+tt*2.99E-17_10)))/3.6E4_10
          int1 = 3
@@ -454,7 +456,7 @@ c           and gamma if series calculation used
       endif
 c
 c determine spot velocity
-  400 if(nvel.le.0) return
+      if(nvel.le.0) return
       danom = 2.2802713493961401E-1_10 +
      .        tt*(2.404714643398E-13_10 + tt*1.5655603390389E-20_10)
       dasc  = -9.24220294234919E-4_10 +

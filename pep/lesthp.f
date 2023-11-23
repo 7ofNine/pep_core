@@ -1,4 +1,6 @@
       subroutine LESTHP(ncall)
+
+      use iso_fortran_env, only: int32
  
       implicit none
 c
@@ -196,7 +198,7 @@ c calculate sun transit time (az=90 or -90 deg)
                               dtrns = dtrns/(dtrns + ABS(az1))
                               Frtrns(ntrnst) = Fract -
      .                           dtrns*((Jd-jdold) + (Fract-frold))
-                              i = Frtrns(ntrnst)
+                              i = int(Frtrns(ntrnst), int32)
                               if(Frtrns(ntrnst).lt.0._10) i = i - 1
                               Jdtrns(ntrnst) = i + Jd
                               Frtrns(ntrnst) = Frtrns(ntrnst) - i

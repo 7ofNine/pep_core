@@ -1,5 +1,7 @@
       subroutine LVTHAR(lharx,mharx,lhar,klnsiz,klnhar,n1,n2,
      .                  nsize,msize,maxsiz)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 
@@ -42,7 +44,7 @@ c copy from lhar (input controls)
                nsizt    = i
             endif
          end do
-         if(nsizt.gt.nsize) nsize = nsizt
+         if(nsizt.gt.nsize) nsize = int(nsizt, int16)
       endif
       if(Iabs1.gt.0) then
 c

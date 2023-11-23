@@ -1,6 +1,8 @@
       subroutine MATCH(coeff,names,numpar,xnom,apcoef,apnams,w,
      .                 nappar,xap,diagon,covar,apest,offset,nstop,
      .                 iskale,rhs,sqrtb,sumsq)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 c
@@ -11,8 +13,8 @@ c array and accumulates statistics
 c
 c parameters
       character*8 names(2,1),apnams(2,1)
-      real*10 coeff(1),apcoef(1),w,sumsq
-      real*10 xnom(1),xap(1),iskale(1),rhs(1)
+      real*10 coeff(*),apcoef(*),w,sumsq
+      real*10 xnom(*),xap(*),iskale(*),rhs(*)
       integer*4 numpar,nappar,nstop
       logical*4 apest,covar,diagon,offset,sqrtb
 
@@ -74,7 +76,7 @@ c and add estimate to rhs, and update effective sum-squared residual
                else
 c
 c if non diagonal, make pointer to jth param for ith apriori par
-                  pointr(i) = j
+                  pointr(i) = int(j, int16)
                endif
                goto 250
             endif

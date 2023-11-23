@@ -1,4 +1,6 @@
       subroutine MNPRD1(lice4)
+
+      use iso_fortran_env, only: int16
  
       implicit none
 c
@@ -44,7 +46,7 @@ c restarted moon integrations not supported
       Jdxx9=0
 c
 c read first two records of moon peripheral data set
-      lice=lice4
+      lice=int(lice4, int16)
       call XXRD1(lice,np10,Ipert2,klmn,Jdbd1,Jdbd2,
      . Iparm,i_mxplprt+1,intmx,Ibdsgn,km,Dmoon(1),frm1,nkimn,kimn)
 
@@ -60,9 +62,9 @@ c read first two records of moon peripheral data set
       end do
       rec=0
       do i=1,3
-         Recbeg(i)=rec+1
+         Recbeg(i)=int(rec+1, int16)
          rec=rec+8
-         Recend(i)=rec
+         Recend(i)=int(rec, int16)
       end do
       Dir = Ibdsgn
       Dmoon(1) = Dmoon(1)*Dir

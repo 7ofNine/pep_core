@@ -341,9 +341,9 @@ c set up observer coordinates
       else
  
 c convert moon to au, au/day (rel. to site)
-         call MNTRP(1, jde(2), fr(2), 0, 0, 1)
+         call MNTRP(jde(2), fr(2), 0, 0, 1)
          if(jde(2).le.0) goto 1200
-         call MNTRP(1, jde(2), fr(2), -1, 0, 1)
+         call MNTRP(jde(2), fr(2), -1, 0, 1)
          do j = 1, 6
             Xsbsun(j) = Xm(j, 1)*Mnau
          end do

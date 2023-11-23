@@ -1,4 +1,6 @@
       subroutine MDYJUL(imonth, iday, iyear, itime, jds)
+
+      use iso_fortran_env, only: int16
  
       implicit none
  
@@ -28,16 +30,16 @@ c ic= number of centuries since 0 january 1600
          ic = nyr/100
  
 c days due to leap years
-         iday = jd - nyr*365 - (nyr - 1)/4 + (nyr + 99)
-     .          /100 - (nyr + 399)/400 - 1
+         iday = int(jd - nyr*365 - (nyr - 1)/4 + (nyr + 99)
+     .          /100 - (nyr + 399)/400 - 1, int16)
          if( ic .eq. 0 ) then
-            if( nyr .eq. 0 ) iday = iday + 1
+            if( nyr .eq. 0 ) iday = iday + 1_2
          endif
          if( iday .gt. 0 ) then
  
 c iyear=  (0  thru  99)   year of the century
-            iyear = nyr - ic*100
-            itime = ic - 3
+            iyear = int(nyr - ic*100, int16)
+            itime = int(ic - 3, int16)
             nyr   = iyear
             if( nyr .ne. 0 ) then
                if( mod(nyr,4) .ne. 0 ) go to 200
@@ -48,7 +50,7 @@ c iyear=  (0  thru  99)   year of the century
             else if( iday .eq. 60 ) then
                go to 300
             else
-               iday = iday - 1
+               iday = iday - 1_2
             endif
          else
             nyr = nyr - 1
@@ -58,7 +60,7 @@ c iyear=  (0  thru  99)   year of the century
   100 end do
   200 do i = 2, 13
          if( iday .le. mdn(i) ) then
-            imonth = i - 1
+            imonth = int(i - 1, int16)
             iday   = iday - mdn(imonth)
             return
          endif

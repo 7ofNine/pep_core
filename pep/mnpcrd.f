@@ -42,7 +42,7 @@ c common
       include 'scdtaint.inc'
 
 c local
-      integer   i,ivl,j,jdsim,k,k1,k2,k3,k4,l,l1,l2,
+      integer   i,j,k,k1,k2,k3,k4,l,l1,l2,
      . limvl,m1,mm,mtab,mvl,n,nn,ntab,ntmoon
       character*56 gmess
       character*10 errcod

@@ -186,7 +186,7 @@ c central body is observed
       endif
 c
 c true moon interpolation
-      call MNTRP(1, Jdx, fractr, 0, 0, 1)
+      call MNTRP(Jdx, fractr, 0, 0, 1)
       do i = 1, 3
          Xsbsun(i) = Xm(i, 1)*Mnltsc
       end do

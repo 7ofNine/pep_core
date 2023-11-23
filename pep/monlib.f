@@ -1,4 +1,6 @@
       subroutine MONLIB(mnrt1,ilib,inert)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 
@@ -38,7 +40,7 @@ c commons
       integer   i, j
  
       if(ilib.le.0) then
-         tausig = Librat(1,3)/meqinc
+         tausig = real(Librat(1,3)/meqinc, real32)
          sigma  = -tausig + tau
          Psy    = Asc + sigma
          Theta  = meqinc + rho

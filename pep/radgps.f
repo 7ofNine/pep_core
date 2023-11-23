@@ -113,7 +113,7 @@ c*  start=1400
 c moon coordinates not previously calculated if nplnt0 is
 c earth satellite
             if(Klanb.ne.0 .and. Ncp0.eq.3)
-     .          call MNTRP(1,Jdx,Fract,0,lmnctl,1)
+     .          call MNTRP(Jdx,Fract,0,lmnctl,1)
             if(Jdx.le.0) then
                Jd = 0
                return

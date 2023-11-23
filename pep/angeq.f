@@ -69,7 +69,7 @@ c           begin iteration to make light time correction
 c moon or lunar orbiter
             fr(2) = fr(3)
             Jdx   = Jdy
-            call MNTRP(1,Jdx,fr(2),0,lswm,1)
+            call MNTRP(Jdx,fr(2),0,lswm,1)
             if(Jdx.le.0) then
                Jd = 0
                return

@@ -1,5 +1,7 @@
       real*10 function MORFN(k,j,s)
 
+      use iso_fortran_env, only: int32
+
       implicit none
 
 c r.king and r.cappallo   july 1977   real*10 function morfn
@@ -84,9 +86,9 @@ c quantities internal to this routine
      . dphi,dphic,dpsy,dpsyc,dtheta,dthetac,dw(3),dw1,dw2,dw3,
      . gama1,gdpfc2,gdpfct,gdpomg(3),gdppar(3),gdpprv(3),
      . gfacte,gfacte2,gfacte5,gfactm,gfactm2,gfactm5,icwc(3),masfct,
-     . pepe,pmpm,psum,psumh,st0,sum,sume(3),sumhe(3),sumhm(3),
+     . pepe,pmpm,psum,psumh,sum,sume(3),sumhe(3),sumhm(3),
      . summ(3),sump(3),sums(3),tde,tdm,temprot(3,3),temqrot(3,3),
-     . temrrot(3,3),tdmp,tdep,termc,termre,termrm,vary,x(3),xcr(3,3),
+     . temrrot(3,3),tdmp,tdep,termc,termre,termrm,vary,xcr(3,3),
      . wcstar(3),wcicwc(3),dwiwdyc(3,6),dwiwdy(3,6),wxw1(3),kinm(3),
      . dwrig(3),frfltrq(3)
       equivalence (dw1,dw),(dw2,dw(2)),(dw3,dw(3))
@@ -315,7 +317,7 @@ c set up for lunar torques due to figure
 c
 c determine perturbing planet coordinates
          if(Knbd.eq.0) then
-            Jd    = s
+            Jd    = int(s, int32)
             Fract = Jd
             Fract = s - Fract
             call PRTCRD(Jd,Fract)

@@ -1,5 +1,7 @@
       subroutine MENMON(jd, fract, ylun, nn)
 
+      use iso_fortran_env, only: real32, int32
+
       implicit none
 
 
@@ -7,7 +9,7 @@ c*** start of declarations inserted by spag
       real      a, asc, casc, cecc, cinc, cpci, cper, danom, dasc, dper,
      .          e, e22, ert, ert2, erta, erte, per, qq1, qq2, qq3
       real      qq4, qq5, sasc, secc, sinc, spci, sper
-      integer   i, int, int1, iswtch, j, jd, k, nn, ntop
+      integer   i, nnint, int1, iswtch, j, jd, k, nn, ntop
 
 c*** end of declarations inserted by spag
 
@@ -39,32 +41,32 @@ c setup for menmon
       if(iswtch.le.0) then
          iswtch = 1
          data e/5.4900489E-2/
-         a    = 60.2665*4.263529034E-5_10
-         e22  = e/2._10
+         a    = real(60.2665*4.263529034E-5_10, real32)
+         e22  = real(e/2._10, real32)
          ert2 = 1. - e*e
          ert  = sqrt(ert2)
          erta = a*ert
          erte = e/ert
 c given that sin(inc/2) =4.4886967e-2
-         cinc = 9.959730260464257E-1_10
-         sinc = 8.9653395852723849E-2_10
+         cinc = real(9.959730260464257E-1_10, real32)
+         sinc = real(8.9653395852723849E-2_10, real32)
          Kepoch = 1
          if(Jct(13).eq.1) Kepoch = 2
       endif
 c
 c determination of time
-      int = jd - 2415020
+      nnint = jd - 2415020
       qq  = fract - 0.5_10
-      tt  = int + qq
+      tt  = nnint + qq
 c
 c determination of mean anomaly
-      int  = 1306*int
-      int1 = int/36000
-      ppp  = int - int1*36000
+      nnint  = 1306*nnint
+      int1 = nnint/36000
+      ppp  = nnint - int1*36000
       ppp  = ((ppp-6.3895392E3_10) + qq*1.306E3_10 +
      . tt*(0.49924465_10+tt*(6.889E-10_10+tt*2.99E-17_10)))/3.6E4_10
-      int = ppp
-      angle = (ppp - int)*Twopi
+      nnint = int(ppp, int32)
+      angle = real((ppp - nnint)*Twopi, real32)
 c
 c determination of eccentric anomaly (solution of kepler eq)
       secc = angle + e*(sin(angle) + e22*sin(angle*2))
@@ -77,32 +79,34 @@ c
 c determination of ascending node and perigee
       ppp = 7.1995354166666667E-1_10 + tt*(-1.4709422833333333E-4_10 +
      .      tt*(4.325E-15_10+tt*1.3888888888888889E-22_10))
-      int = ppp
-      asc = (ppp - int)*Twopi
+      nnint = int(ppp, int32)
+      asc = real((ppp - nnint)*Twopi, real32)
       ppp = 2.08739669444444444444E-1_10 +
      . tt*(4.56550006944444444444E-4_10 -
      . tt*(2.58222222222222222222E-14_10+
      . tt*8.61111111111111111111E-22_10))
-      int = ppp
-      per = (ppp - int)*Twopi
+      nnint = int(ppp, int32)
+      per = real((ppp - nnint)*Twopi, real32)
 c
 c determination of derivatives of mean anomaly, ascending
 c node and perigee
       if(nn.ne.0) then
-         danom = 2.2802713493961401E-1_10 +
-     .    tt*(2.404714643398E-13_10 + tt*1.5655603390389E-20_10)
-         dasc  = -9.24220294234919E-4_10 +
-     .    tt*(5.434955290710E-14_10 + tt*2.617993877991E-21_10)
-         dper  = 2.868588295626071E-3_10 -
-     .    tt*(3.2449161453178E-13_10 + tt*1.62315620435472E-20_10)
+         danom = real(2.2802713493961401E-1_10 +
+     .    tt*(2.404714643398E-13_10 + tt*1.5655603390389E-20_10),
+     .       real32)
+         dasc  = real(-9.24220294234919E-4_10 +
+     .    tt*(5.434955290710E-14_10 + tt*2.617993877991E-21_10), real32)
+         dper  = real(2.868588295626071E-3_10 -
+     .    tt*(3.2449161453178E-13_10 + tt*1.62315620435472E-20_10),
+     .       real32)
       endif
 c
 c determine position,velocity in mean lunar orbital plane
       qq   = 1._10 - e*cecc
       qq1  = cecc - e
-      qq2  = a/qq
+      qq2  = real(a/qq, real32)
       qq3  = -secc*qq2
-      qq4  = erta/qq
+      qq4  = real(erta/qq, real32)
       qq5  = cecc*qq4
       v(1) = a*qq1
       v(2) = erta*secc
@@ -121,16 +125,16 @@ c     of reference epoch)
       if(Kepoch.eq.2) t = tt - 36524.5_10
       do j = 1, 3
          do i = 1, 3
-            aa(i,j) = t*(Aa1(1,i,j,Kepoch)
+            aa(i,j) = real(t*(Aa1(1,i,j,Kepoch)
      .       +t*(Aa1(2,i,j,Kepoch)+t*(Aa1(3,i,j,Kepoch)
-     .       +t*(Aa1(4,i,j,Kepoch)+t*(Aa1(5,i,j,Kepoch))))))
+     .       +t*(Aa1(4,i,j,Kepoch)+t*(Aa1(5,i,j,Kepoch)))))), real32)
             end do
          end do
-      aa(1,1) = aa(1,1) + 1._10
-      aa(2,2) = aa(2,2) + Cob0(Kepoch)
-      aa(2,3) = aa(2,3) + Sob0(Kepoch)
-      aa(3,2) = aa(3,2) - Sob0(Kepoch)
-      aa(3,3) = aa(3,3) + Cob0(Kepoch)
+      aa(1,1) = real(aa(1,1) + 1._10, real32)
+      aa(2,2) = real(aa(2,2) + Cob0(Kepoch), real32)
+      aa(2,3) = real(aa(2,3) + Sob0(Kepoch), real32)
+      aa(3,2) = real(aa(3,2) - Sob0(Kepoch), real32)
+      aa(3,3) = real(aa(3,3) + Cob0(Kepoch), real32)
 c
 c determination of b matrix
       casc   = COS(asc)
@@ -168,7 +172,7 @@ c determination of c matrix and its derivatives
             end do
          end do
 
-      do int = 1, 3
+      do nnint = 1, 3
 c
 c determination of position,velocity for mean
 c lunar orbit in coordinate system referred to mean equinox
@@ -178,13 +182,13 @@ c matrix transformation
          stuff(1) = 0._10
          stuff(2) = 0._10
          do k = 1, 2
-            stuff(1) = stuff(1) + c(int,k)*v(k)
+            stuff(1) = stuff(1) + c(nnint,k)*v(k)
             if(nn.ne.0) stuff(2) = stuff(2)
-     .          + (c(int,k)*dv(k) + dc(int,k)*v(k))
+     .          + (c(nnint,k)*dv(k) + dc(nnint,k)*v(k))
             end do
 
          do i = 1, ntop
-            j = 3*(i - 1) + int
+            j = 3*(i - 1) + nnint
             ylun(j) = stuff(i)
             end do
 

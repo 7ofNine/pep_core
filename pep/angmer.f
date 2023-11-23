@@ -85,7 +85,7 @@ c find type of central body
 c moon or lunar orbiter
          fr(2) = fr(3)
          Jdx   = Jdy
-         call MNTRP(1,Jdx,fr(2),0,lswem,1)
+         call MNTRP(Jdx,fr(2),0,lswem,1)
          if(Jdx.le.0) then
             Jd = 0
             return
@@ -100,14 +100,14 @@ c need earth position,velocity for trans-lunar object
  
 c already done once in angctl
          if(iter.ne.1) then
-            call MNTRP(1,Jdx,fr(2),0,lswem,1)
+            call MNTRP(Jdx,fr(2),0,lswem,1)
             if(Jdx.le.0) then
 c
 c*  start=9000
                Jd = 0
                return
             else
-               call MNTRP(1,Jdx,fr(2),-1,0,1)
+               call MNTRP(Jdx,fr(2),-1,0,1)
 c
 c read earth-moon barycenter tape, perform interpolation
 c to determine sun relative to earth (vel. vice-versa)
@@ -289,7 +289,7 @@ c library tape even if neqnox=0)
          Tdelt = TAN(deltat)
  
 c is this a meridian circle observation with limb correction
-         if(ntime.gt.0) call LMBCOR(alphat,deltat)
+         if(ntime.gt.0) call LMBCOR(deltat)
          if(Neqnox.gt.0 .or. Nphase.gt.0) call EQPCOR(kathy)
       else
          Deriv(2,1) = (xo(2)*Xsitep(4,1)-xo(1)*Xsitep(5,1))/rr1

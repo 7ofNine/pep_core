@@ -1,4 +1,6 @@
       subroutine MEDIA(ngo,rtrn)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 
@@ -91,7 +93,8 @@ c phase delay
                Raddum(2) = -Raddum(2)
             endif
             Raddum(3) = Raddum(2)*trm4
-            rtrn = prmter(60)*Raddum(2) + prmter(61)*Raddum(3)
+            rtrn = real(prmter(60)*Raddum(2) + prmter(61)*Raddum(3),
+     .             real32)
             return
          endif
 c
@@ -108,7 +111,8 @@ c effect of interplanetary plasma on doppler shift
      .               aarct*(DOT(Xemlsc,Xemlsc(4,1))-xex*(DOT(Xsitp0,
      .               Xemlsc(4,1))+DOT(dxsit,Xemlsc)))/close2)/close
          Raddum(8) = Raddum(7)*trm4 + Raddum(2)*COS(trm3)*tfcons/Secday
-         rtrn = Raddum(7)*prmter(60) + Raddum(8)*prmter(61)
+         rtrn = real(Raddum(7)*prmter(60) + Raddum(8)*prmter(61),
+     .          real32)
       endif
  
       return

@@ -50,7 +50,7 @@ c                  l o c a l   v a r i a b l e s
 
       real*10 fact,factj,diw(3),delir(3,6),ddndy(3),dwin(3),delnk(3)
       integer i,is,j,k,kkkrot
-      real*10 deli0i(3,3),dit1(3,3),dit2(3,3),didyt(3,3,6),dd,tems(3),
+      real*10 deli0i(3,3),dit1(3,3),dit2(3,3),didyt(3,3,6),dd,
      . ddndyp(3),ddndxp(3),delns(3)
 
       t2k=0._10

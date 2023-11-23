@@ -1,4 +1,6 @@
-      subroutine LMBCOR(alphat,deltat)
+      subroutine LMBCOR(deltat)
+
+      use iso_fortran_env, only: int32
  
       implicit none
 
@@ -11,7 +13,7 @@ c     as in the greenwich series which have r.a. and dec. separate,
 c      then trial and error  for dec. correction is the only solution.
 c
 c parameters
-      real*10 alphat,deltat
+      real*10 deltat
 
 c array dimensions
       include 'globdefs.inc'
@@ -90,7 +92,7 @@ c sin(prlx)= 3422.451 sec of arc in radians
       tfract = Sidvel*8.640E4_10/Twopi
       call CORCHN(z(1,1),x(1,1))
       call CORCHN(z(4,1),x(4,1))
-      mnrad  = mnr0/Ltvel
+      mnrad  = int(mnr0/Ltvel, int32)
       caps   = mnrad/dist
       caps   = ASIN(caps)
       dradst = (z(1,1)*z(5,1) - z(2,1)*z(4,1))/(z(1,1)**2 + z(2,1)**2)

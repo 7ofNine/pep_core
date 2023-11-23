@@ -103,14 +103,14 @@ c determine nutation-precession
          if(Kst1.ne.2) then
 c
 c get moon position and velocity at receive time
-            call MNTRP(1,Jdx,fr(2),0,lsw,1)
+            call MNTRP(Jdx,fr(2),0,lsw,1)
             if(Jdx.le.0) then
  
 c*  start=9000
                Jd = 0
                return
             else
-               call MNTRP(1,Jdx,fr(2),-1,0,1)
+               call MNTRP(Jdx,fr(2),-1,0,1)
 c
 c read earth-moon barycenter tape, perform interpolation
 c to determine sun relative to earth (vel. vice-versa)

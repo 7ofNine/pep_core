@@ -1,4 +1,4 @@
-      subroutine MNTRP(idumm,jdt,frt,nvel,lcntl,ipi)
+      subroutine MNTRP(jdt,frt,nvel,lcntl,ipi)
  
       implicit none
 
@@ -11,7 +11,7 @@ c        integration tape (or n-body tape)
 
 c input parameters:
       real*10 frt
-      integer*4 idumm, jdt, nvel, lcntl, ipi
+      integer*4 jdt, nvel, lcntl, ipi
  
 c parameter for acceleration
       real*10 xmna(3)

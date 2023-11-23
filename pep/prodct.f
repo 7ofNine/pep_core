@@ -43,6 +43,7 @@ c*** start of declarations inserted by spag
 c*** end of declarations inserted by spag
  
       real*10 a(*), b(*), c(*)
+c     real*10 b(*), c(*)
  
       ka  = IABS(k)
       ma  = IABS(m)

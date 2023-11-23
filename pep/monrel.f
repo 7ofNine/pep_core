@@ -46,7 +46,7 @@ c smcor etc. are selenodetic coordinates
       include 'yvectplp.inc'
 
 c external functions
-      real*10 DOT,DOTN,VECMTPRD
+      real*10 DOT
 c
 c local
       real*10 bp1,f1,f2,f3,f4,f5,f6,f7,gp1,sum,tsum,tsumx,f4r2,df1,df2

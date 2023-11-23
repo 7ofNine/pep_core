@@ -1989,8 +1989,10 @@ c           spool &nmlst1 from in to in0 with a-format printout
      .            nstop, 0)
 c
 c read &nmlst1 namelist from in0
+      write(6,*) "print namelst1"
       read(in0, NMLST1)
       rewind in0
+      write(6,*) "after reading  namelst1"
 
       call EXTFLG(Extprc)
       sepeat = repeat

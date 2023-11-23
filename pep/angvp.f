@@ -36,7 +36,7 @@ c must be earth satellite or asteroid
       else
  
 c get moon velocity in units of au/day
-         call MNTRP(1,Jdx,fr(2),-1,0,1)
+         call MNTRP(Jdx,fr(2),-1,0,1)
          do i = 4,6
             Xp(i) = Xm(i,1)*Mnau
          end do

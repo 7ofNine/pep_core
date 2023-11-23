@@ -1,4 +1,6 @@
       subroutine MENSUN(jd, fract, xsun, k)
+
+      use iso_fortran_env, only:real32, int32
  
       implicit none
  
@@ -39,29 +41,29 @@ c     distances in a.u.
 c     velocity in  a.u./ephemeris days
 c
  
-      eps = Moblq
+      eps = real(Moblq, real32)
  
       dt = (jd - 2415020) + (fract - 0.5_10)
-      t  = dt
+      t  = real(dt, real32)
       dd = dt*1E-4_10
-      d  = dd
+      d  = real(dd, real32)
 c
 c see p. 98 explanatory supplement
 c
       ecc   = 0.01675104-1.1444E-5*d-9.4E-9*d**2
       xl    = 279.696678+0.98564733543*dt+2.267E-5_10*dd**2
       gg    = 358.475845+0.985600267*dt-1.12E-5_10*dd**2-7E-8_10*dd**3
-      kj    = gg/360._10
+      kj    = int(gg/360._10, int32)
       xkj   = kj
       gg    = gg - 360._10*xkj
-      ij    = xl/360._10
+      ij    = int(xl/360._10, int32)
       xkj   = ij
       xl    = xl - 360._10*xkj
       delta = xl - gg
-      diff  = delta*cnvdr
-      g     = gg
+      diff  = real(delta*cnvdr, real32)
+      g     = real(gg, real32)
       g     = g*cnvdr
-      xlam  = xl*cnvdr
+      xlam  = real(xl*cnvdr, real32)
  
 c iterate to solve kepler's equation
       n    = 1

@@ -79,7 +79,7 @@ c everett interpolation
          if(ixctl.gt.0) then
 c
 c compute earth position by correcting for offset from embary
-            call MNTRP(idumm,jdt,frt,nvel,lcntl,ip)
+            call MNTRP(jdt,frt,nvel,lcntl,ip)
             if(jdt.gt.0) then
                jo = 3*iabs(nvel)
                do jy = 1,3

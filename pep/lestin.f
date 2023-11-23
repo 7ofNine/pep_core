@@ -1,4 +1,6 @@
       subroutine LESTIN(jd, fract, ther, offset, itherf)
+
+      use iso_fortran_env, only: real32
  
       implicit none
  
@@ -237,12 +239,12 @@ c determine time interval between data points.
       im1   = kndex - 1
       if( Jdles(im1) .ne. Jdles(kndex) ) deljd = Jdles(kndex)
      .    - Jdles(im1)
-      deltt = deljd + (Frles(kndex) - Frles(im1))
+      deltt = real(deljd + (Frles(kndex) - Frles(im1)), real32)
 c
 c determine time interval between input data and data pt i-1.
       deljd = 0.0
       if( jd .gt. Jdles(im1) ) deljd = jd - Jdles(im1)
-      delt = deljd + (fract - Frles(im1))
+      delt = real(deljd + (fract - Frles(im1)), real32)
 c
 c determine fraction of interval corresponding to input data.
       frac = delt/deltt

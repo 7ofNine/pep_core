@@ -1,4 +1,6 @@
       subroutine MNLIB(jd,fract,librt,kind)
+
+      use iso_fortran_env, only: real32
  
       implicit none
 c
@@ -79,12 +81,14 @@ c determine libration y-vectors
 c
 c everett fourth difference interpolation for libration
       do k = 1, 3
-         librt(1,k) = p(3)*(y(1,1,k) + p(4)*(y(2,1,k)+p(4)*y(3,1,k)))
-     .                 + p(1)*(y(1,2,k) + p(2)*(y(2,2,k)+p(2)*y(3,2,k)))
+         librt(1,k) = real(p(3)*(y(1,1,k) + p(4)*(y(2,1,k)+p(4)
+     .    *y(3,1,k))) + p(1)*(y(1,2,k) + p(2)*(y(2,2,k)+p(2)*y(3,2,k))),
+     .       real32)
          if(kind.gt.0) librt(2,k)
-     .       = (y(1,2,k)+p(2)*(y(2,2,k)*3.0_10+p(2)*y(3,2,k)*5.0_10)
+     .       = real((y(1,2,k)+p(2)*(y(2,2,k)*3.0_10+p(2)*y(3,2,k)*
+     .          5.0_10)
      .       - (y(1,1,k)+p(4)*(y(2,1,k)*3.0_10+p(4)*y(3,1,k)*5.0_10)))
-     .       /dlib
+     .       /dlib, real32)
       end do
  
       return
