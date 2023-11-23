@@ -312,7 +312,7 @@ c
 
       integer   i,j,jdpad
 
-
+      write(6,*) "-----------------subroutine input"
 c
 c*  start=1000
       Useit  = .false.
@@ -328,14 +328,18 @@ c input link for nstop.gt.0
 c
 c read title card and &nmlst1 namelist
       call PRMRED(in0,repeat,noprnt,iseq,nstop,jdpad)
-
+      write(*,*) "---------------------------331 SR input"
       if(Jct(27).le.0) then
          do while( .true. )
+            write(*,*) "---------------------------334 SR input"
             call PEPTIN(In,Iout,nstop)
+            write(*,*) "---------------------------336 SR input"
             if(Ieof.ne.1) then
+               write(*,*) "---------------------------338 SR input"
                if(Card8(1).eq.blank) then
                   if(LEG(64,9,Card8,1,Card8).eq.0) goto 50
                endif
+               write(*,*) "---------------------------342 SR input"
                Useit = .true.
                if(Card8(1).eq.lcom(1)) then
                   Jct(27) = 2
@@ -347,23 +351,26 @@ c read title card and &nmlst1 namelist
             goto 100
    50    end do
       endif
-
+      write(*,*) "---------------------------354 SR input"
 c initialize some controls
   100 call FILTIN(0,nstop,.true.)
+      write(*,*) "---------------------------357 SR input"
       call SKYIN(in0,nstop,.true.)
-
+      write(*,*) "---------------------------359 SR input"
       if(Jct(27).eq.0) then
 c
 c*  start=3000
 c initialize and read data for earth,moon,planet,space probe
 c motion and rotation
+         write(*,*) "---------------------------365 SR input"
          call BDYRED(in0,nstop,jdpad,0)
+         write(*,*) "---------------------------367 SR input"
 c
 c initialize and read data for observing sites
 c etc.,   input stream parts iv - xi
          call INITAL(called,.false.,.false.,in0,nstop)
       else
-
+         write(*,*) "---------------------------373 SR input"
 c initialize bdyred
          call BDYRED(in0,nstop,jdpad,-1)
          do while( .true. )
@@ -506,5 +513,6 @@ c
 c
 c print-out input data
       call PRNTOT(noprnt,iseq,nstop)
+      write(6,*) "-------------end sr input"
       return
       end

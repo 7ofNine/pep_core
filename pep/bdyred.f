@@ -26,11 +26,11 @@ c common
       real*10 erad,eflat,mrad,beta,gamma
       equivalence (Econd(7), erad), (Econd(8), eflat), (Mcond(7), mrad)
       equivalence (Mrcond(9), beta), (Mrcond(10), gamma)
-      integer*4 zempcn/9600/   !r8=4800,r10=9600
+      integer*4 :: zempcn = sizeof(Econd)    !/480/   !r8=4800,r10=9600
       include 'ethhar.inc'
-      integer*4 zemhar/46750/   !r8=25974,r10=46750
+      integer*4 :: zemhar=sizeof(ezhar) !/46750/   !r8=25974,r10=46750
       include 'france.inc'
-      integer*4 zfranc/26680/   !r8=19800,r10=26680
+      integer*4 ::zfranc = sizeof(dumcon) !/26680/   !r8=19800,r10=26680
       include 'inodta.inc'
       include 'lcntrl.inc'
       include 'monhar.inc'
@@ -41,17 +41,17 @@ c monhar has the same length as ethhar and so uses 'zemhar' for zeroing
       include 'param.inc'
       include 'plndta.inc'
       include 'plnhar.inc'
-      integer*4 zplnhr/190/   !r8=190,r10=190
+      integer*4 :: zplnhr= sizeof(nshape) !/190/   !r8=190,r10=190
       include 'psrstf.inc'
-      integer*4 zpsrst/4582/   !r8=2582,r10=4582
+      integer*4 :: zpsrst = sizeof(psrcn) !/4582/   !r8=2582,r10=4582
       include 'scoef4.inc'
       real*4 transf(u_stdsz,4,1000/u_stdsz)
       equivalence (Pzhar(1,1),transf(1,1,1))
       integer*2 klam
       equivalence (klam, Nmphar)
-      integer*4 zscof4/40000/   !r8=24000,r10=40000
+      integer*4:: zscof4=sizeof(pzhar) !/40000/   !r8=24000,r10=40000
       include 'smlbdy.inc'
-      integer*4 zsmlbd/24002/   !r4=7202,r10=24002
+      integer*4 :: zsmlbd = sizeof(scond) !/24002/   !r4=7202,r10=24002
  
 c earth,moon,planet control and data constants (&nmlst2)
       common/WRKCOM/ Bconst(u_nmbod),Bcon1(12),Btcon(30),Secb,Intb1,
@@ -156,7 +156,10 @@ c           other numbers as above
 c
 c
 c           initialize earth,moon,planet init.cond.and parameters
+         write(*,2000) sizeof(Econd)
+ 2000    format("---------------------------159 SR bdyred ", I6)
          call ZFILL(transfer(Econd, (/ "x" /)), zempcn)
+         write(*,*) "---------------------------161 SR bdyred"
          erad  = 6378.166_10
          eflat = 1._10/298.3_10
          mrad  = 1738._10
@@ -175,30 +178,51 @@ c           analysis) are stored in peripheral data set iplcon
 c
 c
 c           initialize earth gravitational potential harmonic coeff.
+         write(*,2005) sizeof(Ezhar), zemhar
+ 2005    format("---------------------------183 SR bdyred ", I6, I6)
          call ZFILL(transfer(Ezhar, (/ "x" /)), zemhar)
+         write(*,*) "---------------------------161 SR bdyred"
          call HARNTL(npln3, Ezhar, Echar, Eshar, Nezone, Netess)
+         write(*,*) "---------------------------186 SR bdyred"
 c
 c initialize moon gravitational potential harmonic coeff.
+         write(*,2006) sizeof(mzhar), zemhar
+ 2006    format("---------------------------191 SR bdyred", I6, i6)
          call ZFILL(transfer(Mzhar, (/ "x" /)), zemhar)
+         write(*,*) "---------------------------192 SR bdyred"
          call HARNTL(npln10, Mzhar, Mchar, Mshar, Nmzone, Nmtess)
 c
 c initialize coefs,l-vectors, and controls for planet grav.pot.
 c or shape
+         write(*,2007) sizeof(nshape), zplnhr
+ 2007    format("---------------------------199 SR bdyred", I6, i6)
          call ZFILL(transfer(Nshape, (/ "x" /)), zplnhr)
+         write(*,2008) sizeof(pzhar), zscof4
+ 2008    format("---------------------------201 SR bdyred", I6, i6)
          call ZFILL(transfer(Pzhar, (/ "x" /)), zscof4)
+         write(*,*) "---------------------------203 SR bdyred"
          do j = 1, 4
             Szero(j) = .true.
          end do
 c
 c initialize quantities to go into iplcon peripheral data set
+         write(*,2009) sizeof(dumcon), zfranc
+ 2009    format("---------------------------211 SR bdyred", I6, i6)
          call ZFILL(transfer(Dumcon, (/ "x" /)), zfranc)
+         write(*,*) "---------------------------212 SR bdyred"
          do j = 1,20
             if(j.le.4) Kkk(88,j) = 3
          end do
 c
 c clear limited asteroid and pulsar quantities
+         write(*,2010) sizeof(scond), zsmlbd
+ 2010    format("---------------------------220 SR bdyred", I6, i6)
          call ZFILL(transfer(Scond, (/ "x" /)), zsmlbd)
+         write(*,*) "---------------------------221 SR bdyred"
+         write(*,2011) sizeof(psrcn), zpsrst
+ 2011    format("---------------------------224 SR bdyred", I6, i6)
          call ZFILL(transfer(Psrcn, (/ "x" /)), zpsrst)
+         write(*,*) "---------------------------225 SR bdyred"
 c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 c
 c read earth,moon,planet control and data constants (&nmlst2)
@@ -469,5 +493,6 @@ c for compar link) if it has not been set yet
 c
 c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 c
+      write(*,*) "---------------------------496 SR bdyred"
       return
       end
