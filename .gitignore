@@ -94,3 +94,7 @@ bigtest/tv1.vko
 bigtest/tv2.abc
 bigtest/tv2.out
 bigtest/tv2.verout
+/.metadata/**
+**/*.exe
+**/*.dll
+**/.*

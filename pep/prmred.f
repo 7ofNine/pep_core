@@ -546,6 +546,8 @@ c from /DTPARM/
 c from /MASCON/
 c maximum number of planets allowed
 c integer control varible for propagation corrections
+      integer*2 repeat
+      integer*4 noprnt, iseq,maxpln
       namelist /NMLST1/Iout, Jout, Kout, Ipunch, Igraph, Intern, Ibuf,
      .         Imat, Ipert, Jpert, Kpert, Imat1, Imat2, Imat0, Nummt0,
      .         Jmat, repeat, noprnt, iseq, Lout, Mout, Nout, Jpunch,
@@ -567,8 +569,8 @@ c
       include 'timstf.inc'
 
 c local variables
-      integer*4 i,in1,iout2,iseq,maxpln,noprnt,t1,t2
-      integer*2 repeat
+      integer*4 i,in1,iout2,t1,t2
+c     integer*2 repeat
       character*8 specs
 
       Dat0   = Dat1

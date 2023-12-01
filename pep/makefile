@@ -1,19 +1,19 @@
 FORT = gfortran
-FFLAGS = -fno-automatic -w -frecord-marker=8
+FFLAGS = -fno-automatic -w -frecord-marker=8 -fallow-argument-mismatch
 pep: blkdata1.o blkdata2.o blkdata3.o blkdata4.o blkdata7.o blkdata8.o blkdata9.o *.o
 	$(FORT) $(FFLAGS) -o pep *.o
-	rm -rf newdate
-	mv -f blkd1prv blkdata1.f
+#	rm -rf newdate
+#	mv -f blkd1prv blkdata1.f
 .f.o:
 	$(FORT) $(FFLAGS) -c -o $@ $<
 new:
 	$(FORT) $(FFLAGS) -c *.f
-blkdata1.o: blkdata1.f newdate
-newdate:	
-	cp blkdata1.f newdate
-	rm -rf blkd1prv
-	mv blkdata1.f blkd1prv
-	sed "s/\(data Lnkdat\).*/\1\/\'`date +%Y%m%d`\'\//" newdate>blkdata1.f
+blkdata1.o: blkdata1.f #newdate
+#newdate:	
+#	cp blkdata1.f newdate
+#	rm -rf blkd1prv
+#	mv blkdata1.f blkd1prv
+#	sed "s/\(data Lnkdat\).*/\1\/\'`date +%Y%m%d`\'\//" newdate>blkdata1.f
 
 SIMPOBJ = \
 a1ut1.o a1ut1f.o a1wwv.o acheck.o adam.o adjast.o adjbdy.o adjfor.o \
@@ -543,3 +543,8 @@ xxrdbd.o: b2dta.inc bddta.inc comdat.inc empcnd.inc globdefs.inc namtim.inc plnd
 ycoff.o: tabval.inc
 ycoft.o: tabval.inc trpcom.inc
 yprtcd.o: prtpin.inc
+
+
+clean:
+	rm -f *.x *.o  *.exe
+
