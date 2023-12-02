@@ -9,7 +9,7 @@ BIN = .
 
 #
 # Create binary files for BIGTEST
-bigtest: abcps convw0 cplnq cpynbq cpynrm cpyobs ctchar intrlv prepmnpt psrcard $B/bigtest.intpvm09 $B/bigtest.intpvm13 $B/bigtest.inttfr $B/bigtest.obsllr $B/bigtest.obspvmdl $B/bigtest.obspvmnc $B/bigtest.obstfl $B/bigtest.obstfr $B/bigtest.obstin $B/bigtest.obstop $B/bigtest.tflw0 $B/bigtest.pprsntin $B/bigtest.tfrtsne $B/bigtest.tmnmoon $B/bigtest.tmnmrot $B/bigtest.tmnntp1 $B/bigtest.tmnntp72 $B/bigtest.ttrsbody $B/ctatint.nbody740 $B/nbody.f311 $B/nbody.f443 $B/nbody.f452
+bigtest: convw0 cplnq cpynbq cpynrm cpyobs ctchar intrlv prepmnpt psrcard $B/bigtest.intpvm09 $B/bigtest.intpvm13 $B/bigtest.inttfr $B/bigtest.obsllr $B/bigtest.obspvmdl $B/bigtest.obspvmnc $B/bigtest.obstfl $B/bigtest.obstfr $B/bigtest.obstin $B/bigtest.obstop $B/bigtest.tflw0 $B/bigtest.pprsntin $B/bigtest.tfrtsne $B/bigtest.tmnmoon $B/bigtest.tmnmrot $B/bigtest.tmnntp1 $B/bigtest.tmnntp72 $B/bigtest.ttrsbody $B/ctatint.nbody740 $B/nbody.f311 $B/nbody.f443 $B/nbody.f452
 	../bigconv cplnq  $B/bigtest.intpvm09 $B/tfr.pvm09
 	../bigconv cplnq  $B/bigtest.intpvm13 $B/tfr.pvm13
 	../bigconv cplnq  $B/bigtest.inttfr $B/tfr.int
@@ -68,3 +68,6 @@ obsfrm.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 obsio.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 prepmnpt.o: $U/pepglob.inc $U/t1a.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
 zerpar.o: $U/pepglob.inc $U/t2a.inc $U/t3a.inc $U/t4a.inc
+
+clean:
+	rm -f *.x *.o  *.exe $U/*.o $B/*.o $P/*.o $G/*.o $B/*.exe $P/*.exe $G/*.exe
