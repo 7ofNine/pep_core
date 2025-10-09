@@ -1,6 +1,6 @@
 @echo(
 @echo(
-del \f fort.*
+del /f fort.*
 copy tfr.ctatint fort.9
 copy tfr.obs fort.40
 copy tfr.obspvmnc fort.41

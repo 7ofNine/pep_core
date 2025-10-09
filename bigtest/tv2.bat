@@ -8,8 +8,8 @@ copy tv1.vko fort.64
 ..\pep\pep <tv2.inp >tv2.out
 @echo(
 @echo(
-rem ../peputil/abcps >tv2.abc <<'End of input'
-rem  &INPUT NAMES=T, LOOK=4, NSERIE=999, NOPRNT=1,
-rem   OBSLIB=31,
-rem &END
-rem End of input
+..\peputil\abcps >tv2.abc <<'End of input'
+ &INPUT NAMES=T, LOOK=4, NSERIE=999, NOPRNT=1,
+   OBSLIB=31,
+ &END
+End of input

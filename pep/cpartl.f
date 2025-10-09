@@ -5,7 +5,7 @@
 c m.e.ash    july 1969    subroutine cpartl
 c interpolate for partials of coordinates from tape and calculate
 c partial of observations
-c * * * implicit real*8 * * * *
+c * *** implicit real*8 * * * *
 c           itype indicates which body's partials to compute:
 c           1-em, 2-mn, 3-pl, 4-sb, 5-sc, 6-pr, 7-er
 c           ngo = 1 calculate partial of coordinates only
